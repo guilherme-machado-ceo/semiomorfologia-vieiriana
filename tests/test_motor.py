@@ -3,7 +3,7 @@ Testes de integração para o MotorSemiomorfologico.
 """
 import pytest
 
-from semiomorfologia.core.ontologia import Morfema, DominioNatural, NivelOrganizacao
+from semiomorfologia.core.ontologia import Morfema, DominioNatural, NivelOrganizacao, TipoAnalogia
 from semiomorfologia.motor import MotorSemiomorfologico
 
 

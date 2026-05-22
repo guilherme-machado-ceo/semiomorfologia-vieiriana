@@ -3,7 +3,7 @@ Testes unitários para os 4 extratores especializados.
 """
 import pytest
 
-from semiomorfologia.core.ontologia import Morfema, DominioNatural, NivelOrganizacao
+from semiomorfologia.core.ontologia import Morfema, DominioNatural, NivelOrganizacao, TipoAnalogia
 from semiomorfologia.extratores import (
     ExtratorMineral, ExtratorVegetal, ExtratorAnimal, ExtratorHumano
 )
