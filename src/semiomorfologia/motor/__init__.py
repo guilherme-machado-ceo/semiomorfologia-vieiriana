@@ -1,0 +1,1 @@
+from .semiomorfologico import MotorSemiomorfologico

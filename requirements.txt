@@ -1,0 +1,16 @@
+# Framework Semiomorfologia Vieiriana
+# Dependências mínimas — compatível com 8GB RAM
+
+# Core (obrigatório)
+numpy>=1.24.0
+
+# Visualização (opcional, para gerar diagramas)
+matplotlib>=3.7.0
+
+# Testes
+pytest>=7.4.0
+pytest-cov>=4.1.0
+
+# Lint/Type (desenvolvimento)
+mypy>=1.5.0
+ruff>=0.1.0
