@@ -1,21 +1,62 @@
-MIT License
+LICENÇA SEMIOMORFOLÓGICA VIEIRIANA v1.0
 
-Copyright (c) 2026 Semiomorfologia Vieiriana Contributors
+Copyright (c) 2026 Guilherme Gonçalves Machado
+ORCID: 0009-0008-1083-0784
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+CRIAÇÃO ORIGINAL: Guilherme Gonçalves Machado
+Este framework é criação intelectual original de Guilherme Gonçalves Machado,
+baseado em pesquisa independente sobre a obra de Vieira e a teoria dos conjuntos
+semelhantes de Jamil Almansur Haddad (*Vieira e o Barroco Brasileiro*, Companhia
+Editora Nacional, São Paulo, 1957), transposta para formalização algorítmica.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+A arquitetura algorítmica, a ontologia semiomorfológica, o sistema de extração
+de analogias e o Algoritmo PANVIEIRA são criação original do autor.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+PERMISSÕES:
+É concedida permissão, gratuitamente, a qualquer pessoa que obtenha uma cópia
+deste software e arquivos de documentação associados (o "Software"), para:
+- Usar, copiar, modificar, mesclar e distribuir cópias do Software
+- Publicar, sublicenciar e vender cópias do Software
+- Permitir que outras pessoas façam o mesmo
+
+DESDE QUE:
+1. A presente licença e aviso de copyright sejam incluídos em todas as cópias
+   ou partes substanciais do Software.
+2. A atribuição de criação original a Guilherme Gonçalves Machado seja
+   mantida em todas as derivações, forks, modificações e redistribuições.
+3. A marca "Hubstry Deep Tech" e a descrição da empresa sejam preservadas
+   no README ou documentação equivalente.
+4. O ORCID do autor (0009-0008-1083-0784) seja citado em publicações
+   acadêmicas que utilizem ou referenciem este Software.
+
+RESTRIÇÃO DE EXPLORAÇÃO COMERCIAL:
+A exploração comercial do Software — incluindo, mas não se limitando a:
+- Venda direta do Software como produto
+- Uso do Software em produtos ou serviços comerciais sem autorização
+- Licenciamento comercial do Software a terceiros
+- Incorporação do Software em soluções enterprise ou governamentais pagas
+- Uso do Software como diferencial competitivo em produtos comerciais
+
+— REQUER AUTORIZAÇÃO PRÉVIA E ESCRITA DO AUTOR.
+
+Para solicitar autorização comercial, entre em contato:
+  Guilherme Gonçalves Machado
+  E-mail: guilhermemachado@hubstry.onmicrosoft.com
+  Site: www.hubstry.dev
+  Representante: Hubstry Deep Tech
+
+USO ACADÊMICO E EDUCACIONAL:
+O uso acadêmico, educacional, de pesquisa e não-comercial é expressamente
+permitido e incentivado, desde que:
+- A atribuição original seja mantida
+- O ORCID seja citado
+- A licença seja incluída
+
+ISENÇÃO DE RESPONSABILIDADE:
+O SOFTWARE É FORNECIDO "COMO ESTÁ", SEM GARANTIA DE QUALQUER TIPO, EXPRESSA
+OU IMPLÍCITA, INCLUINDO, MAS NÃO SE LIMITANDO ÀS GARANTIAS DE COMERCIALIZAÇÃO,
+ADEQUAÇÃO A UM DETERMINADO FIM E NÃO VIOLAÇÃO. EM NENHUM CASO OS AUTORES OU
+DETENTORES DE DIREITOS AUTORAIS SERÃO RESPONSÁVEIS POR QUALQUER RECLAMAÇÃO,
+DANOS OU OUTRA RESPONSABILIDADE, SEJA EM UMA AÇÃO DE CONTRATO, ATO ILÍCITO
+OU DE OUTRA FORMA, DECORRENTE DE, FORA DE OU EM CONEXÃO COM O SOFTWARE OU O
+USO OU OUTRAS NEGOCIAÇÕES NO SOFTWARE.

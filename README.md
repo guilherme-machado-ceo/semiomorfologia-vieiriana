@@ -1,13 +1,68 @@
 # Semiomorfologia Vieiriana
 
 > Framework agnóstico de extração de analogias nas 4 morfologias naturais  
-> Baseado na *Teoria dos Conjuntos Semelhantes* de Damaso Alonso / Vieira
+> Transposição computacional do Algoritmo PANVIEIRA
+
+---
+
+## Criação Original
+
+**Autor:** Guilherme Gonçalves Machado  
+**ORCID:** 0009-0008-1083-0784  
+**Contato:** guilhermemachado@hubstry.onmicrosoft.com  
+**Site:** www.hubstry.dev
+
+Este framework é criação intelectual original de Guilherme Gonçalves Machado,
+resultado de pesquisa independente sobre a estilística barroca de Vieira e sua
+transposição para formalização algorítmica computacional. A influência teórica
+de Jamil Almansur Haddad (*Vieira e o Barroco Brasileiro*, Companhia Editora
+Nacional, São Paulo, 1957) é reconhecida como fundamento estrutural, mas a
+arquitetura algorítmica, a ontologia semiomorfológica e o sistema de extração
+de analogias são criação original do autor.
+
+O framework é a transposição computacional do **Algoritmo PANVIEIRA**
+(preprint Zenodo, 2026), que formaliza a estrutura de paralelismo
+não-progressivo vieiriano como padrão agnóstico instanciável em qualquer
+sistema semiótico.
+
+---
+
+## Hubstry Deep Tech
+
+Este projeto é desenvolvido e mantido pela **Hubstry Deep Tech**, um *operating
+deep tech venture builder* focado em pesquisa, desenvolvimento e criação de
+ativos tecnológicos proprietários.
+
+Nosso modelo atua prioritariamente em **B2B** e **B2G**, permitindo que empresas
+e instituições acessem e co-desenvolvam tecnologias avançadas com maior eficiência
+de capital e soberania tecnológica, reduzindo custo, tempo e risco de inovação.
+
+Estruturamos e escalamos soluções em áreas estratégicas, criando barreiras de
+entrada relevantes e capturando valor antecipado em ciclos tecnológicos emergentes.
+Adicionalmente, operamos modelos **B2B2C**, ampliando a distribuição e captura
+de valor das tecnologias desenvolvidas.
+
+No horizonte estratégico, acompanhamos a crescente atomização do consumo
+impulsionada por IA, que tende a transformar indivíduos em operadores
+tecnológicos independentes. Esse movimento orienta nossa capacidade de
+antecipar novos modelos de mercado e posicionar ativos para capturar valor
+também em contextos **B2C** emergentes.
+
+Em síntese, a **Hubstry** transforma incerteza tecnológica em vantagem
+competitiva estruturada e de longo prazo.
 
 ---
 
 ## O que é
 
-Este projeto formaliza algoritmicamente a estilística barroca de Vieira — especificamente o processo de **reiteração enfática**, a **redução de N termos a 1 genérico** e o **paralelismo sintático** — como um sistema computacional de descoberta de analogias entre domínios naturais:
+Este projeto formaliza algoritmicamente a estilística barroca de Vieira —
+especificamente o processo de **reiteração enfática**, a **redução de N termos
+a 1 genérico** e o **paralelismo sintático** — como um sistema computacional
+de descoberta de analogias entre domínios naturais.
+
+Baseado no Algoritmo PANVIEIRA (⟨G, {Sᵢ}, {Cᵢ}, ⊗, π, ρ⟩), o framework opera
+com quatro operações fundamentais: **ABSTRACT, EXPAND, SERIALIZE, CONTRACT**,
+com propriedade de circularidade iterativa (G → EXPAND → CONTRACT → G).
 
 | Domínio | Escopo | Extrator |
 |---------|--------|----------|
@@ -20,41 +75,6 @@ Cada domínio implementa **3 tipos de analogia**:
 - **Heurística** — descoberta de emergências não-lineares
 - **Funcional** — mesma função, estrutura diferente
 - **Homológica** — mesma origem, função pode divergir
-
----
-
-## Instalação (Windows 11 / PowerShell / 8GB RAM)
-
-### Requisitos
-- Python 3.10+
-- ~50MB de disco (sem dependências pesadas)
-- 8GB RAM são suficientes (não usa PyTorch/TensorFlow)
-
-### Passo a passo no PowerShell
-
-```powershell
-# 1. Clone o repositório
-git clone https://github.com/seu-usuario/semiomorfologia-vieiriana.git
-cd semiomorfologia-vieiriana
-
-# 2. Crie ambiente virtual (recomendado)
-python -m venv venv
-.\venv\Scripts\Activate.ps1
-
-# 3. Instale dependências leves
-pip install -r requirements.txt
-
-# 4. Execute testes
-python -m pytest tests/ -v
-
-# 5. Rode um exemplo
-python examples/demo_completo.py
-```
-
-Ou use o script automatizado:
-```powershell
-.\scripts\setup_windows.ps1
-```
 
 ---
 
@@ -80,7 +100,8 @@ grafeno = Morfema(
 resultados = motor.extrair_analogias_dominio([grafeno, ...], DominioNatural.MINERAL)
 ```
 
-Veja `examples/` para demonstrações completas.
+Veja `examples/` para demonstrações completas e `docs/TEORIA.md` para a
+fundamentação teórica (Vieira, Haddad, PANVIEIRA).
 
 ---
 
@@ -106,7 +127,7 @@ semiomorfologia-vieiriana/
 
 ```
 ┌─────────────────────────────────────────────┐
-│  1. FUNDAÇÃO TEÓRICA (Vieira/Damaso Alonso) │
+│  1. FUNDAÇÃO TEÓRICA (Vieira/Haddad/PANVIEIRA)│
 ├─────────────────────────────────────────────┤
 │  2. ONTOLOGIA (4 Domínios × 3 Analogias)    │
 ├─────────────────────────────────────────────┤
@@ -123,9 +144,25 @@ semiomorfologia-vieiriana/
 
 ## Licença
 
-MIT License — veja [LICENSE](LICENSE).
+**Licença Semiomorfológica Vieiriana v1.0**
+
+Copyright (c) 2026 Guilherme Gonçalves Machado
+
+Este software é disponibilizado para uso acadêmico, educacional, de pesquisa e
+não-comercial de forma livre e gratuita, desde que a atribuição de criação
+original seja mantida.
+
+**A exploração comercial deste software — incluindo venda direta, uso em produtos
+ou serviços comerciais, licenciamento a terceiros ou incorporação em soluções
+enterprise/governamentais pagas — REQUER AUTORIZAÇÃO PRÉVIA E ESCRITA do autor.**
+
+Para solicitar autorização comercial, entre em contato:  
+📧 guilhermemachado@hubstry.onmicrosoft.com  
+🌐 www.hubstry.dev
+
+Veja [LICENSE](LICENSE) para o texto completo.
 
 ---
 
-> *"As quatro expressões possuem o mesmo conteúdo conceptual. Genéricamente iguais, diferem especificamente."*  
-> — Vieira, via Damaso Alonso
+**Desenvolvido por Guilherme Gonçalves Machado | Hubstry Deep Tech © 2026**  
+**ORCID:** 0009-0008-1083-0784
