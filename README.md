@@ -1,97 +1,97 @@
 # Semiomorfologia Vieiriana
 
-> Framework agnostico de extracao de analogias nas 4 morfologias naturais
-> Transposicao computacional do Algoritmo PANVIEIRA
+> Framework agnóstico de extração de analogias nas 4 morfologias naturais
+> Transposição computacional do Algoritmo PANVIEIRA
 >
-> **v2.0.0** -- Metricas reais, embeddings semanticos, anti-unificacao e avaliacao FAME
+> **v2.0.0** — Métricas reais, embeddings semânticos, anti-unificação e avaliação FAME
 
 ---
 
-## Criacao Original
+## Criação Original
 
-**Autor:** Guilherme Goncalves Machado
+**Autor:** Guilherme Gonçalves Machado
 **ORCID:** 0009-0008-1083-0784
 **Contato:** guilhermemachado@hubstry.onmicrosoft.com
 **Site:** www.hubstry.dev
 
-Este framework e criacao intelectual original de Guilherme Goncalves Machado,
-resultado de pesquisa independente sobre a estilistica barroca de Vieira e sua
-transposicao para formalizacao algoritmica computacional. A influencia teorica
-de Jamil Almansur Haddad (Vieira e o Barroco Brasileiro, Companhia Editora
-Nacional, Sao Paulo, 1957) e reconhecida como fundamento estrutural, mas a
-arquitetura algoritmica, a ontologia semiomorfologica e o sistema de extracao
-de analogias sao criacao original do autor.
+Este framework é criação intelectual original de Guilherme Gonçalves Machado,
+resultado de pesquisa independente sobre a estilística barroca de Vieira e sua
+transposição para formalização algorítmica computacional. A influência teórica
+de Jamil Almansur Haddad (*Vieira e o Barroco Brasileiro*, Companhia Editora
+Nacional, São Paulo, 1957) é reconhecida como fundamento estrutural, mas a
+arquitetura algorítmica, a ontologia semiomorfologica e o sistema de extração
+de analogias são criação original do autor.
 
-O framework e a transposicao computacional do **Algoritmo PANVIEIRA**
+O framework é a transposição computacional do **Algoritmo PANVIEIRA**
 (preprint Zenodo, 2026), que formaliza a estrutura de paralelismo
-nao-progressivo vieiriano como padrao agnostico instanciavel em qualquer
-sistema semiotico.
+não-progressivo vieiriano como padrão agnóstico instanciável em qualquer
+sistema semiótico.
 
 ---
 
-## O que e
+## O que é
 
-Este projeto formaliza algoritmicamente a estilistica barroca de Vieira --
-especificamente o processo de **reiteracao enfatica**, a **reducao de N termos
-a 1 generico** e o **paralelismo sintatico** -- como um sistema computacional
-de descoberta de analogias entre dominios naturais.
+Este projeto formaliza algoritmicamente a estilística barroca de Vieira —
+especificamente o processo de **reiteração enfática**, a **redução de N termos
+a 1 genérico** e o **paralelismo sintático** — como um sistema computacional
+de descoberta de analogias entre domínios naturais.
 
-Baseado no Algoritmo PANVIEIRA, o framework opera com quatro operacoes
+Baseado no Algoritmo PANVIEIRA, o framework opera com quatro operações
 fundamentais: **ABSTRACT, EXPAND, SERIALIZE, CONTRACT**, com propriedade de
 circularidade iterativa.
 
-| Dominio | Escopo | Extrator | Exemplos |
+| Domínio | Escopo | Extrator | Exemplos |
 |---------|--------|----------|----------|
-| **Mineral** | Pedras, minerios, terras raras | `ExtratorMineral` | Materiais avancados, eletronica |
-| **Vegetal** | Plantas, florestas, fitoquimica | `ExtratorVegetal` | Agronegocio, farmacologia |
-| **Animal** | Fauna, sistemas zoologicos | `ExtratorAnimal` | Robotica biomimetica |
-| **Humano** | Fisiologia, linguas naturais | `ExtratorHumano` | IA explicavel, medicina de precisao |
+| **Mineral** | Pedras, minérios, terras raras | `ExtratorMineral` | Materiais avançados, eletrônica |
+| **Vegetal** | Plantas, florestas, fitoquímica | `ExtratorVegetal` | Agronegócio, farmacologia |
+| **Animal** | Fauna, sistemas zoológicos | `ExtratorAnimal` | Robótica biomimética |
+| **Humano** | Fisiologia, línguas naturais | `ExtratorHumano` | IA explicável, medicina de precisão |
 
-Cada dominio implementa **3 tipos de analogia**:
+Cada domínio implementa **3 tipos de analogia**:
 
-- **Heuristica** -- emergencias nao-lineares e convergencias nao-obvias
-- **Funcional** -- mesma funcao em estrutura diferente
-- **Homologica** -- mesma origem/evolucao, funcao pode divergir
+- **Heurística** — emergências não-lineares e convergências não-óbvias
+- **Funcional** — mesma função em estrutura diferente
+- **Homológica** — mesma origem/evolução, função pode divergir
 
 ---
 
 ## Novidades na v2.0.0
 
-### Metricas de Similaridade Reais (Tarefa 1.1)
+### Métricas de Similaridade Reais (Tarefa 1.1)
 
-**8 algoritmos** substituindo stubs aleatorios:
+**8 algoritmos** substituindo stubs aleatórios:
 
-- **Cosseno** -- Angular, vetores de propriedades
-- **Jaccard** -- Conjuntista, descritores e dominios
-- **Pearson** -- Correlacao, alinhamento linear
-- **Spearman** -- Correlacao (rank), relacoes monotonicas
-- **Euclidiana** -- Distancia, proximidade espacial
-- **Manhattan** -- Distancia, robusta a outliers
-- **Sobreposicao de Descritores** -- Hibrida, descritores semanticos
-- **Distancia Combinada** -- Ponderada, score composto (0-1)
+- **Cosseno** — Angular, vetores de propriedades
+- **Jaccard** — Conjuntista, descritores e domínios
+- **Pearson** — Correlação, alinhamento linear
+- **Spearman** — Correlação (rank), relações monotônicas
+- **Euclidiana** — Distância, proximidade espacial
+- **Manhattan** — Distância, robusta a outliers
+- **Sobreposição de Descritores** — Híbrida, descritores semânticos
+- **Distância Combinada** — Ponderada, score composto (0-1)
 
-### Motor Semantico com Embeddings (Tarefa 1.2)
+### Motor Semântico com Embeddings (Tarefa 1.2)
 
-**Fallback de 3 niveis** -- funciona ate em 8GB RAM:
+**Fallback de 3 níveis** — funciona até em 8GB de RAM:
 
-1. **Nivel 3:** Sentence-Transformers (sentence-transformers + PyTorch)
-2. **Nivel 2:** TF-IDF (scikit-learn)
-3. **Nivel 1:** Hash fingerprint + SequenceMatcher (stdlib)
+1. **Nível 3:** Sentence-Transformers (sentence-transformers + PyTorch)
+2. **Nível 2:** TF-IDF (scikit-learn)
+3. **Nível 1:** Hash fingerprint + SequenceMatcher (stdlib)
 
-### Anti-Unificacao HDTP (Tarefa 1.3)
+### Anti-Unificação HDTP (Tarefa 1.3)
 
-Operacao **CONTRACT** do PANVIEIRA como anti-unificacao:
-extrai o generico G entre dois morfemas, identifica especificos
+Operação **CONTRACT** do PANVIEIRA como anti-unificação:
+extrai o genérico G entre dois morfemas, identifica específicos
 e calcula grau de similaridade.
 
-### Avaliacao FAME (Tarefa 1.4)
+### Avaliação FAME (Tarefa 1.4)
 
-**6 dimensoes** com media harmonica: Analogia, Significancia,
+**6 dimensões** com média harmônica: Analogia, Significância,
 Novidade, Solidez, Utilidade, Informatividade.
 
 ---
 
-## Uso Rapido
+## Uso Rápido
 
     from semiomorfologia.motor.semiomorfologico import MotorSemiomorfologico
     from semiomorfologia.core.ontologia import DominioNatural, NivelOrganizacao, Morfema
@@ -107,37 +107,37 @@ Novidade, Solidez, Utilidade, Informatividade.
     avaliador = AvaliadorFAME()
     fame = avaliador.avaliar_contrato(contrato)
 
-## Instalacao
+## Instalação
 
-    pip install -r requirements-lite.txt   # Leve (8GB RAM)
+    pip install -r requirements-lite.txt   # Leve (8GB de RAM)
     pip install -e ".[embeddings]"         # Completa (com embeddings)
     python -m pytest tests/ -v             # 42 passed
 
 ---
 
-## Estrutura do Repositorio
+## Estrutura do Repositório
 
     src/semiomorfologia/
       core/ontologia.py           # Morfema, Sintagma, Analogia
       extratores/                 # 4 extratores (mineral, vegetal, animal, humano)
       motor/semiomorfologico.py   # Orquestrador PANVIEIRA
-      similaridade/               # [v2.0] 8 metricas + Motor Semantico + Anti-Unificacao
-      avaliacao/fame.py           # [v2.0] FAME: 6 dimensoes
+      similaridade/               # [v2.0] 8 métricas + Motor Semântico + Anti-Unificação
+      avaliacao/fame.py           # [v2.0] FAME: 6 dimensões
     tests/                        # 42 testes (pytest)
     requirements-lite.txt         # Sem torch
 
-## Citacao
+## Citação
 
-> MACHADO, G. G. **Algoritmo PANVIEIRA: Formalizacao algoritmica do
-> paralelismo nao-progressivo vieiriano.** 2026. Preprint Zenodo.
+> MACHADO, G. G. **Algoritmo PANVIEIRA: Formalização algorítmica do
+> paralelismo não-progressivo vieiriano.** 2026. Preprint Zenodo.
 > **ORCID:** 0009-0008-1083-0784
 
-## Licenca
+## Licença
 
-**Licenca Semiomorfologica Vieiriana v1.0** -- Uso academico livre.
-**Uso comercial requer autorizacao previa do autor.**
+**Licença Semiomorfológica Vieiriana v1.0** — Uso acadêmico livre.
+**Uso comercial requer autorização prévia do autor.**
 Contato: guilhermemachado@hubstry.onmicrosoft.com | www.hubstry.dev
 
 ---
 
-**Desenvolvido por Guilherme Goncalves Machado | Hubstry Deep Tech (c) 2026**
+**Desenvolvido por Guilherme Gonçalves Machado | Hubstry Deep Tech © 2026**
