@@ -1,168 +1,143 @@
 # Semiomorfologia Vieiriana
 
-> Framework agnóstico de extração de analogias nas 4 morfologias naturais  
-> Transposição computacional do Algoritmo PANVIEIRA
+> Framework agnostico de extracao de analogias nas 4 morfologias naturais
+> Transposicao computacional do Algoritmo PANVIEIRA
+>
+> **v2.0.0** -- Metricas reais, embeddings semanticos, anti-unificacao e avaliacao FAME
 
 ---
 
-## Criação Original
+## Criacao Original
 
-**Autor:** Guilherme Gonçalves Machado  
-**ORCID:** 0009-0008-1083-0784  
-**Contato:** guilhermemachado@hubstry.onmicrosoft.com  
+**Autor:** Guilherme Goncalves Machado
+**ORCID:** 0009-0008-1083-0784
+**Contato:** guilhermemachado@hubstry.onmicrosoft.com
 **Site:** www.hubstry.dev
 
-Este framework é criação intelectual original de Guilherme Gonçalves Machado,
-resultado de pesquisa independente sobre a estilística barroca de Vieira e sua
-transposição para formalização algorítmica computacional. A influência teórica
-de Jamil Almansur Haddad (*Vieira e o Barroco Brasileiro*, Companhia Editora
-Nacional, São Paulo, 1957) é reconhecida como fundamento estrutural, mas a
-arquitetura algorítmica, a ontologia semiomorfológica e o sistema de extração
-de analogias são criação original do autor.
+Este framework e criacao intelectual original de Guilherme Goncalves Machado,
+resultado de pesquisa independente sobre a estilistica barroca de Vieira e sua
+transposicao para formalizacao algoritmica computacional. A influencia teorica
+de Jamil Almansur Haddad (Vieira e o Barroco Brasileiro, Companhia Editora
+Nacional, Sao Paulo, 1957) e reconhecida como fundamento estrutural, mas a
+arquitetura algoritmica, a ontologia semiomorfologica e o sistema de extracao
+de analogias sao criacao original do autor.
 
-O framework é a transposição computacional do **Algoritmo PANVIEIRA**
+O framework e a transposicao computacional do **Algoritmo PANVIEIRA**
 (preprint Zenodo, 2026), que formaliza a estrutura de paralelismo
-não-progressivo vieiriano como padrão agnóstico instanciável em qualquer
-sistema semiótico.
+nao-progressivo vieiriano como padrao agnostico instanciavel em qualquer
+sistema semiotico.
 
 ---
 
-## Hubstry Deep Tech
+## O que e
 
-Este projeto é desenvolvido e mantido pela **Hubstry Deep Tech**, um *operating
-deep tech venture builder* focado em pesquisa, desenvolvimento e criação de
-ativos tecnológicos proprietários.
+Este projeto formaliza algoritmicamente a estilistica barroca de Vieira --
+especificamente o processo de **reiteracao enfatica**, a **reducao de N termos
+a 1 generico** e o **paralelismo sintatico** -- como um sistema computacional
+de descoberta de analogias entre dominios naturais.
 
-Nosso modelo atua prioritariamente em **B2B** e **B2G**, permitindo que empresas
-e instituições acessem e co-desenvolvam tecnologias avançadas com maior eficiência
-de capital e soberania tecnológica, reduzindo custo, tempo e risco de inovação.
+Baseado no Algoritmo PANVIEIRA, o framework opera com quatro operacoes
+fundamentais: **ABSTRACT, EXPAND, SERIALIZE, CONTRACT**, com propriedade de
+circularidade iterativa.
 
-Estruturamos e escalamos soluções em áreas estratégicas, criando barreiras de
-entrada relevantes e capturando valor antecipado em ciclos tecnológicos emergentes.
-Adicionalmente, operamos modelos **B2B2C**, ampliando a distribuição e captura
-de valor das tecnologias desenvolvidas.
+| Dominio | Escopo | Extrator | Exemplos |
+|---------|--------|----------|----------|
+| **Mineral** | Pedras, minerios, terras raras | `ExtratorMineral` | Materiais avancados, eletronica |
+| **Vegetal** | Plantas, florestas, fitoquimica | `ExtratorVegetal` | Agronegocio, farmacologia |
+| **Animal** | Fauna, sistemas zoologicos | `ExtratorAnimal` | Robotica biomimetica |
+| **Humano** | Fisiologia, linguas naturais | `ExtratorHumano` | IA explicavel, medicina de precisao |
 
-No horizonte estratégico, acompanhamos a crescente atomização do consumo
-impulsionada por IA, que tende a transformar indivíduos em operadores
-tecnológicos independentes. Esse movimento orienta nossa capacidade de
-antecipar novos modelos de mercado e posicionar ativos para capturar valor
-também em contextos **B2C** emergentes.
+Cada dominio implementa **3 tipos de analogia**:
 
-Em síntese, a **Hubstry** transforma incerteza tecnológica em vantagem
-competitiva estruturada e de longo prazo.
-
----
-
-## O que é
-
-Este projeto formaliza algoritmicamente a estilística barroca de Vieira —
-especificamente o processo de **reiteração enfática**, a **redução de N termos
-a 1 genérico** e o **paralelismo sintático** — como um sistema computacional
-de descoberta de analogias entre domínios naturais.
-
-Baseado no Algoritmo PANVIEIRA (⟨G, {Sᵢ}, {Cᵢ}, ⊗, π, ρ⟩), o framework opera
-com quatro operações fundamentais: **ABSTRACT, EXPAND, SERIALIZE, CONTRACT**,
-com propriedade de circularidade iterativa (G → EXPAND → CONTRACT → G).
-
-| Domínio | Escopo | Extrator |
-|---------|--------|----------|
-| **Mineral** | Pedras, minérios, terras raras | `ExtratorMineral` |
-| **Vegetal** | Plantas, florestas, fitoquímica | `ExtratorVegetal` |
-| **Animal** | Fauna, sistemas zoológicos | `ExtratorAnimal` |
-| **Humano** | Fisiologia, biologia, línguas naturais | `ExtratorHumano` |
-
-Cada domínio implementa **3 tipos de analogia**:
-- **Heurística** — descoberta de emergências não-lineares
-- **Funcional** — mesma função, estrutura diferente
-- **Homológica** — mesma origem, função pode divergir
+- **Heuristica** -- emergencias nao-lineares e convergencias nao-obvias
+- **Funcional** -- mesma funcao em estrutura diferente
+- **Homologica** -- mesma origem/evolucao, funcao pode divergir
 
 ---
 
-## Uso Rápido
+## Novidades na v2.0.0
 
-```python
-from semiomorfologia.motor.semiomorfologico import MotorSemiomorfologico
-from semiomorfologia.core.ontologia import DominioNatural, NivelOrganizacao, Morfema
+### Metricas de Similaridade Reais (Tarefa 1.1)
 
-# Criar motor
-motor = MotorSemiomorfologico()
+**8 algoritmos** substituindo stubs aleatorios:
 
-# Definir morfemas (unidades de análise)
-grafeno = Morfema(
-    id="grafeno",
-    dominio=DominioNatural.MINERAL,
-    nivel=NivelOrganizacao.MOLECULAR,
-    descritores={"elemento_base": "carbono", "funcao": "condutividade"},
-    propriedades={"condutividade": 0.98, "flexibilidade": 0.95}
-)
+- **Cosseno** -- Angular, vetores de propriedades
+- **Jaccard** -- Conjuntista, descritores e dominios
+- **Pearson** -- Correlacao, alinhamento linear
+- **Spearman** -- Correlacao (rank), relacoes monotonicas
+- **Euclidiana** -- Distancia, proximidade espacial
+- **Manhattan** -- Distancia, robusta a outliers
+- **Sobreposicao de Descritores** -- Hibrida, descritores semanticos
+- **Distancia Combinada** -- Ponderada, score composto (0-1)
 
-# ... adicionar mais morfemas e processar
-resultados = motor.extrair_analogias_dominio([grafeno, ...], DominioNatural.MINERAL)
-```
+### Motor Semantico com Embeddings (Tarefa 1.2)
 
-Veja `examples/` para demonstrações completas e `docs/TEORIA.md` para a
-fundamentação teórica (Vieira, Haddad, PANVIEIRA).
+**Fallback de 3 niveis** -- funciona ate em 8GB RAM:
 
----
+1. **Nivel 3:** Sentence-Transformers (sentence-transformers + PyTorch)
+2. **Nivel 2:** TF-IDF (scikit-learn)
+3. **Nivel 1:** Hash fingerprint + SequenceMatcher (stdlib)
 
-## Estrutura do Repositório
+### Anti-Unificacao HDTP (Tarefa 1.3)
 
-```
-semiomorfologia-vieiriana/
-├── src/semiomorfologia/      # Código-fonte principal
-│   ├── core/                 # Ontologia: Morfema, Sintagma, Analogia
-│   ├── extratores/           # 4 extratores especializados
-│   ├── motor/                # Orquestrador vieiriano
-│   └── aplicacao/            # Camada industrial (TRL, mercado)
-├── tests/                    # Testes unitários (pytest)
-├── examples/                 # Demonstrações executáveis
-├── scripts/                  # Scripts PowerShell/Shell
-├── docs/                     # Documentação teórica
-└── output/                   # Resultados gerados (gitignored)
-```
+Operacao **CONTRACT** do PANVIEIRA como anti-unificacao:
+extrai o generico G entre dois morfemas, identifica especificos
+e calcula grau de similaridade.
+
+### Avaliacao FAME (Tarefa 1.4)
+
+**6 dimensoes** com media harmonica: Analogia, Significancia,
+Novidade, Solidez, Utilidade, Informatividade.
 
 ---
 
-## Arquitetura
+## Uso Rapido
 
-```
-┌─────────────────────────────────────────────┐
-│  1. FUNDAÇÃO TEÓRICA (Vieira/Haddad/PANVIEIRA)│
-├─────────────────────────────────────────────┤
-│  2. ONTOLOGIA (4 Domínios × 3 Analogias)    │
-├─────────────────────────────────────────────┤
-│  3. COMPOSIÇÃO → Redução N termos → 1 genérico │
-│  4. REITERAÇÃO → Enfática circular/paralela │
-│  5. EXTRAÇÃO → 3 algoritmos por domínio     │
-│  6. PONTES → Cruzadas inter-domínios        │
-├─────────────────────────────────────────────┤
-│  7. APLICAÇÃO → TRL, Mercado, Setores       │
-└─────────────────────────────────────────────┘
-```
+    from semiomorfologia.motor.semiomorfologico import MotorSemiomorfologico
+    from semiomorfologia.core.ontologia import DominioNatural, NivelOrganizacao, Morfema
+    from semiomorfologia.similaridade.anti_unificacao import AntiUnificador
+    from semiomorfologia.avaliacao.fame import AvaliadorFAME
 
----
+    motor = MotorSemiomorfologico()
+    grafeno = Morfema("grafeno", DominioNatural.MINERAL, NivelOrganizacao.MOLECULAR,
+        descritores={"elemento_base": "carbono"}, propriedades={"condutividade": 0.98})
+    resultados = motor.extrair_analogias_dominio([grafeno, ...], DominioNatural.MINERAL)
+    au = AntiUnificador()
+    contrato = au.contrato(m1_dict, m2_dict)
+    avaliador = AvaliadorFAME()
+    fame = avaliador.avaliar_contrato(contrato)
 
-## Licença
+## Instalacao
 
-**Licença Semiomorfológica Vieiriana v1.0**
-
-Copyright (c) 2026 Guilherme Gonçalves Machado
-
-Este software é disponibilizado para uso acadêmico, educacional, de pesquisa e
-não-comercial de forma livre e gratuita, desde que a atribuição de criação
-original seja mantida.
-
-**A exploração comercial deste software — incluindo venda direta, uso em produtos
-ou serviços comerciais, licenciamento a terceiros ou incorporação em soluções
-enterprise/governamentais pagas — REQUER AUTORIZAÇÃO PRÉVIA E ESCRITA do autor.**
-
-Para solicitar autorização comercial, entre em contato:  
-📧 guilhermemachado@hubstry.onmicrosoft.com  
-🌐 www.hubstry.dev
-
-Veja [LICENSE](LICENSE) para o texto completo.
+    pip install -r requirements-lite.txt   # Leve (8GB RAM)
+    pip install -e ".[embeddings]"         # Completa (com embeddings)
+    python -m pytest tests/ -v             # 42 passed
 
 ---
 
-**Desenvolvido por Guilherme Gonçalves Machado | Hubstry Deep Tech © 2026**  
-**ORCID:** 0009-0008-1083-0784
+## Estrutura do Repositorio
+
+    src/semiomorfologia/
+      core/ontologia.py           # Morfema, Sintagma, Analogia
+      extratores/                 # 4 extratores (mineral, vegetal, animal, humano)
+      motor/semiomorfologico.py   # Orquestrador PANVIEIRA
+      similaridade/               # [v2.0] 8 metricas + Motor Semantico + Anti-Unificacao
+      avaliacao/fame.py           # [v2.0] FAME: 6 dimensoes
+    tests/                        # 42 testes (pytest)
+    requirements-lite.txt         # Sem torch
+
+## Citacao
+
+> MACHADO, G. G. **Algoritmo PANVIEIRA: Formalizacao algoritmica do
+> paralelismo nao-progressivo vieiriano.** 2026. Preprint Zenodo.
+> **ORCID:** 0009-0008-1083-0784
+
+## Licenca
+
+**Licenca Semiomorfologica Vieiriana v1.0** -- Uso academico livre.
+**Uso comercial requer autorizacao previa do autor.**
+Contato: guilhermemachado@hubstry.onmicrosoft.com | www.hubstry.dev
+
+---
+
+**Desenvolvido por Guilherme Goncalves Machado | Hubstry Deep Tech (c) 2026**
