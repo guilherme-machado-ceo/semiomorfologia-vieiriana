@@ -3,7 +3,7 @@
 > Framework agnóstico de extração de analogias nas 4 morfologias naturais
 > Transposição computacional do Algoritmo PANVIEIRA
 >
-> **v2.0.0** — Métricas reais, embeddings semânticos, anti-unificação e avaliação FAME
+> **v2.0.0** — Métricas reais, embeddings semânticos, anti-unificação, FAME, API REST, CLI, Grafos de Conhecimento e Visualização
 
 ---
 
@@ -91,6 +91,49 @@ Novidade, Solidez, Utilidade, Informatividade.
 
 ---
 
+### API REST + CLI (Tarefa 3.1)
+
+**FastAPI + Typer** - interfaces para integração e uso interativo.
+
+Endpoints REST:
+
+- `GET /` - saúde da API
+- `GET /health` - status dos módulos
+- `GET /api/domains` - domínios suportados
+- `POST /api/extract` - extrai analogias (domain como query, body como lista de morfemas)
+- `POST /api/contract` - opera CONTRACT
+- `POST /api/fame` - avalia analogias
+- `POST /api/similarity` - calcula similaridade
+
+CLI (Typer):
+
+```
+semiomorfologia extract --domain mineral --input dados.json
+semiomorfologia contract --input dados.json --output resultado.json
+semiomorfologia fame --input analogias.json
+semiomorfologia serve --host 0.0.0.0 --port 8000
+```
+
+### Grafos de Conhecimento (Tarefa 3.2)
+
+Integração com **3 bases externas** (sem chave de API):
+
+- **Wikidata** (SPARQL) - propriedades, classes e relações de entidades
+- **PubChem** (REST) - dados químicos: fórmula, peso molecular, SMILES
+- **GBIF** (REST) - dados taxonômicos de espécies (vegetal e animal)
+- **Enriquecedor** - orquestra automaticamente a base correta por domínio
+
+### Visualização Interativa (Tarefa 3.3)
+
+**NetworkX + pyvis** - grafos analógicos para exploração visual:
+
+- Nós = morfemas, arestas = analogias, codificação por cor por domínio
+- Exportação HTML interativo com pyvis (zoom, arrastar, filtros)
+- Métricas de rede: densidade, centralidade, modularidade
+
+---
+
+
 ## Uso Rápido
 
     from semiomorfologia.motor.semiomorfologico import MotorSemiomorfologico
@@ -110,8 +153,10 @@ Novidade, Solidez, Utilidade, Informatividade.
 ## Instalação
 
     pip install -r requirements-lite.txt   # Leve (8GB de RAM)
-    pip install -e ".[embeddings]"         # Completa (com embeddings)
-    python -m pytest tests/ -v             # 42 passed
+    pip install -e ".[embeddings]"         # Com embeddings
+    pip install -e ".[api]"                # API + CLI + KG + Viz
+    pip install -e ".[all]"                # Tudo junto
+    python -m pytest tests/ -v             # 59 passed
 
 ---
 
@@ -123,8 +168,13 @@ Novidade, Solidez, Utilidade, Informatividade.
       motor/semiomorfologico.py   # Orquestrador PANVIEIRA
       similaridade/               # [v2.0] 8 métricas + Motor Semântico + Anti-Unificação
       avaliacao/fame.py           # [v2.0] FAME: 6 dimensões
-    tests/                        # 42 testes (pytest)
+      api/app.py                  # [v2.0] API REST (FastAPI + Uvicorn)
+      cli.py                      # [v2.0] CLI (Typer)
+      conhecimento/               # [v2.0] Wikidata, PubChem, GBIF
+      visualizacao/grafo.py       # [v2.0] NetworkX + pyvis
+    tests/                        # 59 testes (pytest)
     requirements-lite.txt         # Sem torch
+    requirements-api.txt          # API + CLI + KG + Viz
 
 ## Citação
 
