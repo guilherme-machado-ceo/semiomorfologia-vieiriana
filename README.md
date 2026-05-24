@@ -5,6 +5,8 @@
 >
 > **v3.0.0** — TAP-PAN, CSI, Diálogo com Algoritmos, Grafos Bipartidos e Extensão Quântica
 
+[![Python 3.8+](https://img.shields.io/badge/Python-3.8%2B-blue.svg)](https://www.python.org/downloads/) [![License](https://img.shields.io/badge/License-Semiomorfologica_Vieiriana-green.svg)](LICENSE) [![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.20367826-blue.svg)](https://doi.org/10.5281/zenodo.20367826) [![Version](https://img.shields.io/badge/version-3.0.0-orange.svg)](https://github.com/guilherme-machado-ceo/semiomorfologia-vieiriana) [![Tests 95](https://img.shields.io/badge/tests-95%20passed-success.svg)](tests/)
+
 ---
 
 ## Criação Original
