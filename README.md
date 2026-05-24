@@ -3,7 +3,7 @@
 > Framework agnóstico de extração de analogias nas 4 morfologias naturais
 > Transposição computacional do Algoritmo PANVIEIRA
 >
-> **v2.0.0** — Métricas reais, embeddings semânticos, anti-unificação, FAME, API REST, CLI, Grafos de Conhecimento e Visualização
+> **v3.0.0** — TAP-PAN, CSI, Diálogo com Algoritmos, Grafos Bipartidos e Extensão Quântica
 
 ---
 
@@ -23,9 +23,9 @@ arquitetura algorítmica, a ontologia semiomorfologica e o sistema de extração
 de analogias são criação original do autor.
 
 O framework é a transposição computacional do **Algoritmo PANVIEIRA**
-(preprint Zenodo, 2026), que formaliza a estrutura de paralelismo
-não-progressivo vieiriano como padrão agnóstico instanciável em qualquer
-sistema semiótico.
+(preprint Zenodo, 2026 — [DOI: 10.5281/zenodo.20367826](https://doi.org/10.5281/zenodo.20367826)),
+que formaliza a estrutura de paralelismo não-progressivo vieiriano como
+padrão agnóstico instanciável em qualquer sistema semiótico.
 
 ---
 
@@ -89,50 +89,49 @@ e calcula grau de similaridade.
 **6 dimensões** com média harmônica: Analogia, Significância,
 Novidade, Solidez, Utilidade, Informatividade.
 
+### Teste de Aderência ao Padrão (TAP-PAN)
+
+Procedimento estatístico em 4 etapas que verifica se um sistema semiótico
+realmente adere ao padrão PANVIEIRA: invariância de G (cosseno em
+embeddings), independência entre {Sᵢ} e {Cᵢ} (qui-quadrado), validação
+cruzada por exclusão (leave-one-out), e benchmark contra modelos nulos
+(AIC/BIC).
+
+### Coerência Semântica Interna (CSI)
+
+Métrica que distingue padrões semióticos genuínos de coincidências
+formais. CSI(G, {Sᵢ}, {Cᵢ}) = (1/n) * somatório de sim(φ(eᵢ), ē_φ),
+onde φ é uma função de embebição semântico e ē_φ é o centróide semântico.
+O limiar τ é determinado empiricamente via distribuição nula (bootstrap).
+
+### Horizonte Hermenêutico P
+
+Restrições contextuais formais como parâmetro do algoritmo,
+respeitando a decisão gadameriana de que todo entendimento ocorre dentro
+de um horizonte histórico. Cada ρ_j ∈ P é testada como restrição lógica
+sobre G, Sᵢ, Cᵢ e ⊗.
+
+### Diálogo com Algoritmos Clássicos
+
+- **MapReduce**: EXPAND ≈ Map, CONTRACT ≈ Reduce
+- **Hylomorphism**: PANVIEIRA como composição unfold + fold
+- **Grafos Bipartidos**: EXPAND via arestas semânticas (escalabilidade)
+- **K-Means**: ABSTRACT via clustering de embeddings
+- **Unificação de Robinson**: CONTRACT como unificação lógica
+
+### Visualização por Grafo Bipartido
+
+EXPAND opera sobre arestas de um grafo bipartido Sᵢ-Cᵢ (não produto
+cartesiano), evitando explosão combinatória semântica. Integrado com
+NetworkX + pyvis para visualização interativa.
+
+### H-PANVIEIRA (Quântico Híbrido)
+
+Protótipo experimental com qiskit: orquestração clássica + kernel
+quântico (EXPAND no QPU via superposição, Grover para busca de loci,
+VQE para ABSTRACT). Requer instalação separada: `pip install -e ".[quantum]"`
+
 ---
-
-### API REST + CLI (Tarefa 3.1)
-
-**FastAPI + Typer** - interfaces para integração e uso interativo.
-
-Endpoints REST:
-
-- `GET /` - saúde da API
-- `GET /health` - status dos módulos
-- `GET /api/domains` - domínios suportados
-- `POST /api/extract` - extrai analogias (domain como query, body como lista de morfemas)
-- `POST /api/contract` - opera CONTRACT
-- `POST /api/fame` - avalia analogias
-- `POST /api/similarity` - calcula similaridade
-
-CLI (Typer):
-
-```
-semiomorfologia extract --domain mineral --input dados.json
-semiomorfologia contract --input dados.json --output resultado.json
-semiomorfologia fame --input analogias.json
-semiomorfologia serve --host 0.0.0.0 --port 8000
-```
-
-### Grafos de Conhecimento (Tarefa 3.2)
-
-Integração com **3 bases externas** (sem chave de API):
-
-- **Wikidata** (SPARQL) - propriedades, classes e relações de entidades
-- **PubChem** (REST) - dados químicos: fórmula, peso molecular, SMILES
-- **GBIF** (REST) - dados taxonômicos de espécies (vegetal e animal)
-- **Enriquecedor** - orquestra automaticamente a base correta por domínio
-
-### Visualização Interativa (Tarefa 3.3)
-
-**NetworkX + pyvis** - grafos analógicos para exploração visual:
-
-- Nós = morfemas, arestas = analogias, codificação por cor por domínio
-- Exportação HTML interativo com pyvis (zoom, arrastar, filtros)
-- Métricas de rede: densidade, centralidade, modularidade
-
----
-
 
 ## Uso Rápido
 
@@ -153,34 +152,55 @@ Integração com **3 bases externas** (sem chave de API):
 ## Instalação
 
     pip install -r requirements-lite.txt   # Leve (8GB de RAM)
-    pip install -e ".[embeddings]"         # Com embeddings
-    pip install -e ".[api]"                # API + CLI + KG + Viz
-    pip install -e ".[all]"                # Tudo junto
-    python -m pytest tests/ -v             # 59 passed
+    pip install -e ".[embeddings]"         # Com embeddings semânticos
+    pip install -e ".[all]"                # Completa (embeddings + quantum)
+    pip install -e ".[quantum]"            # Módulo quântico experimental
+    python -m pytest tests/ -v             # 77+ passed
 
 ---
 
 ## Estrutura do Repositório
 
     src/semiomorfologia/
-      core/ontologia.py           # Morfema, Sintagma, Analogia
-      extratores/                 # 4 extratores (mineral, vegetal, animal, humano)
-      motor/semiomorfologico.py   # Orquestrador PANVIEIRA
-      similaridade/               # [v2.0] 8 métricas + Motor Semântico + Anti-Unificação
-      avaliacao/fame.py           # [v2.0] FAME: 6 dimensões
-      api/app.py                  # [v2.0] API REST (FastAPI + Uvicorn)
-      cli.py                      # [v2.0] CLI (Typer)
-      conhecimento/               # [v2.0] Wikidata, PubChem, GBIF
-      visualizacao/grafo.py       # [v2.0] NetworkX + pyvis
-    tests/                        # 59 testes (pytest)
-    requirements-lite.txt         # Sem torch
-    requirements-api.txt          # API + CLI + KG + Viz
+      core/ontologia.py             # Morfema, Sintagma, Analogia
+      extratores/                   # 4 extratores (mineral, vegetal, animal, humano)
+      motor/
+        semiomorfologico.py         # Orquestrador PANVIEIRA
+        hylomorphism.py             # [v3.0] Hylomorphism (unfold/fold)
+        mapreduce_engine.py         # [v3.0] EXPAND/CONTRACT paralelizados
+        abstract_kmeans.py          # [v3.0] ABSTRACT via clustering
+      similaridade/
+        metricas.py                 # [v2.0] 8 métricas de similaridade
+        semantica.py                # [v2.0] Motor Semântico (3 níveis)
+        anti_unificacao.py          # [v2.0] HDTP anti-unificação
+        tap_pan.py                  # [v3.0] TAP-PAN (4 etapas)
+        csi.py                      # [v3.0] CSI com limiar τ
+      avaliacao/fame.py             # [v2.0] FAME: 6 dimensões
+      visualizacao/
+        grafo_bipartido.py          # [v3.0] EXPAND via grafo bipartido (NetworkX + pyvis)
+      quantum/                       # [v3.0] Módulo quântico experimental
+        hpanvieira.py               # Orquestrador híbrido
+        qexpand.py                  # EXPAND quântico (superposição)
+        qcontract.py                # CONTRACT quântico (interferência)
+        grover_locus.py              # Grover search para loci
+    tests/                          # 59+ testes (pytest)
+    docs/TEORIA.md                  # Fundamentação teórica completa
+    requirements-lite.txt           # Sem torch
 
 ## Citação
 
-> MACHADO, G. G. **Algoritmo PANVIEIRA: Formalização algorítmica do
-> paralelismo não-progressivo vieiriano.** 2026. Preprint Zenodo.
+> MACHADO, G. G. **PANVIEIRA: Um Algoritmo Agnóstico para Instanciação de
+> Série e Paralelo como Estrutura Semiótica Universal — Da Retórica
+> Vieiriana à Computação.** 2026. Zenodo.
+> **DOI:** [10.5281/zenodo.20367826](https://doi.org/10.5281/zenodo.20367826)
 > **ORCID:** 0009-0008-1083-0784
+
+## Referência Acadêmica
+
+A fundamentação teórica completa do framework, incluindo 5 definições
+formais, 8 proposições (TAP-PAN, CSI, MDL), diálogo com algoritmos
+clássicos e roteiro de extensões quânticas, está documentada em
+`docs/TEORIA.md` e no [preprint no Zenodo](https://zenodo.org/records/20367826).
 
 ## Licença
 
