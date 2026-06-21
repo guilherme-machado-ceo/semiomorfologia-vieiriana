@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PANVIEIRA · Arquitetura de Invariantes Semióticos | Hubstry Deep Tech</title>
+
+    <!-- SEO & Social -->
+    <meta name="description" content="PANVIEIRA é um algoritmo agnóstico de extração de invariantes semióticos. Auditabilidade nativa para governança de IA. Da prosa sermônica de Antônio Vieira à computação quântica. Hubstry Deep Tech.">
+    <meta name="author" content="Guilherme Gonçalves Machado">
+    <meta name="keywords" content="PANVIEIRA, semiótica computacional, invariantes, governança de IA, XAI, Antônio Vieira, hylomorphism, Hubstry, deep tech">
+    <link rel="canonical" href="https://guilherme-machado-ceo.github.io/semiomorfologia-vieiriana/">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="PANVIEIRA · Arquitetura de Invariantes Semióticos">
+    <meta property="og:description" content="Algoritmo agnóstico para extração e preservação de invariantes em sistemas semióticos. Auditabilidade nativa para IA.">
+    <meta property="og:url" content="https://guilherme-machado-ceo.github.io/semiomorfologia-vieiriana/">
+    <meta property="og:site_name" content="Hubstry Deep Tech">
+    <meta property="og:locale" content="pt_BR">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PANVIEIRA · Arquitetura de Invariantes Semióticos">
+    <meta name="twitter:description" content="Algoritmo agnóstico para preservação de invariantes em sistemas semióticos. Auditabilidade nativa para IA.">
+
+    <!-- JSON-LD: Software + Article -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "PANVIEIRA / Semiomorfologia Vieiriana",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Cross-platform",
+      "author": {
+        "@type": "Person",
+        "name": "Guilherme Gonçalves Machado",
+        "identifier": "https://orcid.org/0009-0008-1083-0784",
+        "affiliation": "Hubstry Deep Tech"
+      },
+      "softwareVersion": "3.1.0",
+      "license": "https://github.com/guilherme-machado-ceo/semiomorfologia-vieiriana/blob/main/LICENSE",
+      "codeRepository": "https://github.com/guilherme-machado-ceo/semiomorfologia-vieiriana",
+      "citation": "https://doi.org/10.5281/zenodo.20367826"
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-abyss: #07070A;
+            --bg-panel: #0E0E14;
+            --bg-card: #12121A;
+            --gold-baroque: #C5A059;
+            --gold-dim: #8A6B36;
+            --cyan-quantum: #00F0FF;
+            --text-light: #E8E8E8;
+            --text-dim: #9095A5;
+            --border-subtle: #1E1E28;
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--bg-abyss);
+            color: var(--text-light);
+            font-family: var(--font-mono);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        #panvieira-canvas {
+            position: fixed; top: 0; left: 0;
+            width: 100%; height: 100vh; z-index: -1; opacity: 0.25;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed; width: 100%; padding: 1.2rem 4%;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(7, 7, 10, 0.85); backdrop-filter: blur(12px);
+            z-index: 100; border-bottom: 1px solid var(--border-subtle);
+        }
+        .logo { font-family: var(--font-serif); font-size: 1.4rem; font-weight: 700; color: var(--gold-baroque); letter-spacing: 1px; }
+        .logo span { font-family: var(--font-mono); color: var(--cyan-quantum); font-size: 0.9rem; }
+        nav ul { list-style: none; display: flex; gap: 2.5rem; }
+        nav a { color: var(--text-dim); text-decoration: none; font-size: 0.85rem; transition: color 0.3s; text-transform: uppercase; letter-spacing: 1px; }
+        nav a:hover { color: var(--gold-baroque); }
+
+        /* HERO */
+        #hero {
+            min-height: 100vh; display: flex; flex-direction: column; justify-content: center;
+            padding: 8rem 4% 4rem; max-width: 1400px; margin: 0 auto;
+        }
+        .hero-tag { color: var(--cyan-quantum); font-size: 0.8rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 2rem; border-left: 2px solid var(--cyan-quantum); padding-left: 1rem; }
+        #hero h1 { font-family: var(--font-serif); font-size: 4.5rem; line-height: 1.05; margin-bottom: 2rem; font-weight: 600; max-width: 1000px; }
+        #hero h1 em { font-style: italic; color: var(--gold-baroque); }
+        .hero-desc { font-size: 1.1rem; color: var(--text-dim); max-width: 720px; margin-bottom: 3rem; }
+        .cta-group { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .btn { padding: 0.9rem 2rem; text-decoration: none; font-size: 0.85rem; border: 1px solid; transition: all 0.3s; text-transform: uppercase; letter-spacing: 1px; }
+        .btn-primary { background: var(--gold-baroque); color: var(--bg-abyss); border-color: var(--gold-baroque); font-weight: 700; }
+        .btn-primary:hover { background: transparent; color: var(--gold-baroque); }
+        .btn-secondary { background: transparent; color: var(--text-light); border-color: var(--border-subtle); }
+        .btn-secondary:hover { border-color: var(--cyan-quantum); color: var(--cyan-quantum); }
+
+        /* SECTIONS */
+        section { padding: 6rem 4%; max-width: 1400px; margin: 0 auto; border-top: 1px solid var(--border-subtle); }
+        .section-header { margin-bottom: 4rem; }
+        .section-num { color: var(--gold-dim); font-size: 0.8rem; letter-spacing: 2px; margin-bottom: 0.5rem; }
+        .section-title { font-family: var(--font-serif); font-size: 3rem; color: var(--text-light); }
+        .section-intro { color: var(--text-dim); max-width: 820px; font-size: 1.1rem; }
+
+        /* TESE — 3 LAYERS */
+        .thesis-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border-subtle); margin-bottom: 3rem; }
+        .thesis-card { background: var(--bg-panel); padding: 2.5rem; transition: background 0.3s; }
+        .thesis-card:hover { background: var(--bg-card); }
+        .thesis-card.anchor { background: var(--bg-card); border-top: 3px solid var(--gold-baroque); }
+        .thesis-eyebrow { color: var(--cyan-quantum); font-size: 0.75rem; text-transform: uppercase; margin-bottom: 1rem; letter-spacing: 2px; }
+        .thesis-heading { font-family: var(--font-serif); font-size: 2rem; color: var(--text-light); margin-bottom: 1rem; line-height: 1.15; }
+        .thesis-card.anchor .thesis-heading { color: var(--gold-baroque); }
+        .thesis-body { font-size: 0.9rem; color: var(--text-dim); line-height: 1.65; }
+
+        /* DOCTRINAL ANCHOR */
+        .anchor-block { background: var(--bg-panel); border-left: 2px solid var(--gold-baroque); padding: 2rem 2.5rem; margin-top: 2rem; }
+        .anchor-label { color: var(--gold-dim); font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1rem; }
+        .anchor-body { font-size: 0.95rem; color: var(--text-dim); line-height: 1.7; }
+        .anchor-body cite { font-style: italic; color: var(--text-light); }
+
+        /* CORPUS DECOMPOSITION */
+        .corpus-layout { display: grid; grid-template-columns: 1fr 1.5fr; gap: 4rem; align-items: center; }
+        .quote-box { border-left: 2px solid var(--gold-baroque); padding: 1.5rem 2rem; background: rgba(197, 160, 89, 0.05); }
+        .quote-text { font-family: var(--font-serif); font-size: 1.7rem; font-style: italic; line-height: 1.4; color: var(--text-light); margin-bottom: 1rem; }
+        .quote-author { font-size: 0.8rem; color: var(--gold-dim); text-transform: uppercase; letter-spacing: 1px; }
+
+        .table-decomp { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+        .table-decomp th { text-align: left; color: var(--gold-baroque); padding: 1rem; border-bottom: 1px solid var(--border-subtle); font-weight: 500; text-transform: uppercase; font-size: 0.75rem; }
+        .table-decomp td { padding: 1rem; border-bottom: 1px solid var(--bg-card); color: var(--text-dim); }
+        .math-symbol { color: var(--cyan-quantum); font-weight: 700; }
+
+        /* ALGORITHM CONSOLE */
+        .console-container { background: #050507; border: 1px solid var(--border-subtle); border-radius: 4px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .console-header { background: var(--bg-panel); padding: 0.8rem 1.5rem; display: flex; align-items: center; border-bottom: 1px solid var(--border-subtle); }
+        .console-dot { width: 10px; height: 10px; border-radius: 50%; margin-right: 8px; }
+        .dot-red { background: #FF5F56; } .dot-yellow { background: #FFBD2E; } .dot-green { background: #27C93F; }
+        .console-title { margin-left: 1rem; font-size: 0.8rem; color: var(--text-dim); }
+        .console-body { padding: 2rem; font-size: 0.9rem; }
+        .code-line { margin-bottom: 0.5rem; }
+        .comment { color: var(--text-dim); }
+        .keyword { color: #C678DD; }
+        .function { color: #61AFEF; }
+        .string { color: #98C379; }
+        .variable { color: var(--gold-baroque); }
+        .output { color: var(--cyan-quantum); padding-left: 2rem; font-style: italic; }
+
+        /* QUANTUM GRID */
+        .quantum-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+        .quantum-card { background: var(--bg-panel); padding: 2.5rem; border: 1px solid var(--border-subtle); position: relative; overflow: hidden; }
+        .quantum-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--cyan-quantum); opacity: 0.5; }
+        .quantum-title { font-family: var(--font-serif); font-size: 1.8rem; color: var(--text-light); margin-bottom: 1rem; }
+        .quantum-sub { color: var(--gold-baroque); font-size: 0.8rem; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px; }
+        .quantum-desc { color: var(--text-dim); font-size: 0.95rem; margin-bottom: 1.5rem; }
+        .quantum-algo { font-size: 0.8rem; color: var(--cyan-quantum); background: rgba(0, 240, 255, 0.1); padding: 0.5rem 1rem; display: inline-block; border-radius: 2px; }
+
+        /* FOOTER */
+        footer { background: var(--bg-panel); padding: 4rem 4%; border-top: 1px solid var(--border-subtle); margin-top: 4rem; }
+        .footer-content { max-width: 1400px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 2rem; }
+        .footer-info h4 { font-family: var(--font-serif); color: var(--gold-baroque); margin-bottom: 1rem; font-size: 1.2rem; }
+        .footer-info p { color: var(--text-dim); font-size: 0.85rem; max-width: 360px; }
+        .footer-meta { text-align: right; }
+        .footer-meta p { color: var(--text-dim); font-size: 0.8rem; margin-bottom: 0.5rem; }
+        .footer-meta a { color: var(--text-dim); text-decoration: none; border-bottom: 1px dotted var(--border-subtle); }
+        .footer-meta a:hover { color: var(--cyan-quantum); }
+
+        @media (max-width: 900px) {
+            #hero h1 { font-size: 2.8rem; }
+            .thesis-grid, .corpus-layout, .quantum-grid { grid-template-columns: 1fr; }
+            nav ul { display: none; }
+            .footer-content { flex-direction: column; }
+            .footer-meta { text-align: left; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            #panvieira-canvas { display: none; }
+            html { scroll-behavior: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="panvieira-canvas" aria-hidden="true"></canvas>
+
+    <nav>
+        <div class="logo">PANVIEIRA<span>.core</span></div>
+        <ul>
+            <li><a href="#tese">Tese</a></li>
+            <li><a href="#corpus">Corpus</a></li>
+            <li><a href="#tech">Arquitetura</a></li>
+            <li><a href="#quantum">Quântica</a></li>
+        </ul>
+    </nav>
+
+    <header id="hero">
+        <div class="hero-tag">Hubstry Deep Tech · Semiótica Computacional</div>
+        <h1>Genericamente iguais. <em>Especificamente diferentes.</em> A arquitetura dos invariantes na era da multiplicação algorítmica.</h1>
+        <p class="hero-desc">
+            PANVIEIRA é um algoritmo agnóstico para extração e preservação de invariantes semióticos. Aplicado à governança de IA, fornece auditabilidade nativa: a máquina multiplica instâncias; a operação CONTRACT recupera o invariante humano que organiza cada uma. Origem formal: a prosa sermônica de Padre Antônio Vieira (1608–1697), abstraída como tupla ⟨G, {Sᵢ}, {Cᵢ}, ⊗, π, ρ⟩.
+        </p>
+        <div class="cta-group">
+            <a href="#tech" class="btn btn-primary">Decompor o algoritmo</a>
+            <a href="https://doi.org/10.5281/zenodo.20367826" target="_blank" rel="noopener" class="btn btn-secondary">Paper · Zenodo</a>
+            <a href="https://github.com/guilherme-machado-ceo/semiomorfologia-vieiriana" target="_blank" rel="noopener" class="btn btn-secondary">Repositório · GitHub</a>
+        </div>
+    </header>
+
+    <section id="tese">
+        <div class="section-header">
+            <div class="section-num">01 · TESE</div>
+            <h2 class="section-title">Multiplicação, invariante, arquitetura</h2>
+        </div>
+        <p class="section-intro" style="margin-bottom: 3rem;">A IA está absorvendo capacidade técnica. À medida que a multiplicação de instâncias se torna barata, o valor migra para o que não se reduz à métrica. O problema é técnico, não retórico: como construir sistemas que multiplicam sem destruir o invariante que cada instância pressupõe.</p>
+
+        <div class="thesis-grid">
+            <div class="thesis-card">
+                <div class="thesis-eyebrow">01 · Diagnóstico</div>
+                <h3 class="thesis-heading">A multiplicação</h3>
+                <p class="thesis-body">A IA opera por multiplicação técnica de instâncias. O custo marginal de uma resposta, análise, código ou imagem tende a zero. O que era escasso torna-se abundante; o que era abundante perde valor de troca. A consequência operacional é estrutural, não conjuntural: valor migra do que se multiplica para o que não se reduz.</p>
+            </div>
+            <div class="thesis-card">
+                <div class="thesis-eyebrow">02 · Estrutura</div>
+                <h3 class="thesis-heading">O invariante</h3>
+                <p class="thesis-body">Há uma camada do humano — sentido, dignidade, propósito — que não é métrica nem resultado. Não é resistência tecnológica; é tese estrutural: o invariante semiótico precede a instância. Quatro séculos antes da computação, a crítica vieiriana (Haddad, 1957) nomeou o padrão: <em>pluralidade de forma unitária</em>, genericamente iguais e especificamente diferentes.</p>
+            </div>
+            <div class="thesis-card anchor">
+                <div class="thesis-eyebrow">03 · Instrumento</div>
+                <h3 class="thesis-heading">A arquitetura</h3>
+                <p class="thesis-body">PANVIEIRA materializa o invariante em algoritmo. ABSTRACT extrai o genérico G; EXPAND multiplica preservando G; CONTRACT garante recuperabilidade auditável. A trilha de auditoria semiótica torna a multiplicação reversível ao seu princípio organizador — explicabilidade estrutural, embutida na operação, não acrescentada depois.</p>
+            </div>
+        </div>
+
+        <div class="anchor-block">
+            <div class="anchor-label">Ancoragem doutrinal</div>
+            <p class="anchor-body">A encíclica <cite>Magnifica Humanitas</cite> (Leão XIV, 15 de maio de 2026) reconhece a assimetria material da era: <cite>"o controle das plataformas, das infraestruturas, dos dados e da capacidade de computação não é prerrogativa dos Estados, mas sim de grandes atores econômicos e tecnológicos"</cite> (par. 95), e que <cite>"no mundo da IA, nada é imaterial ou mágico"</cite> (par. 173). O documento nomeia o problema antropológico e regulatório. O PANVIEIRA é uma proposta técnica de instrumento de operação: um algoritmo para o que a doutrina formula em princípio.</p>
+        </div>
+    </section>
+
+    <section id="corpus">
+        <div class="section-header">
+            <div class="section-num">02 · ESTRUTURA FORMAL</div>
+            <h2 class="section-title">A matemática do sermão</h2>
+        </div>
+        <div class="corpus-layout">
+            <div>
+                <div class="quote-box">
+                    <p class="quote-text">"A natureza insensível o perseguiu nas pedras; a vegetativa, nos espinhos; a sensitiva, nas aves; a racional, nos homens."</p>
+                    <div class="quote-author">Padre Antônio Vieira · Sermão da Sexagésima (1654)</div>
+                </div>
+                <p style="margin-top: 2rem; color: var(--text-dim); font-size: 0.9rem;">O estilo vieiriano não é ornamentação. É epistemologia. A <em>pluralidade de forma unitária</em> identificada pela crítica (Haddad, 1957) é um padrão lógico-formal isomórfico a <code style="color:var(--cyan-quantum)">map(f, lista)</code> em programação funcional, ao circuito em paralelo com tensão invariante em eletrônica, e ao operador de quantificação universal ∀ com instanciação em lógica de primeira ordem.</p>
+            </div>
+            <div>
+                <table class="table-decomp">
+                    <thead>
+                        <tr>
+                            <th>Diferenciador (Sᵢ)</th>
+                            <th>Invariante (G)</th>
+                            <th>Locus (Cᵢ)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>a natureza <span style="color:var(--gold-baroque)">insensível</span></td>
+                            <td><span class="math-symbol">[o perseguiu]</span></td>
+                            <td>nas pedras</td>
+                        </tr>
+                        <tr>
+                            <td>a (natureza) <span style="color:var(--gold-baroque)">vegetativa</span></td>
+                            <td><span class="math-symbol">[o perseguiu]</span></td>
+                            <td>nos espinhos</td>
+                        </tr>
+                        <tr>
+                            <td>a (natureza) <span style="color:var(--gold-baroque)">sensitiva</span></td>
+                            <td><span class="math-symbol">[o perseguiu]</span></td>
+                            <td>nas aves</td>
+                        </tr>
+                        <tr>
+                            <td>a (natureza) <span style="color:var(--gold-baroque)">racional</span></td>
+                            <td><span class="math-symbol">[o perseguiu]</span></td>
+                            <td>nos homens</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section id="tech">
+        <div class="section-header">
+            <div class="section-num">03 · ALGORITMO AGNÓSTICO</div>
+            <h2 class="section-title">Operações fundamentais</h2>
+        </div>
+        <p class="section-intro" style="margin-bottom: 3rem;">PANVIEIRA opera por um ciclo de hilomorfismo (unfold seguido de fold). A propriedade de circularidade — G → EXPAND → SERIALIZE → CONTRACT → G — garante que o invariante genérico é recuperável da série expandida, condição de auditabilidade do sistema.</p>
+
+        <div class="console-container">
+            <div class="console-header">
+                <div class="console-dot dot-red"></div>
+                <div class="console-dot dot-yellow"></div>
+                <div class="console-dot dot-green"></div>
+                <div class="console-title">panvieira_xai_audit.py — Hubstry Core</div>
+            </div>
+            <div class="console-body">
+                <div class="code-line"><span class="comment"># 1. ABSTRACT — extração do invariante semântico</span></div>
+                <div class="code-line"><span class="variable">G</span> = <span class="function">ABSTRACT</span>(contexto_institucional)</div>
+                <div class="code-line"><span class="output">> G = "preservacao_da_dignidade_humana"</span></div>
+                <br>
+                <div class="code-line"><span class="comment"># 2. EXPAND — instanciação paralela em múltiplos modelos</span></div>
+                <div class="code-line"><span class="variable">instancias</span> = <span class="function">EXPAND</span>(<span class="variable">G</span>, diferenciadores=<span class="string">["llm_1", "llm_2", "llm_3"]</span>)</div>
+                <div class="code-line"><span class="output">> [llm_1(G, c1), llm_2(G, c2), llm_3(G, c3)]</span></div>
+                <br>
+                <div class="code-line"><span class="comment"># 3. SERIALIZE — linearização para pipeline de execução</span></div>
+                <div class="code-line"><span class="variable">pipeline</span> = <span class="function">SERIALIZE</span>(<span class="variable">instancias</span>)</div>
+                <br>
+                <div class="code-line"><span class="comment"># 4. CONTRACT — redução verificável e trilha de auditoria</span></div>
+                <div class="code-line"><span class="variable">resultado_G</span> = <span class="function">CONTRACT</span>(<span class="variable">pipeline</span>)</div>
+                <div class="code-line"><span class="keyword">assert</span> <span class="variable">resultado_G</span> == <span class="variable">G</span>  <span class="comment"># circularidade verificada</span></div>
+                <div class="code-line"><span class="output">> STATUS: ESTASE PRESERVADA · INVARIANTE RECUPERADO</span></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="quantum">
+        <div class="section-header">
+            <div class="section-num">04 · COMPUTAÇÃO QUÂNTICA</div>
+            <h2 class="section-title">Versões quânticas e híbridas</h2>
+        </div>
+        <p class="section-intro" style="margin-bottom: 3rem;">A ênfase do PANVIEIRA no paralelismo não-progressivo é estruturalmente compatível com superposição e paralelismo quântico, abrindo caminho para exploração massivamente paralela de relações semióticas.</p>
+
+        <div class="quantum-grid">
+            <div class="quantum-card">
+                <div class="quantum-sub">Estado de superposição</div>
+                <h3 class="quantum-title">Q-PANVIEIRA (Quântico)</h3>
+                <p class="quantum-desc">O invariante G é codificado como estado quântico base. EXPAND gera um estado de superposição |Ψ⟩ = Σ αᵢ |Sᵢ ⊗ G ⊗ Cᵢ⟩, avaliado simultaneamente via paralelismo quântico. CONTRACT colapsa o sistema via interferência construtiva no estado G.</p>
+                <div class="quantum-algo">Inspiração: Deutsch-Jozsa</div>
+            </div>
+            <div class="quantum-card">
+                <div class="quantum-sub">Orquestração clássico-quântica</div>
+                <h3 class="quantum-title">H-PANVIEIRA (Híbrido)</h3>
+                <p class="quantum-desc">Algoritmo clássico orquestra a definição do sistema semiótico, enquanto EXPAND é delegado a QPU. VQE (Variational Quantum Eigensolver) é empregado em ABSTRACT para identificação robusta de G em sistemas ruidosos. Grover acelera busca por loci específicos.</p>
+                <div class="quantum-algo">Inspiração: Grover · VQE</div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-info">
+                <h4>Hubstry Deep Tech</h4>
+                <p>Infraestrutura algorítmica para preservação de invariantes semióticos. Da retórica barroca à governança de IA e computação quântica.</p>
+            </div>
+            <div class="footer-meta">
+                <p>Instituto PCIH³ · Hubstry Deep Tech</p>
+                <p>Guilherme Gonçalves Machado</p>
+                <p><a href="https://orcid.org/0009-0008-1083-0784" target="_blank" rel="noopener">ORCID 0009-0008-1083-0784</a></p>
+                <p><a href="https://doi.org/10.5281/zenodo.20367826" target="_blank" rel="noopener">DOI 10.5281/zenodo.20367826</a></p>
+                <p><a href="https://github.com/guilherme-machado-ceo/semiomorfologia-vieiriana" target="_blank" rel="noopener">github.com/guilherme-machado-ceo/semiomorfologia-vieiriana</a></p>
+                <p style="margin-top: 1rem; color: var(--gold-dim);">© 2026 · Hubstry Deep Tech</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const canvas = document.getElementById('panvieira-canvas');
+            if (!canvas) return;
+
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (reduceMotion) return;
+
+            const ctx = canvas.getContext('2d');
+            let width, height, center;
+
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+                center = { x: width / 2, y: height / 2 };
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            let nodes = [];
+            let phase = 'EXPAND';
+            let frame = 0;
+            const duration = { EXPAND: 120, SERIALIZE: 80, CONTRACT: 120, WAIT: 40 };
+
+            class Node {
+                constructor(angle) {
+                    this.angle = angle;
+                    this.radius = Math.min(width, height) * 0.3;
+                    this.x = center.x; this.y = center.y;
+                    this.tx = center.x + Math.cos(angle) * this.radius;
+                    this.ty = center.y + Math.sin(angle) * this.radius;
+                    this.opacity = 0;
+                }
+                update() {
+                    if (phase === 'EXPAND') {
+                        this.x += (this.tx - this.x) * 0.04; this.y += (this.ty - this.y) * 0.04;
+                        this.opacity += 0.015;
+                    } else if (phase === 'SERIALIZE') {
+                        this.x = this.tx + (Math.random() - 0.5) * 3; this.y = this.ty + (Math.random() - 0.5) * 3;
+                    } else if (phase === 'CONTRACT') {
+                        this.x += (center.x - this.x) * 0.04; this.y += (center.y - this.y) * 0.04;
+                        this.opacity -= 0.015;
+                    }
+                    this.opacity = Math.max(0, Math.min(1, this.opacity));
+                }
+                draw() {
+                    ctx.beginPath(); ctx.moveTo(this.x, this.y); ctx.lineTo(center.x, center.y);
+                    ctx.strokeStyle = `rgba(0, 240, 255, ${this.opacity * 0.15})`; ctx.lineWidth = 1; ctx.stroke();
+                    ctx.beginPath(); ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(0, 240, 255, ${this.opacity})`; ctx.fill();
+                }
+            }
+
+            function init() {
+                nodes = [];
+                for (let i = 0; i < 6; i++) {
+                    nodes.push(new Node((i / 6) * Math.PI * 2));
+                }
+            }
+
+            function loop() {
+                ctx.clearRect(0, 0, width, height);
+                frame++;
+                if (phase === 'EXPAND' && frame > duration.EXPAND) { phase = 'SERIALIZE'; frame = 0; }
+                else if (phase === 'SERIALIZE' && frame > duration.SERIALIZE) { phase = 'CONTRACT'; frame = 0; }
+                else if (phase === 'CONTRACT' && frame > duration.CONTRACT) { phase = 'WAIT'; frame = 0; }
+                else if (phase === 'WAIT' && frame > duration.WAIT) { phase = 'EXPAND'; frame = 0; init(); }
+
+                ctx.beginPath(); ctx.arc(center.x, center.y, 8, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(197, 160, 89, 0.9)'; ctx.fill();
+                const pulse = Math.sin(frame * 0.05) * 8 + 25;
+                ctx.beginPath(); ctx.arc(center.x, center.y, pulse, 0, Math.PI * 2);
+                ctx.strokeStyle = 'rgba(197, 160, 89, 0.2)'; ctx.lineWidth = 2; ctx.stroke();
+
+                nodes.forEach(n => { n.update(); n.draw(); });
+                requestAnimationFrame(loop);
+            }
+            init(); loop();
+        });
+    </script>
+</body>
+</html>
