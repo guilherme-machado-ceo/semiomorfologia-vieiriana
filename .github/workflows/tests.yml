@@ -21,6 +21,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements-lite.txt
           pip install pytest
+          pip install fastapi httpx requests networkx
           pip install -e .
       - name: Run tests
         run: python -m pytest tests/ -v --tb=short
