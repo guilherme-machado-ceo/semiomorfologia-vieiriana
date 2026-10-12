@@ -1,0 +1,46 @@
+name: Deploy landing (Google Cloud Storage)
+
+# Publica docs/index.html no bucket que serve panvieira.hubstry.dev
+# sempre que a landing muda na main — espelhando o deploy da Vercel.
+# Autenticação sem chave: Workload Identity Federation, restrita a
+# este repositório e à branch main.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/index.html'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: deploy-gcs
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Autenticar no Google Cloud (sem chave)
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: projects/456475154490/locations/global/workloadIdentityPools/github/providers/github-repo
+          service_account: panvieira-deployer@innate-gizmo-464917-m6.iam.gserviceaccount.com
+
+      - uses: google-github-actions/setup-gcloud@v2
+
+      - name: Publicar docs/index.html no bucket
+        run: |
+          gcloud storage cp docs/index.html gs://panvieira-hubstry-dev/index.html \
+            --cache-control="public, max-age=300"
+
+      - name: Conferir publicação
+        run: |
+          echo "md5 local:  $(md5sum docs/index.html | cut -d' ' -f1)"
+          gcloud storage objects describe gs://panvieira-hubstry-dev/index.html \
+            --format="value(md5_hash,update_time)"
