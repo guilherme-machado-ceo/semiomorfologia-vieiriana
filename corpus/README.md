@@ -5,9 +5,17 @@ Texto-base: *Sermões do padre Antonio Vieira*, edição de Lisboa, J.M.C. Seabr
 | Arquivo | Conteúdo |
 |---|---|
 | `corpus-panvieira-wikisource-v1.json` | 3 sermões (Sexagésima; Pelo Bom Sucesso das Armas de Portugal contra as de Holanda; Do Mandato), 104 parágrafos numerados, com página, revisão, URL, data de coleta e SHA-256 de cada texto |
-| `manual-anotacao-v2.txt` | Manual de anotação da tupla ⟨G, {Sᵢ}, {Cᵢ}⟩ usado nas anotações cegas por Gemini 4 Argon e Claude Opus 5.5 |
+| `manual-anotacao-v3.txt` | Manual de anotação **vigente** (v3), usado nas anotações cegas da pasta `anotacoes/` |
+| `manual-anotacao-v2.txt` | Manual anterior (v2), mantido para histórico |
+| `anotacoes/claude-opus55-manual-v3.jsonl` | Anotação cega do Claude Opus 5.5 com o manual v3 (um registro por bloco de parágrafos) |
+| `anotacoes/gemini4argon-manual-v3.jsonl` | Anotação cega do Gemini 4 Argon com o manual v3; o bloco 1 da Sexagésima falhou por tempo esgotado e foi refeito (vale a última resposta bem-sucedida) |
+| `anotacoes/correspondencia-v3.csv` | Correspondência entre os anotadores gerada por `scripts/gerar_concordancia.py` (casamento bipartido ótimo, pontuação e mapeamento de ramos) |
 
-Pendências da v2 do corpus: Sermão de Santo António (aos peixes), cujo título no Wikisource difere do buscado, e resíduo de estilo do Wikisource no último parágrafo do Sermão do Mandato.
+As anotações são **propostas de modelos**, não conjunto-ouro: ainda não passaram por adjudicação humana.
+
+O último parágrafo do Sermão do Mandato (`189440-p031`) contém resíduo de folha de estilo do Wikisource. O arquivo do corpus foi mantido intacto, porque é a fonte exata que os anotadores receberam; o resíduo é removido apenas na geração dos dados da plataforma.
+
+Pendência da v2 do corpus: Sermão de Santo António (aos peixes), cujo título no Wikisource difere do buscado.
 
 ## Fundamentação teórica
 

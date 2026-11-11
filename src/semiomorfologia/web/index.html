@@ -97,13 +97,13 @@ th{color:var(--suave);font-weight:600}
   <div class="filtros">
     <select id="f-sermao" aria-label="Sermão"><option value="">Todos os sermões</option></select>
     <select id="f-cat" aria-label="Categoria"><option value="">Nuclear e expandido</option><option value="nuclear">Só nuclear</option><option value="expandido">Só expandido</option></select>
-    <select id="f-mod" aria-label="Anotadores"><option value="">Qualquer anotador</option><option value="ambos">Os dois modelos concordam</option><option value="claude">Só Claude</option><option value="gemini">Só Gemini</option></select>
+    <select id="f-mod" aria-label="Anotador"><option value="">Todas as ocorrências</option><option value="claude">Anotações do Claude</option><option value="gemini">Anotações do Gemini</option><option value="concordante">Só concordantes</option><option value="divergente">Só divergentes</option></select>
     <select id="f-ord" aria-label="Ordem"><option value="pos">Ordem do texto</option><option value="lema">Lema de G</option></select>
     <input type="search" id="f-busca" placeholder="Buscar no G ou no lema" aria-label="Busca">
     <button class="acao" id="csv">Exportar CSV</button>
     <span class="conta" id="conta"></span>
   </div>
-  <p class="legenda">Clique numa linha para ver o parágrafo com <mark class="g">G</mark>, <mark class="s">S</mark> e <mark class="c">C</mark> destacados.</p>
+  <p class="legenda">Clique numa linha para ver o parágrafo com <mark class="g">G</mark>, <mark class="s">S</mark> e <mark class="c">C</mark> destacados. Nas ocorrências concordantes, as anotações dos dois modelos aparecem lado a lado.</p>
   <div class="kwic" id="kwic"></div>
 </section>
 
@@ -152,85 +152,108 @@ document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()
   document.querySelectorAll(".painel").forEach(p=>p.classList.toggle("ativo",p.id===b.dataset.p));
 }));
 
+const NOME={claude:"Claude",gemini:"Gemini"};
+// Anotação exibida na linha: a do modelo escolhido no filtro; senão, Claude quando houver.
+function vista(o){const m=$("#f-mod").value;return (m==="claude"||m==="gemini")?o.anotacoes[m]:(o.anotacoes.claude||o.anotacoes.gemini);}
 function filtradas(){
   const s=$("#f-sermao").value,c=$("#f-cat").value,m=$("#f-mod").value,q=$("#f-busca").value.trim().toLowerCase();
-  let o=D.ocorrencias.filter(x=>(!s||x.sermao===s)&&(!c||x.categoria===c)
-    &&(!m||(m==="ambos"?x.modelos.length===2:(x.modelos.length===1&&x.modelos[0]===m)))
-    &&(!q||x.G.toLowerCase().includes(q)||(x.G_lema||"").toLowerCase().includes(q)));
-  if($("#f-ord").value==="lema") o=[...o].sort((a,b)=>(a.G_lema||a.G).localeCompare(b.G_lema||b.G,"pt"));
-  else o=[...o].sort((a,b)=>a.sermao.localeCompare(b.sermao)||a.paragrafo-b.paragrafo);
+  let o=D.ocorrencias.filter(x=>{
+    if(s&&x.sermao!==s)return false;
+    if(m==="claude"||m==="gemini"){if(!x.anotacoes[m])return false;}
+    else if(m==="concordante"&&x.status!=="concordante")return false;
+    else if(m==="divergente"&&x.status==="concordante")return false;
+    const a=vista(x);
+    if(c&&!((m==="claude"||m==="gemini")?a.categoria===c:Object.values(x.anotacoes).some(z=>z.categoria===c)))return false;
+    if(q&&!Object.values(x.anotacoes).some(z=>z.G.toLowerCase().includes(q)||(z.G_lema||"").toLowerCase().includes(q)))return false;
+    return true;});
+  if($("#f-ord").value==="lema") o=[...o].sort((a,b)=>(vista(a).G_lema||vista(a).G).localeCompare(vista(b).G_lema||vista(b).G,"pt"));
   return o;
 }
 
-function destacar(texto,oc){
+// Destaque por posição (não por busca de texto): distingue repetições literais.
+function destacar(texto,a){
   const marcas=[];
-  const add=(t,cls)=>{if(!t)return;let i=texto.indexOf(t);if(i>=0)marcas.push([i,i+t.length,cls]);};
-  oc.ramos.forEach(r=>{add(r.S,"s");add(r.C,"c");if(r.G_forma)add(r.G_forma,"g");});
-  add(oc.G,"g");
-  marcas.sort((a,b)=>a[0]-b[0]);
+  a.ramos.forEach(r=>{if(r.S_pos)marcas.push([...r.S_pos,"s"]);if(r.C_pos)marcas.push([...r.C_pos,"c"]);if(r.G_pos)marcas.push([...r.G_pos,"g"]);});
+  if(a.G_pos&&!a.ramos.some(r=>r.G_pos))marcas.push([...a.G_pos,"g"]);
+  marcas.sort((x,y)=>x[0]-y[0]);
   let out="",pos=0;
   for(const [i,f,cls] of marcas){if(i<pos)continue;out+=esc(texto.slice(pos,i))+`<mark class="${cls}">`+esc(texto.slice(i,f))+"</mark>";pos=f;}
   return out+esc(texto.slice(pos));
+}
+
+function painelAnotacao(o,m){
+  const a=o.anotacoes[m];
+  return `<div><p class="legenda"><b>${NOME[m]}</b> · categoria ${esc(a.categoria)} · lema ${esc(a.G_lema||"—")} · confiança declarada ${a.confianca??"—"}${a.alertas.length?` · alertas: ${a.alertas.map(esc).join(", ")}`:""}</p>
+    <p>${destacar(D.paragrafos[o.paragrafo_id],a)}</p>
+    <table><tr><th>Ramo</th><th>S (diferenciador)</th><th>C (locus)</th><th>G</th><th>Função de C</th></tr>
+    ${a.ramos.map((r,i)=>`<tr><td>${i+1}</td><td>${esc(r.S)}</td><td>${esc(r.C)}</td><td>${r.G_elidido?"<i>elidido</i>":esc(r.G_forma||a.G)}</td><td>${esc(r.C_funcao||"")}</td></tr>`).join("")}</table></div>`;
 }
 
 function render(){
   const o=filtradas();
   $("#conta").textContent=`${o.length} ocorrência${o.length===1?"":"s"}`;
   $("#kwic").innerHTML=o.map(x=>{
-    const tag=!x.cobertura_completa?'<span class="tag">cobertura parcial</span>':x.modelos.length===2?'<span class="tag ambos">2 modelos</span>':`<span class="tag um">só ${x.modelos[0]==="claude"?"Claude":"Gemini"}</span>`;
+    const a=vista(x);
+    const tag=!x.cobertura_completa?'<span class="tag">cobertura parcial</span>':x.status==="concordante"?'<span class="tag ambos">2 modelos</span>':`<span class="tag um">só ${NOME[x.modelos[0]]}</span>`;
     let h=`<div class="linha" data-id="${x.id}">
-      <div class="esq"><span>${esc(x.esquerda)}</span></div>
-      <div class="chave">${esc(x.chave||x.G)}</div>
-      <div class="dir">${esc(x.direita)}</div>
-      <div class="meta">${esc(x.sermao.replace("Sermão ",""))} §${x.paragrafo}<br>${x.categoria}${tag}</div>`;
+      <div class="esq"><span>${esc(a.esquerda)}</span></div>
+      <div class="chave">${esc(a.chave||a.G)}</div>
+      <div class="dir">${esc(a.direita)}</div>
+      <div class="meta">${esc(x.sermao.replace("Sermão ",""))} §${x.paragrafo}<br>${esc(a.categoria)}${tag}</div>`;
     if(abertos.has(x.id)){
-      h+=`<div class="detalhe"><p>${destacar(D.paragrafos[x.paragrafo_id],x)}</p>
-      <table><tr><th>Ramo</th><th>S (diferenciador)</th><th>C (locus)</th><th>G</th><th>Função de C</th></tr>
-      ${x.ramos.map((r,i)=>`<tr><td>${i+1}</td><td>${esc(r.S)}</td><td>${esc(r.C)}</td><td>${r.G_elidido?"<i>elidido</i>":esc(r.G_forma||x.G)}</td><td>${esc(r.C_funcao||"")}</td></tr>`).join("")}
-      </table><p class="legenda">Lema de G: <b>${esc(x.G_lema||"—")}</b> · validação humana: ${x.validacao==="nao_validado"?"pendente":esc(x.validacao)} · <a href="${x.fonte}" target="_blank" rel="noopener">fonte (Wikisource)</a></p></div>`;
+      const ms=x.modelos;
+      h+=`<div class="detalhe"><div style="display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(320px,1fr))">${ms.map(m=>painelAnotacao(x,m)).join("")}</div>
+      <p class="legenda">${x.status==="concordante"?`Casamento entre anotadores: pontuação ${x.match_score}, ramos casados ${x.branch_mapping.length}. `:""}Validação humana: ${x.validacao==="nao_validado"?"pendente":esc(x.validacao)} · <a href="${x.fonte}" target="_blank" rel="noopener">fonte (Wikisource)</a></p></div>`;
     }
     return h+"</div>";
   }).join("")||'<p style="padding:12px">Nenhuma ocorrência com esses filtros.</p>';
 }
 
 function cards(){
-  const porS={};D.ocorrencias.forEach(x=>{porS[x.sermao]=porS[x.sermao]||{t:0,n:0};porS[x.sermao].t++;if(x.categoria==="nuclear")porS[x.sermao].n++;});
+  const porS={};D.ocorrencias.forEach(x=>{porS[x.sermao]=porS[x.sermao]||{t:0,n:0};porS[x.sermao].t++;if(Object.values(x.anotacoes).some(a=>a.categoria==="nuclear"))porS[x.sermao].n++;});
   const max=Math.max(...D.sermoes.map(s=>(porS[s.titulo]?.t||0)/s.n_paragrafos));
   $("#cards").innerHTML=D.sermoes.map(s=>{const v=porS[s.titulo]||{t:0,n:0},d=v.t/s.n_paragrafos,mil=v.t/s.palavras*1000;
-    return `<div class="card"><b>${v.t}</b><span>${esc(s.titulo)}</span><br><span>${v.n} nucleares · ${d.toFixed(2)} por parágrafo · ${mil.toFixed(1)} por mil palavras · em ${s.paragrafos_com_ocorrencia} de ${s.n_paragrafos} parágrafos</span><div class="barra"><i style="width:${(d/max*100).toFixed(0)}%"></i></div></div>`}).join("");
+    return `<div class="card"><b>${v.t}</b><span>${esc(s.titulo)}</span><br><span>${v.n} com leitura nuclear · ${d.toFixed(2)} por parágrafo · ${mil.toFixed(1)} por mil palavras · em ${s.paragrafos_com_ocorrencia} de ${s.n_paragrafos} parágrafos</span><div class="barra"><i style="width:${(d/max*100).toFixed(0)}%"></i></div></div>`}).join("");
 }
 
 function governanca(){
-  const g=D.governanca,pc=x=>Math.round(x*100)+"%";
+  const g=D.governanca,pc=x=>Math.round(x*100)+"%",c=g.modelos.claude,m=g.modelos.gemini;
   $("#gov-cards").innerHTML=[
-    [g.modelos.claude.estruturas,"estruturas · "+g.modelos.claude.nome],
-    [g.modelos.gemini.estruturas,"estruturas · "+g.modelos.gemini.nome],
-    [g.concordantes,"concordantes entre os dois"],
+    [c.estruturas,"estruturas válidas · "+c.nome],
+    [m.estruturas,"estruturas válidas · "+m.nome],
+    [g.concordantes,"concordantes (casamento ótimo)"],
     [g.f1.toFixed(2),"F1 de concordância"],
     [`${g.mesma_categoria}/${g.concordantes}`,"mesma categoria quando concordam"],
-    [g.trechos_nao_literais_descartados,"trechos não literais"],
+    [c.nao_literais_descartadas+m.nao_literais_descartadas,"trechos não literais descartados (validação independente)"],
   ].map(([v,t])=>`<div class="card"><b>${v}</b><span>${t}</span></div>`).join("");
-  const c=g.modelos.claude,m=g.modelos.gemini;
+  const linhaAud=x=>`${x.estruturas_brutas} brutas · ${x.nao_literais_descartadas} não literais descartadas · ${x.elipse_inconsistente} com elipse inconsistente · ${x.posicao_fora_de_ordem} com trecho fora de ordem · ${x.blocos_sem_resposta} blocos sem resposta`;
   $("#gov-texto").innerHTML=`
   <h3>Leitura</h3>
-  <p>Das estruturas do Claude, ${pc(g.confirmadas_claude)} também foram encontradas pelo Gemini; das do Gemini, ${pc(g.confirmadas_gemini)} pelo Claude. Quando os dois encontram a mesma estrutura, quase sempre concordam na categoria. A divergência está em <i>o que conta</i> como ocorrência, e não em <i>como</i> delimitá-la.</p>
+  <p>Das estruturas do Claude, ${pc(g.confirmadas_claude)} também foram encontradas pelo Gemini; das do Gemini, ${pc(g.confirmadas_gemini)} pelo Claude. Quando os dois encontram a mesma estrutura, quase sempre concordam na categoria. A divergência está em <i>o que conta</i> como ocorrência, e não em <i>como</i> delimitá-la. Estes números comparam dois anotadores automáticos entre si; não são acurácia, que só a adjudicação humana pode medir.</p>
   <h3>Confiança declarada e concordância (exploratório)</h3>
   <p>Confiança média declarada pelo Gemini: ${m.confianca_media_concordantes} nas estruturas que o outro modelo também encontrou e ${m.confianca_media_isoladas} nas que só ele viu. No Claude: ${c.confianca_media_concordantes} e ${c.confianca_media_isoladas}. Isso mede a relação entre confiança e <i>concordância entre modelos</i>, e não entre confiança e acerto: uma estrutura confirmada pelos dois pode estar errada, e uma isolada pode estar certa. A calibração propriamente dita só poderá ser medida contra a adjudicação humana.</p>
-  <h3>Trilha</h3>
+  <h3>Trilha e validação</h3>
   <table><tr><th>Item</th><th>Registro</th></tr>
   <tr><td>Fonte</td><td>${esc(D.edicao)}</td></tr>
   <tr><td>Manual</td><td>${esc(g.manual)}</td></tr>
-  <tr><td>Anotadores</td><td>${esc(c.nome)}; ${esc(m.nome)}</td></tr>
-  <tr><td>Base da concordância</td><td>${esc(g.base_da_concordancia)}${g.paragrafos_sem_resposta.length?` (sem resposta de um modelo: ${g.paragrafos_sem_resposta.map(esc).join(", ")}; contados como ausência de saída, não como ausência de estrutura)`:""}</td></tr>
+  <tr><td>${esc(c.nome)}</td><td>${linhaAud(c)}</td></tr>
+  <tr><td>${esc(m.nome)}</td><td>${linhaAud(m)}</td></tr>
+  <tr><td>Casamento</td><td>${esc(g.criterio_casamento)}</td></tr>
+  <tr><td>Base da concordância</td><td>${esc(g.base_da_concordancia)}</td></tr>
   <tr><td>Dados gerados em</td><td>${esc(D.gerado_em)}</td></tr></table>`;
 }
 
 function csv(){
-  const o=filtradas(),cab=["sermao","paragrafo","categoria","G","G_lema","esquerda","chave","direita","modelos","ramos","fonte"];
-  const q=v=>'"'+String(v).replace(/"/g,'""')+'"';
-  const linhas=[cab.join(",")].concat(o.map(x=>[x.sermao,x.paragrafo,x.categoria,x.G,x.G_lema,x.esquerda,x.chave,x.direita,x.modelos.join("+"),x.ramos.map(r=>`${r.S} | ${r.C}`).join(" ; "),x.fonte].map(q).join(",")));
-  const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["﻿"+linhas.join("\n")],{type:"text/csv"}));
-  a.download="panvieira-concordancia.csv";a.click();
+  const o=filtradas(),q=v=>'"'+String(v??"").replace(/"/g,'""')+'"';
+  const cab=["id","sermao","paragrafo","status"];
+  ["claude","gemini"].forEach(m=>cab.push(`${m}_categoria`,`${m}_G`,`${m}_G_lema`,`${m}_ramos`,`${m}_confianca`));
+  cab.push("match_score","fonte");
+  const linhas=[cab.join(",")].concat(o.map(x=>{
+    const v=[x.id,x.sermao,x.paragrafo,x.status];
+    ["claude","gemini"].forEach(m=>{const a=x.anotacoes[m];v.push(a?a.categoria:"",a?a.G:"",a?a.G_lema:"",a?a.ramos.map(r=>`${r.S} | ${r.C}`).join(" ; "):"",a?a.confianca:"");});
+    v.push(x.match_score,x.fonte);return v.map(q).join(",");}));
+  const el=document.createElement("a");el.href=URL.createObjectURL(new Blob(["﻿"+linhas.join("\n")],{type:"text/csv"}));
+  el.download="panvieira-concordancia.csv";el.click();
 }
 
 fetch("/static/dados/concordancia.json").then(r=>r.json()).then(d=>{
