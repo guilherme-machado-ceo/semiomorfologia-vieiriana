@@ -13,7 +13,21 @@ class TestAPI(unittest.TestCase):
     def test_root(self):
         r = self.client.get("/")
         self.assertEqual(r.status_code, 200)
+        self.assertIn("text/html", r.headers["content-type"])
+        self.assertIn("PANVIEIRA", r.text)
+
+    def test_status(self):
+        r = self.client.get("/api/status")
+        self.assertEqual(r.status_code, 200)
         self.assertEqual(r.json()["version"], "2.0.0")
+
+    def test_dados_concordancia(self):
+        r = self.client.get("/static/dados/concordancia.json")
+        self.assertEqual(r.status_code, 200)
+        d = r.json()
+        self.assertGreater(len(d["ocorrencias"]), 0)
+        for o in d["ocorrencias"]:
+            self.assertIn(o["paragrafo_id"], d["paragrafos"])
 
     def test_domains(self):
         r = self.client.get("/api/domains")

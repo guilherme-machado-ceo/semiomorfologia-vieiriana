@@ -5,6 +5,8 @@ setup(
     version="3.0.0",
     packages=find_packages(where="src"),
     package_dir={"": "src"},
+    package_data={"semiomorfologia": ["web/*.html", "web/dados/*.json"]},
+    include_package_data=True,
     python_requires=">=3.8",
     install_requires=[
         "numpy>=1.21.0",

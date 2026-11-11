@@ -50,3 +50,7 @@ Desktop.ini
 .pytest_cache/
 .coverage
 htmlcov/
+
+# Dados versionados do corpus e da plataforma
+!corpus/*.json
+!src/semiomorfologia/web/dados/*.json

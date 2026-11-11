@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PANVIEIRA · Plataforma</title>
+<meta name="description" content="PANVIEIRA: análise estrutural auditável de textos — humanidades digitais, jurídico, governança de IA e analogias.">
+<style>
+:root{
+  --fundo:#f7f4ee;--papel:#fffdf8;--tinta:#1f1b16;--suave:#6b6257;--linha:#e3dccf;
+  --acento:#8a2d1b;--acento-suave:#f3e3dc;--g:#8a2d1b;--s:#1f5f7a;--c:#5b6b1f;
+  --ok:#2e6b3a;--alerta:#9a6a00;--sombra:0 1px 2px rgba(0,0,0,.06),0 4px 16px rgba(0,0,0,.04);
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --mono:ui-monospace,"SF Mono",Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root{
+  --fundo:#16130f;--papel:#1e1a15;--tinta:#ece5d8;--suave:#a69c8d;--linha:#352e25;
+  --acento:#e08a6f;--acento-suave:#3a2620;--g:#e08a6f;--s:#7cc0dc;--c:#b9c97a;--ok:#7fc28c;--alerta:#e0b450;
+  --sombra:none}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fundo);color:var(--tinta);font:15px/1.55 var(--sans)}
+a{color:var(--acento)}
+.topo{background:var(--papel);border-bottom:1px solid var(--linha)}
+.topo-in{max-width:1180px;margin:0 auto;padding:20px 16px 0}
+.marca{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.marca h1{font:600 26px/1 var(--serif);letter-spacing:.06em;margin:0}
+.marca p{margin:0;color:var(--suave)}
+nav{display:flex;gap:4px;margin-top:16px;overflow-x:auto}
+nav button{border:0;background:none;font:inherit;padding:10px 14px;color:var(--suave);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap}
+nav button[aria-selected=true]{color:var(--tinta);border-color:var(--acento);font-weight:600}
+nav .breve{font-size:11px;background:var(--linha);border-radius:8px;padding:1px 6px;margin-left:6px}
+main{max-width:1180px;margin:0 auto;padding:20px 16px 48px}
+.painel{display:none}.painel.ativo{display:block}
+.selo{display:inline-block;font-size:12px;padding:3px 8px;border-radius:10px;background:var(--acento-suave);color:var(--acento)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:16px 0}
+.card{background:var(--papel);border:1px solid var(--linha);border-radius:10px;padding:14px;box-shadow:var(--sombra)}
+.card b{display:block;font:600 24px/1.2 var(--serif)}
+.card span{color:var(--suave);font-size:13px}
+.barra{height:6px;background:var(--linha);border-radius:3px;margin-top:8px;overflow:hidden}
+.barra i{display:block;height:100%;background:var(--acento)}
+.filtros{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0 12px}
+select,input[type=search]{font:inherit;padding:7px 10px;border:1px solid var(--linha);border-radius:8px;background:var(--papel);color:var(--tinta)}
+button.acao{font:inherit;padding:7px 12px;border:1px solid var(--acento);color:var(--acento);background:none;border-radius:8px;cursor:pointer}
+.conta{color:var(--suave);font-size:13px;margin-left:auto}
+.kwic{background:var(--papel);border:1px solid var(--linha);border-radius:10px;overflow:hidden}
+.linha{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr) 150px;gap:10px;padding:9px 12px;border-top:1px solid var(--linha);cursor:pointer;font:15px/1.5 var(--serif);align-items:center}
+.linha:first-child{border-top:0}
+.linha:hover{background:var(--fundo)}
+.esq{text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;direction:rtl;color:var(--suave)}
+.esq span{direction:ltr;unicode-bidi:plaintext}
+.chave{font-weight:700;color:var(--g);white-space:nowrap}
+.dir{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--suave)}
+.meta{font:12px/1.3 var(--sans);color:var(--suave);text-align:right}
+.tag{display:inline-block;font:11px var(--sans);padding:1px 6px;border-radius:6px;border:1px solid var(--linha);margin-left:4px}
+.tag.ambos{border-color:var(--ok);color:var(--ok)}
+.tag.um{border-color:var(--alerta);color:var(--alerta)}
+.detalhe{grid-column:1/-1;cursor:default;font:15px/1.65 var(--serif);padding:6px 4px 10px}
+.detalhe p{margin:0 0 10px}
+mark.g{background:none;color:var(--g);font-weight:700;border-bottom:2px solid var(--g)}
+mark.s{background:none;color:var(--s);border-bottom:2px solid var(--s)}
+mark.c{background:none;color:var(--c);border-bottom:2px solid var(--c)}
+table{border-collapse:collapse;width:100%;font:13px var(--sans)}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--linha);vertical-align:top}
+th{color:var(--suave);font-weight:600}
+.legenda{font:13px var(--sans);color:var(--suave);margin:4px 0 8px}
+.legenda b{font-weight:600}
+.prosa{max-width:760px}
+.prosa h2{font:600 22px var(--serif);margin:8px 0 6px}
+.prosa h3{font:600 17px var(--serif);margin:20px 0 6px}
+.rodape{max-width:1180px;margin:0 auto;padding:16px;color:var(--suave);font-size:13px;border-top:1px solid var(--linha)}
+@media (max-width:720px){
+  .linha{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);font-size:14px}
+  .meta{grid-column:1/-1;text-align:left}
+}
+</style>
+</head>
+<body>
+<header class="topo"><div class="topo-in">
+  <div class="marca"><h1>PANVIEIRA</h1><p>Análise estrutural auditável de textos</p></div>
+  <nav role="tablist">
+    <button role="tab" aria-selected="true" data-p="humanidades">Humanidades digitais</button>
+    <button role="tab" aria-selected="false" data-p="governanca">Governança de IA</button>
+    <button role="tab" aria-selected="false" data-p="juridico">Jurídico<span class="breve">em breve</span></button>
+    <button role="tab" aria-selected="false" data-p="analogias">Analogias<span class="breve">fase 2</span></button>
+    <button role="tab" aria-selected="false" data-p="metodo">Método</button>
+  </nav>
+</div></header>
+
+<main>
+<section class="painel ativo" id="humanidades">
+  <div class="prosa">
+    <h2>Concordanciador da pluralidade de forma unitária</h2>
+    <p>Ocorrências, nos sermões de Vieira, de séries paralelas que compartilham um núcleo predicativo invariante (<b>G</b>), cada ramo com um diferenciador (<b>S</b>) e um locus (<b>C</b>). O padrão foi descrito por Jamil Almansur Haddad (<i>Vieira e o Barroco Brasileiro</i>, 1957, p. 14-15). <span class="selo">anotação automática em validação</span></p>
+  </div>
+  <div class="cards" id="cards"></div>
+  <div class="filtros">
+    <select id="f-sermao" aria-label="Sermão"><option value="">Todos os sermões</option></select>
+    <select id="f-cat" aria-label="Categoria"><option value="">Nuclear e expandido</option><option value="nuclear">Só nuclear</option><option value="expandido">Só expandido</option></select>
+    <select id="f-mod" aria-label="Anotadores"><option value="">Qualquer anotador</option><option value="ambos">Os dois modelos concordam</option><option value="claude">Só Claude</option><option value="gemini">Só Gemini</option></select>
+    <select id="f-ord" aria-label="Ordem"><option value="pos">Ordem do texto</option><option value="lema">Lema de G</option></select>
+    <input type="search" id="f-busca" placeholder="Buscar no G ou no lema" aria-label="Busca">
+    <button class="acao" id="csv">Exportar CSV</button>
+    <span class="conta" id="conta"></span>
+  </div>
+  <p class="legenda">Clique numa linha para ver o parágrafo com <mark class="g">G</mark>, <mark class="s">S</mark> e <mark class="c">C</mark> destacados.</p>
+  <div class="kwic" id="kwic"></div>
+</section>
+
+<section class="painel" id="governanca">
+  <div class="prosa">
+    <h2>Laudo de confiabilidade da anotação</h2>
+    <p>Cada ocorrência foi anotada às cegas por dois modelos de linguagem de empresas diferentes, com o mesmo manual. Todo trecho citado é conferido contra o texto da fonte, e trechos inexistentes são descartados. Onde os modelos discordam, a decisão cabe a um revisor humano.</p>
+  </div>
+  <div class="cards" id="gov-cards"></div>
+  <div class="prosa" id="gov-texto"></div>
+</section>
+
+<section class="painel" id="juridico"><div class="prosa">
+  <h2>Mapa de obrigações <span class="selo">em breve</span></h2>
+  <p>O mesmo método aplicado a leis, regulamentos e contratos. A tupla da retórica de Vieira tem a forma de uma obrigação: um dever comum (<b>G</b>, por exemplo "deverá comunicar"), quem o cumpre (<b>S</b>, "o controlador", "o operador") e em que condição ou prazo (<b>C</b>, "em até 2 dias úteis").</p>
+  <p>Cada obrigação virá com o trecho literal do dispositivo, conferido automaticamente, e com o laudo de confiabilidade da extração. Ferramenta de apoio à leitura; não constitui aconselhamento jurídico.</p>
+</div></section>
+
+<section class="painel" id="analogias"><div class="prosa">
+  <h2>Hipóteses de transferência entre áreas <span class="selo">fase 2</span></h2>
+  <p>A estrutura descrita por Haddad distribui uma mesma relação por domínios diferentes. A fase 2 usará essa forma para propor analogias entre áreas do conhecimento, tratadas como hipóteses, e não como descobertas: cada uma com o esquema da relação compartilhada, o mapeamento de papéis, as diferenças que limitam a transferência e um critério de refutação.</p>
+  <p>O módulo só entra em operação depois de demonstrar, em teste cego, que produz hipóteses melhores do que um modelo de linguagem usado sem o método.</p>
+</div></section>
+
+<section class="painel" id="metodo"><div class="prosa">
+  <h2>Método</h2>
+  <h3>1. Fonte registrada</h3><p>Texto-base em domínio público, com página, revisão, data de coleta e impressão digital (SHA-256) de cada sermão.</p>
+  <h3>2. Regra escrita</h3><p>Manual de anotação versionado (v3), com definições operacionais, exemplos e contraexemplos.</p>
+  <h3>3. Dois anotadores às cegas</h3><p>Modelos de linguagem de famílias diferentes anotam o mesmo texto sem ver a resposta um do outro.</p>
+  <h3>4. Prova literal</h3><p>Todo trecho afirmado deve existir no texto; a verificação é automática.</p>
+  <h3>5. Decisão humana nas divergências</h3><p>Onde os anotadores discordam, um revisor humano decide e registra a justificativa. As decisões formam a amostra de referência.</p>
+  <h3>6. Medição</h3><p>Concordância entre anotadores, calibração da confiança declarada e evolução do manual, medidas sobre conjuntos separados.</p>
+  <p>Código e dados: <a href="https://github.com/guilherme-machado-ceo/semiomorfologia-vieiriana">github.com/guilherme-machado-ceo/semiomorfologia-vieiriana</a>.</p>
+</div></section>
+</main>
+
+<footer class="rodape" id="rodape">Hubstry Deep Tech · Guilherme Gonçalves Machado</footer>
+
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>(s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let D=null,abertos=new Set();
+
+document.querySelectorAll("nav button").forEach(b=>b.addEventListener("click",()=>{
+  document.querySelectorAll("nav button").forEach(x=>x.setAttribute("aria-selected",x===b));
+  document.querySelectorAll(".painel").forEach(p=>p.classList.toggle("ativo",p.id===b.dataset.p));
+}));
+
+function filtradas(){
+  const s=$("#f-sermao").value,c=$("#f-cat").value,m=$("#f-mod").value,q=$("#f-busca").value.trim().toLowerCase();
+  let o=D.ocorrencias.filter(x=>(!s||x.sermao===s)&&(!c||x.categoria===c)
+    &&(!m||(m==="ambos"?x.modelos.length===2:(x.modelos.length===1&&x.modelos[0]===m)))
+    &&(!q||x.G.toLowerCase().includes(q)||(x.G_lema||"").toLowerCase().includes(q)));
+  if($("#f-ord").value==="lema") o=[...o].sort((a,b)=>(a.G_lema||a.G).localeCompare(b.G_lema||b.G,"pt"));
+  else o=[...o].sort((a,b)=>a.sermao.localeCompare(b.sermao)||a.paragrafo-b.paragrafo);
+  return o;
+}
+
+function destacar(texto,oc){
+  const marcas=[];
+  const add=(t,cls)=>{if(!t)return;let i=texto.indexOf(t);if(i>=0)marcas.push([i,i+t.length,cls]);};
+  oc.ramos.forEach(r=>{add(r.S,"s");add(r.C,"c");if(r.G_forma)add(r.G_forma,"g");});
+  add(oc.G,"g");
+  marcas.sort((a,b)=>a[0]-b[0]);
+  let out="",pos=0;
+  for(const [i,f,cls] of marcas){if(i<pos)continue;out+=esc(texto.slice(pos,i))+`<mark class="${cls}">`+esc(texto.slice(i,f))+"</mark>";pos=f;}
+  return out+esc(texto.slice(pos));
+}
+
+function render(){
+  const o=filtradas();
+  $("#conta").textContent=`${o.length} ocorrência${o.length===1?"":"s"}`;
+  $("#kwic").innerHTML=o.map(x=>{
+    const tag=x.modelos.length===2?'<span class="tag ambos">2 modelos</span>':`<span class="tag um">só ${x.modelos[0]==="claude"?"Claude":"Gemini"}</span>`;
+    let h=`<div class="linha" data-id="${x.id}">
+      <div class="esq"><span>${esc(x.esquerda)}</span></div>
+      <div class="chave">${esc(x.chave||x.G)}</div>
+      <div class="dir">${esc(x.direita)}</div>
+      <div class="meta">${esc(x.sermao.replace("Sermão ",""))} §${x.paragrafo}<br>${x.categoria}${tag}</div>`;
+    if(abertos.has(x.id)){
+      h+=`<div class="detalhe"><p>${destacar(D.paragrafos[x.paragrafo_id],x)}</p>
+      <table><tr><th>Ramo</th><th>S (diferenciador)</th><th>C (locus)</th><th>G</th><th>Função de C</th></tr>
+      ${x.ramos.map((r,i)=>`<tr><td>${i+1}</td><td>${esc(r.S)}</td><td>${esc(r.C)}</td><td>${r.G_elidido?"<i>elidido</i>":esc(r.G_forma||x.G)}</td><td>${esc(r.C_funcao||"")}</td></tr>`).join("")}
+      </table><p class="legenda">Lema de G: <b>${esc(x.G_lema||"—")}</b> · validação humana: ${x.validacao==="nao_validado"?"pendente":esc(x.validacao)} · <a href="${x.fonte}" target="_blank" rel="noopener">fonte (Wikisource)</a></p></div>`;
+    }
+    return h+"</div>";
+  }).join("")||'<p style="padding:12px">Nenhuma ocorrência com esses filtros.</p>';
+}
+
+function cards(){
+  const porS={};D.ocorrencias.forEach(x=>{porS[x.sermao]=porS[x.sermao]||{t:0,n:0};porS[x.sermao].t++;if(x.categoria==="nuclear")porS[x.sermao].n++;});
+  const max=Math.max(...D.sermoes.map(s=>(porS[s.titulo]?.t||0)/s.n_paragrafos));
+  $("#cards").innerHTML=D.sermoes.map(s=>{const v=porS[s.titulo]||{t:0,n:0},d=v.t/s.n_paragrafos;
+    return `<div class="card"><b>${v.t}</b><span>${esc(s.titulo)}</span><br><span>${v.n} nucleares · ${d.toFixed(2)} por parágrafo</span><div class="barra"><i style="width:${(d/max*100).toFixed(0)}%"></i></div></div>`}).join("");
+}
+
+function governanca(){
+  const g=D.governanca,pc=x=>Math.round(x*100)+"%";
+  $("#gov-cards").innerHTML=[
+    [g.modelos.claude.estruturas,"estruturas · "+g.modelos.claude.nome],
+    [g.modelos.gemini.estruturas,"estruturas · "+g.modelos.gemini.nome],
+    [g.concordantes,"concordantes entre os dois"],
+    [g.f1.toFixed(2),"F1 de concordância"],
+    [`${g.mesma_categoria}/${g.concordantes}`,"mesma categoria quando concordam"],
+    [g.trechos_nao_literais_descartados,"trechos não literais"],
+  ].map(([v,t])=>`<div class="card"><b>${v}</b><span>${t}</span></div>`).join("");
+  const c=g.modelos.claude,m=g.modelos.gemini;
+  $("#gov-texto").innerHTML=`
+  <h3>Leitura</h3>
+  <p>Das estruturas do Claude, ${pc(g.confirmadas_claude)} também foram encontradas pelo Gemini; das do Gemini, ${pc(g.confirmadas_gemini)} pelo Claude. Quando os dois encontram a mesma estrutura, quase sempre concordam na categoria. A divergência está em <i>o que conta</i> como ocorrência, e não em <i>como</i> delimitá-la.</p>
+  <h3>Calibração</h3>
+  <p>Confiança média declarada pelo Gemini: ${m.confianca_media_concordantes} nas estruturas confirmadas pelo outro modelo e ${m.confianca_media_isoladas} nas que só ele viu. No Claude: ${c.confianca_media_concordantes} e ${c.confianca_media_isoladas}. Um modelo bem calibrado declara menos confiança onde erra mais; a confiança do Gemini quase não separa os dois casos e, por isso, não serve como filtro.</p>
+  <h3>Trilha</h3>
+  <table><tr><th>Item</th><th>Registro</th></tr>
+  <tr><td>Fonte</td><td>${esc(D.edicao)}</td></tr>
+  <tr><td>Manual</td><td>${esc(g.manual)}</td></tr>
+  <tr><td>Anotadores</td><td>${esc(c.nome)}; ${esc(m.nome)} (${m.blocos_com_erro} bloco sem resposta)</td></tr>
+  <tr><td>Dados gerados em</td><td>${esc(D.gerado_em)}</td></tr></table>`;
+}
+
+function csv(){
+  const o=filtradas(),cab=["sermao","paragrafo","categoria","G","G_lema","esquerda","chave","direita","modelos","ramos","fonte"];
+  const q=v=>'"'+String(v).replace(/"/g,'""')+'"';
+  const linhas=[cab.join(",")].concat(o.map(x=>[x.sermao,x.paragrafo,x.categoria,x.G,x.G_lema,x.esquerda,x.chave,x.direita,x.modelos.join("+"),x.ramos.map(r=>`${r.S} | ${r.C}`).join(" ; "),x.fonte].map(q).join(",")));
+  const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["﻿"+linhas.join("\n")],{type:"text/csv"}));
+  a.download="panvieira-concordancia.csv";a.click();
+}
+
+fetch("/static/dados/concordancia.json").then(r=>r.json()).then(d=>{
+  D=d;
+  D.sermoes.forEach(s=>$("#f-sermao").insertAdjacentHTML("beforeend",`<option>${esc(s.titulo)}</option>`));
+  ["#f-sermao","#f-cat","#f-mod","#f-ord"].forEach(s=>$(s).addEventListener("change",render));
+  $("#f-busca").addEventListener("input",render);
+  $("#csv").addEventListener("click",csv);
+  $("#kwic").addEventListener("click",e=>{const l=e.target.closest(".linha");if(!l||e.target.closest(".detalhe"))return;
+    const id=l.dataset.id;abertos.has(id)?abertos.delete(id):abertos.add(id);render();});
+  $("#rodape").innerHTML=`${esc(D.edicao)} · Fundamentação: HADDAD, J. A. <i>Vieira e o Barroco Brasileiro</i>. São Paulo: Cia. Editora Nacional, 1957 · Hubstry Deep Tech · Guilherme Gonçalves Machado`;
+  cards();render();governanca();
+}).catch(()=>{$("#kwic").innerHTML='<p style="padding:12px">Não foi possível carregar os dados.</p>';});
+</script>
+</body>
+</html>
