@@ -53,15 +53,23 @@ def _mesma(e1, e2):
 
 
 def _estruturas(caminho):
-    out, erros = [], 0
+    """Devolve (estruturas válidas, nº de blocos sem resposta, parágrafos sem resposta).
+
+    Bloco sem resposta (erro de rede ou JSON inválido) NÃO equivale a
+    "nenhuma estrutura encontrada": seus parágrafos ficam fora das medidas
+    de concordância.
+    """
+    out, erros, sem_resposta = [], 0, set()
     for linha in caminho.read_text(encoding="utf-8").splitlines():
         r = json.loads(linha)
         if r.get("erro") or r.get("erro_json"):
             erros += 1
+            sem_resposta.update(r.get("paragrafos", []))
+            continue
         for e in (r.get("anotacao") or {}).get("estruturas", []):
             if e.get("trechos_literais_ok", True):
                 out.append(e)
-    return out, erros
+    return out, erros, sem_resposta
 
 
 def _kwic(texto, g):
@@ -85,6 +93,7 @@ def main():
 
     por_modelo = {m: _estruturas(c) for m, c in ANOTACOES.items()}
     base, outro = "claude", "gemini"
+    sem_resposta = set().union(*(v[2] for v in por_modelo.values()))
     usados, linhas = set(), []
 
     def registrar(e, modelos, categorias):
@@ -100,6 +109,7 @@ def main():
                       for r in e.get("ramos", [])],
             "esquerda": esq, "chave": kw, "direita": dir_,
             "modelos": modelos, "validacao": "nao_validado", "fonte": p["url"],
+            "cobertura_completa": e["paragrafo_id"] not in sem_resposta,
         })
 
     for e in por_modelo[base][0]:
@@ -114,16 +124,20 @@ def main():
         if j not in usados:
             registrar(g, [outro], {outro: g.get("categoria")})
 
-    n_c, n_g = len(por_modelo[base][0]), len(por_modelo[outro][0])
-    comuns = sum(1 for l in linhas if len(l["modelos"]) == 2)
+    # Concordância só sobre parágrafos que os dois modelos efetivamente processaram
+    cobertas = [l for l in linhas if l["cobertura_completa"]]
+    n_c = sum(1 for l in cobertas if base in l["modelos"])
+    n_g = sum(1 for l in cobertas if outro in l["modelos"])
+    comuns = sum(1 for l in cobertas if len(l["modelos"]) == 2)
     pc, pg = comuns / n_c, comuns / n_g
-    mesma_cat = sum(1 for l in linhas if len(l["modelos"]) == 2
+    mesma_cat = sum(1 for l in cobertas if len(l["modelos"]) == 2
                     and len(set(l["categorias_por_modelo"].values())) == 1)
 
     def confianca_media(modelo, sozinho):
         vals = [e.get("confianca", 0) for e in por_modelo[modelo][0]
-                if any(l["paragrafo_id"] == e["paragrafo_id"] and l["G"] == e["G"]
-                       and (l["modelos"] == [modelo]) == sozinho for l in linhas)]
+                if e["paragrafo_id"] not in sem_resposta
+                and any(l["paragrafo_id"] == e["paragrafo_id"] and l["G"] == e["G"]
+                        and (l["modelos"] == [modelo]) == sozinho for l in linhas)]
         return round(sum(vals) / len(vals), 2) if vals else None
 
     governanca = {
@@ -138,7 +152,28 @@ def main():
         "f1": round(2 * pc * pg / (pc + pg), 3),
         "mesma_categoria": mesma_cat,
         "trechos_nao_literais_descartados": 0,
+        "paragrafos_sem_resposta": sorted(sem_resposta),
+        "base_da_concordancia": f"{len(paragrafos) - len(sem_resposta)} de {len(paragrafos)} parágrafos processados pelos dois modelos",
     }
+
+    # Densidade normalizada por sermão
+    for s in sermoes:
+        pids = [k for k, v in paragrafos.items() if v["sermao"] == s["titulo"]]
+        s["palavras"] = sum(len(re.findall(r"\w+", paragrafos[k]["texto"])) for k in pids)
+        com = {l["paragrafo_id"] for l in linhas if l["sermao"] == s["titulo"]}
+        s["paragrafos_com_ocorrencia"] = len(com)
+
+    # Arquivo de correspondência entre anotadores (auditoria)
+    corresp = RAIZ / "corpus" / "anotacoes" / "correspondencia-v3.csv"
+    with corresp.open("w", encoding="utf-8") as f:
+        f.write("candidate_id,paragraph_id,claude,gemini,match_status,categoria_claude,categoria_gemini,G\n")
+        for l in linhas:
+            st = ("sem_resposta" if not l["cobertura_completa"]
+                  else "concordante" if len(l["modelos"]) == 2 else f"so_{l['modelos'][0]}")
+            cat = l["categorias_por_modelo"]
+            f.write(",".join([l["id"], l["paragrafo_id"], str(base in l["modelos"]).lower(),
+                              str(outro in l["modelos"]).lower(), st, cat.get(base) or "",
+                              cat.get(outro) or "", '"' + l["G"].replace('"', '""') + '"']) + "\n")
 
     SAIDA.parent.mkdir(parents=True, exist_ok=True)
     SAIDA.write_text(json.dumps({

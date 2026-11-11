@@ -177,7 +177,7 @@ function render(){
   const o=filtradas();
   $("#conta").textContent=`${o.length} ocorrência${o.length===1?"":"s"}`;
   $("#kwic").innerHTML=o.map(x=>{
-    const tag=x.modelos.length===2?'<span class="tag ambos">2 modelos</span>':`<span class="tag um">só ${x.modelos[0]==="claude"?"Claude":"Gemini"}</span>`;
+    const tag=!x.cobertura_completa?'<span class="tag">cobertura parcial</span>':x.modelos.length===2?'<span class="tag ambos">2 modelos</span>':`<span class="tag um">só ${x.modelos[0]==="claude"?"Claude":"Gemini"}</span>`;
     let h=`<div class="linha" data-id="${x.id}">
       <div class="esq"><span>${esc(x.esquerda)}</span></div>
       <div class="chave">${esc(x.chave||x.G)}</div>
@@ -196,8 +196,8 @@ function render(){
 function cards(){
   const porS={};D.ocorrencias.forEach(x=>{porS[x.sermao]=porS[x.sermao]||{t:0,n:0};porS[x.sermao].t++;if(x.categoria==="nuclear")porS[x.sermao].n++;});
   const max=Math.max(...D.sermoes.map(s=>(porS[s.titulo]?.t||0)/s.n_paragrafos));
-  $("#cards").innerHTML=D.sermoes.map(s=>{const v=porS[s.titulo]||{t:0,n:0},d=v.t/s.n_paragrafos;
-    return `<div class="card"><b>${v.t}</b><span>${esc(s.titulo)}</span><br><span>${v.n} nucleares · ${d.toFixed(2)} por parágrafo</span><div class="barra"><i style="width:${(d/max*100).toFixed(0)}%"></i></div></div>`}).join("");
+  $("#cards").innerHTML=D.sermoes.map(s=>{const v=porS[s.titulo]||{t:0,n:0},d=v.t/s.n_paragrafos,mil=v.t/s.palavras*1000;
+    return `<div class="card"><b>${v.t}</b><span>${esc(s.titulo)}</span><br><span>${v.n} nucleares · ${d.toFixed(2)} por parágrafo · ${mil.toFixed(1)} por mil palavras · em ${s.paragrafos_com_ocorrencia} de ${s.n_paragrafos} parágrafos</span><div class="barra"><i style="width:${(d/max*100).toFixed(0)}%"></i></div></div>`}).join("");
 }
 
 function governanca(){
@@ -214,13 +214,14 @@ function governanca(){
   $("#gov-texto").innerHTML=`
   <h3>Leitura</h3>
   <p>Das estruturas do Claude, ${pc(g.confirmadas_claude)} também foram encontradas pelo Gemini; das do Gemini, ${pc(g.confirmadas_gemini)} pelo Claude. Quando os dois encontram a mesma estrutura, quase sempre concordam na categoria. A divergência está em <i>o que conta</i> como ocorrência, e não em <i>como</i> delimitá-la.</p>
-  <h3>Calibração</h3>
-  <p>Confiança média declarada pelo Gemini: ${m.confianca_media_concordantes} nas estruturas confirmadas pelo outro modelo e ${m.confianca_media_isoladas} nas que só ele viu. No Claude: ${c.confianca_media_concordantes} e ${c.confianca_media_isoladas}. Um modelo bem calibrado declara menos confiança onde erra mais; a confiança do Gemini quase não separa os dois casos e, por isso, não serve como filtro.</p>
+  <h3>Confiança declarada e concordância (exploratório)</h3>
+  <p>Confiança média declarada pelo Gemini: ${m.confianca_media_concordantes} nas estruturas que o outro modelo também encontrou e ${m.confianca_media_isoladas} nas que só ele viu. No Claude: ${c.confianca_media_concordantes} e ${c.confianca_media_isoladas}. Isso mede a relação entre confiança e <i>concordância entre modelos</i>, e não entre confiança e acerto: uma estrutura confirmada pelos dois pode estar errada, e uma isolada pode estar certa. A calibração propriamente dita só poderá ser medida contra a adjudicação humana.</p>
   <h3>Trilha</h3>
   <table><tr><th>Item</th><th>Registro</th></tr>
   <tr><td>Fonte</td><td>${esc(D.edicao)}</td></tr>
   <tr><td>Manual</td><td>${esc(g.manual)}</td></tr>
-  <tr><td>Anotadores</td><td>${esc(c.nome)}; ${esc(m.nome)} (${m.blocos_com_erro} bloco sem resposta)</td></tr>
+  <tr><td>Anotadores</td><td>${esc(c.nome)}; ${esc(m.nome)}</td></tr>
+  <tr><td>Base da concordância</td><td>${esc(g.base_da_concordancia)}${g.paragrafos_sem_resposta.length?` (sem resposta de um modelo: ${g.paragrafos_sem_resposta.map(esc).join(", ")}; contados como ausência de saída, não como ausência de estrutura)`:""}</td></tr>
   <tr><td>Dados gerados em</td><td>${esc(D.gerado_em)}</td></tr></table>`;
 }
 
