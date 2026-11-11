@@ -1,6 +1,22 @@
+import hashlib
+import re
 import numpy as np
 from typing import List, Optional
 from .metricas import cosseno
+
+DIM_HASH = 512
+
+
+def _saco_de_palavras(texto: str, dim: int = DIM_HASH) -> Optional[List[float]]:
+    """Vetor de contagem de tokens por hashing estável (md5), normalizado."""
+    tokens = re.findall(r"\w+", texto.lower())
+    if not tokens:
+        return None
+    v = np.zeros(dim)
+    for t in tokens:
+        v[int(hashlib.md5(t.encode("utf-8")).hexdigest(), 16) % dim] += 1.0
+    n = np.linalg.norm(v)
+    return (v / n).tolist() if n > 0 else None
 
 class MotorSemantico:
     def __init__(self, modelo: str = "paraphrase-multilingual-MiniLM-L12-v2"):
@@ -33,17 +49,11 @@ class MotorSemantico:
                 return v.tolist()
             except Exception:
                 pass
-        try:
-            from sklearn.feature_extraction.text import TfidfVectorizer
-            vocab = [" ".join(texto.lower().split())]
-            if len(vocab[0].strip()) < 2:
-                return None
-            tfidf = TfidfVectorizer().fit_transform(vocab)
-            return tfidf.toarray()[0].tolist()
-        except Exception:
-            pass
-        tokens = texto.lower().split()
-        return [float(hash(t) % 1000) / 1000.0 for t in tokens] if tokens else None
+        # Fallback sem modelo: saco de palavras com hashing em dimensão fixa.
+        # Antes: TF-IDF ajustado num único documento (todos os vetores ficavam
+        # uniformes, e textos de mesmo tamanho davam cosseno 1,0) e hash() do
+        # Python (aleatorizado a cada processo, logo não reprodutível).
+        return _saco_de_palavras(texto)
 
     def similaridade(self, t1: str, t2: str) -> float:
         v1, v2 = self.vetorizar(t1), self.vetorizar(t2)

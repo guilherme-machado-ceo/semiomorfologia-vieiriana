@@ -13,6 +13,8 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from functools import partial
 import numpy as np
 
+from .invariante import extrair_invariante
+
 
 class MapReduceEngine:
     """
@@ -92,7 +94,14 @@ class MapReduceEngine:
         }
 
     def _reducao_semantica(self, instancias: List[str]) -> str:
-        """Redução semântica: instância mais próxima do centróide."""
+        """
+        Redução (CONTRACT): primeiro o invariante sintático comum a todas as
+        instâncias; só sem token comum recorre à instância mais próxima do
+        centróide de embeddings.
+        """
+        g = extrair_invariante(instancias)
+        if g:
+            return g
         try:
             from semiomorfologia.similaridade.semantica import MotorSemantico
             motor = MotorSemantico()

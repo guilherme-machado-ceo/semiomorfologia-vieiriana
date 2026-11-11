@@ -41,7 +41,8 @@ class TAPPAN:
     """
 
     def __init__(self, epsilon1: float = 0.15, epsilon2: float = 0.3,
-                 alpha: float = 0.05):
+                 alpha: float = 0.05, semente: int = 42):
+        self.semente = semente  # reprodutibilidade do bootstrap
         self.epsilon1 = epsilon1  # limiar variância G
         self.epsilon2 = epsilon2  # limiar erro predição
         self.alpha = alpha  # nível de significância
@@ -140,8 +141,9 @@ class TAPPAN:
         # Bootstrap para p-valor
         n = len(embeddings)
         bootstrap_vars = []
+        rng = np.random.RandomState(self.semente)
         for _ in range(1000):
-            idx = np.random.choice(n, n, replace=True)
+            idx = rng.choice(n, n, replace=True)
             sample = embeddings[idx]
             cent = np.mean(sample, axis=0)
             cent_norm = cent / (np.linalg.norm(cent) + 1e-10)
@@ -252,7 +254,11 @@ class TAPPAN:
         # Modelo nulo 1: média global (constante)
         media_global = np.mean(embeddings)
         residuos_null1 = np.sum((embeddings - media_global) ** 2)
-        k_null1 = d + 1
+        # Média escalar única + variância: 2 parâmetros. Com k = d + 1 nos dois
+        # modelos, AIC_PAN <= AIC_nulo seria identidade algébrica (o centróide
+        # por dimensão nunca tem resíduo maior que a média escalar), e a
+        # etapa 4 não poderia falhar.
+        k_null1 = 2
         aic_null1 = float(2 * k_null1 + n * np.log(residuos_null1 / n + 1e-10))
         bic_null1 = float(k_null1 * np.log(n) + n * np.log(residuos_null1 / n + 1e-10))
 

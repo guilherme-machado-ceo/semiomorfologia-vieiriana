@@ -98,7 +98,10 @@ class Sintagma:
         )
 
         dominio_base = self.morfemas[0].dominio.value
-        self.conteudo_generico = f"conjunto_{dominio_base}_generico"
+        generico = f"conjunto_{dominio_base}_generico"
+        if descritores_comuns:
+            generico += ":" + "+".join(sorted(descritores_comuns))
+        self.conteudo_generico = generico
         return self.conteudo_generico
 
     def adicionar_morfema(self, morfema: Morfema) -> None:
