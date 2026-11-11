@@ -65,3 +65,18 @@ def test_dados_preservam_as_duas_anotacoes():
         assert o["anotacoes"]["gemini"]["id"].startswith("gemini-")
     ids_g = [o["anotacoes"]["gemini"]["id"] for o in d["ocorrencias"] if "gemini" in o["anotacoes"]]
     assert len(ids_g) == len(set(ids_g)), "cada estrutura do Gemini aparece uma única vez"
+
+
+def test_um_unico_ramo_casado_nao_e_concordancia():
+    texto = "Dá-me o pão do céu, e me dá a água da fonte; o vinho guardo eu."
+    a = {"G": "Dá-me", "G_lema": "dar", "ramos": [_ramo("o pão", "do céu", "Dá-me"),
+                                                  _ramo("o vinho", "guardo eu", None, True)]}
+    b = {"G": "me dá", "G_lema": "dar", "ramos": [_ramo("o pão", "do céu", "Dá-me"),
+                                                  _ramo("a água", "da fonte", "me dá")]}
+    est = []
+    for e in (a, b):
+        ramos, g_pos, _ = G._localizar(texto, e)
+        est.append({**e, "paragrafo_id": "p", "ramos": ramos, "G_pos": g_pos})
+    prop, mapa = G._casar_ramos(est[0], est[1])
+    assert prop == 0.0 and mapa == []
+    assert G._casar([est[0]], [est[1]]) == []

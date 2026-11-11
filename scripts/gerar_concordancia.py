@@ -47,6 +47,7 @@ CONTEXTO = 90
 LIMIAR_G = 0.5        # semelhança mínima de G (lema igual conta 1,0)
 LIMIAR_RAMOS = 0.5    # proporção mínima de ramos casados (pelo maior número de ramos)
 LIMIAR_RAMO = 0.3     # sobreposição mínima (Jaccard de caracteres) para casar um ramo
+MIN_RAMOS_CASADOS = 2  # pluralidade: um par só concorda se preservar pelo menos dois ramos
 CSS_WIKISOURCE = re.compile(r"\.mw-parser-output[^{}]*\{[^{}]*\}")
 
 
@@ -206,6 +207,8 @@ def _casar_ramos(e1, e2):
     m = np.array([[_sim_ramo(a, b) for b in r2] for a in r1])
     li, co = linear_sum_assignment(-m)
     mapa = [[int(i), int(j), round(float(m[i, j]), 3)] for i, j in zip(li, co) if m[i, j] >= LIMIAR_RAMO]
+    if len(mapa) < MIN_RAMOS_CASADOS:
+        return 0.0, []
     return len(mapa) / max(len(r1), len(r2)), mapa
 
 
@@ -309,7 +312,7 @@ def main():
         "manual": "v3",
         "criterio_casamento": (f"bipartido ótimo por parágrafo (algoritmo húngaro); G semelhante "
                                f"(lema igual ou Jaccard ≥ {LIMIAR_G}) e ≥ {int(LIMIAR_RAMOS * 100)}% dos ramos "
-                               f"casados por sobreposição de posição ≥ {LIMIAR_RAMO}"),
+                               f"casados, com no mínimo {MIN_RAMOS_CASADOS}, por sobreposição de posição ≥ {LIMIAR_RAMO}"),
         "modelos": {m: {"nome": NOMES[m], "estruturas": len(estr[m]), **auditoria[m],
                         "confianca_media_concordantes": conf(m, True),
                         "confianca_media_isoladas": conf(m, False)} for m in ANOTACOES},

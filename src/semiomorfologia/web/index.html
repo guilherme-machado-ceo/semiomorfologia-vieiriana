@@ -219,8 +219,9 @@ function cards(){
 function governanca(){
   const g=D.governanca,pc=x=>Math.round(x*100)+"%",c=g.modelos.claude,m=g.modelos.gemini;
   $("#gov-cards").innerHTML=[
-    [c.estruturas,"estruturas válidas · "+c.nome],
-    [m.estruturas,"estruturas válidas · "+m.nome],
+    [c.estruturas,"estruturas retidas após validação literal · "+c.nome],
+    [m.estruturas,"estruturas retidas após validação literal · "+m.nome],
+    [c.elipse_inconsistente+m.elipse_inconsistente+c.posicao_fora_de_ordem+m.posicao_fora_de_ordem,"alertas de validação nas estruturas retidas (elipse ou posição; ver trilha)"],
     [g.concordantes,"concordantes (casamento ótimo)"],
     [g.f1.toFixed(2),"F1 de concordância"],
     [`${g.mesma_categoria}/${g.concordantes}`,"mesma categoria quando concordam"],
