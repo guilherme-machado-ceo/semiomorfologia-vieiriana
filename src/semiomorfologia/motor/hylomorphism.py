@@ -13,6 +13,8 @@ from typing import List, Dict, Callable, Any, Optional, Tuple
 from functools import reduce
 import numpy as np
 
+from .invariante import extrair_invariante
+
 
 class HylomorphismEngine:
     """
@@ -36,11 +38,14 @@ class HylomorphismEngine:
         return f"{s} {g} {c}"
 
     def _reduzir_padrao(self, instancias: List[str]) -> str:
-        """Redução padrão: retorna a instância mais comum como proxy de G."""
-        if not instancias:
-            return ""
-        from collections import Counter
-        return Counter(instancias).most_common(1)[0][0]
+        """
+        Redução padrão (CONTRACT): extrai o invariante G como a maior
+        subsequência contígua de tokens comum a todas as instâncias.
+
+        Com uma única instância, G não é identificável e a própria instância
+        é devolvida (ver semiomorfologia.motor.invariante).
+        """
+        return extrair_invariante(instancias)
 
     def unfold(self, g: str, pares: List[Tuple[str, str]]) -> List[str]:
         """
@@ -70,7 +75,12 @@ class HylomorphismEngine:
         if len(instancias) == 1:
             return instancias[0]
 
-        # Tentar via embeddings para ABSTRACT semântico
+        # 1) Invariante sintático: subsequência comum a todas as instâncias
+        g = extrair_invariante(instancias)
+        if g:
+            return g
+
+        # 2) Sem token comum: aproximação semântica (instância mais central)
         try:
             from semiomorfologia.similaridade.semantica import MotorSemantico
             motor = MotorSemantico()

@@ -116,14 +116,32 @@ class ExtratorMineral(ExtratorAnalogias):
 
     # --- Cálculo de força ---
 
+    # Forças determinísticas, calculadas dos dados dos morfemas e mantidas nas
+    # mesmas faixas dos antigos sorteios (np.random.uniform), para preservar
+    # os limiares usados adiante.
+
+    @staticmethod
+    def _jaccard(a: set, b: set) -> float:
+        uniao = a | b
+        return len(a & b) / len(uniao) if uniao else 0.0
+
     def _calcular_forca_emergencia(self, m1: Morfema, m2: Morfema) -> float:
-        return float(np.random.uniform(0.6, 0.95))
+        v1, v2 = m1.vetor_propriedades(), m2.vetor_propriedades()
+        corr = 1.0
+        if len(v1) >= 2 and len(v1) == len(v2):
+            with np.errstate(invalid="ignore", divide="ignore"):
+                c = np.corrcoef(v1, v2)[0, 1]
+            if np.isfinite(c):
+                corr = abs(float(c))
+        return 0.6 + 0.35 * (1.0 - min(corr, 1.0))
 
     def _calcular_similaridade_funcional(self, m1: Morfema, m2: Morfema) -> float:
-        return float(np.random.uniform(0.7, 0.98))
+        j = self._jaccard(set(map(str, m1.descritores.items())), set(map(str, m2.descritores.items())))
+        return 0.7 + 0.28 * j
 
     def _calcular_proximidade_estrutural(self, m1: Morfema, m2: Morfema) -> float:
-        return float(np.random.uniform(0.5, 0.9))
+        j = self._jaccard(set(m1.propriedades), set(m2.propriedades))
+        return 0.5 + 0.4 * j
 
     # --- Mapeamentos ---
 

@@ -163,7 +163,11 @@ class MotorSemiomorfologico:
         return len(props_comuns) >= 1 and m1.dominio != m2.dominio
 
     def _forca_ponte(self, m1: Morfema, m2: Morfema) -> float:
-        return float(np.random.uniform(0.55, 0.85))
+        """Força determinística: proporção de propriedades compartilhadas,
+        na mesma faixa (0,55 a 0,85) do antigo sorteio."""
+        a, b = set(m1.propriedades), set(m2.propriedades)
+        j = len(a & b) / len(a | b) if (a | b) else 0.0
+        return 0.55 + 0.30 * j
 
     def _aplicacao_ponte(
         self, d1: DominioNatural, d2: DominioNatural, m1: Morfema, m2: Morfema
