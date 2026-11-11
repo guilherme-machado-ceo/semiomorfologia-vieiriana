@@ -59,10 +59,19 @@ def _estruturas(caminho):
     "nenhuma estrutura encontrada": seus parágrafos ficam fora das medidas
     de concordância.
     """
-    out, erros, sem_resposta = [], 0, set()
+    # Um bloco pode aparecer mais de uma vez (falha seguida de nova tentativa);
+    # vale a última resposta bem-sucedida, ou a última falha se nenhuma deu certo.
+    blocos = {}
     for linha in caminho.read_text(encoding="utf-8").splitlines():
         r = json.loads(linha)
-        if r.get("erro") or r.get("erro_json"):
+        chave = (r.get("revid"), r.get("bloco"))
+        ok = not (r.get("erro") or r.get("erro_json"))
+        anterior = blocos.get(chave)
+        if anterior is None or ok or not anterior[0]:
+            blocos[chave] = (ok, r)
+    out, erros, sem_resposta = [], 0, set()
+    for ok, r in blocos.values():
+        if not ok:
             erros += 1
             sem_resposta.update(r.get("paragrafos", []))
             continue
