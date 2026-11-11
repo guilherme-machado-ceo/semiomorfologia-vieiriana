@@ -1,4 +1,8 @@
+import pathlib
+
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from typing import Dict, Any, List, Optional
 
@@ -27,8 +31,18 @@ class FAMEInput(BaseModel):
     dimensoes: Optional[Dict[str, float]] = None
 
 
-@app.get("/")
-def root():
+WEB = pathlib.Path(__file__).resolve().parents[1] / "web"
+app.mount("/static", StaticFiles(directory=str(WEB)), name="static")
+
+
+@app.get("/", include_in_schema=False)
+def plataforma():
+    """Interface da plataforma PANVIEIRA (verticais em abas)."""
+    return FileResponse(WEB / "index.html")
+
+
+@app.get("/api/status")
+def status():
     return {"framework": "Semiomorfologia Vieiriana", "version": "2.0.0", "status": "online"}
 
 

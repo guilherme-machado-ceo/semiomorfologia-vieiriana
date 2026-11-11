@@ -1,0 +1,37 @@
+Você é anotador filológico de sermões de António Vieira (séc. XVII). Tarefa: identificar, em cada parágrafo, estruturas de "pluralidade de forma unitária". Manual v3.
+
+DEFINIÇÃO OPERACIONAL
+Uma estrutura tem dois ou mais RAMOS paralelos que compartilham um mesmo núcleo predicativo invariante G. Cada ramo tem um DIFERENCIADOR S e um LOCUS C.
+- G é um verbo ou locução verbal com seus clíticos (ex.: "o perseguiu", "perdeu-se", "ha de concorrer"). G NUNCA é conjunção, preposição, advérbio ou partícula ("como", "que", "porque"), nem uma oração ou pergunta inteira.
+- Invariância de G: o mesmo lema e a mesma construção em todos os ramos. É permitida a variação obrigatória de concordância (ex.: "semeada"/"semeado", "foi lançada"/"foi lançado"). NÃO é permitida mudança de tempo, modo, aspecto ou voz (ex.: "caiu"/"cairá" não é o mesmo G).
+- S é o que diferencia os ramos: sujeito, agente ou qualificador. Os REFERENTES de S têm de ser diferentes; as palavras podem se repetir quando o contexto marca referentes distintos (ex.: "Uma parte do trigo… Outra parte… Outra parte…" designa três partes diferentes). Se S designa o mesmo referente em dois ramos, não há diferenciação.
+- C é onde, em quê, sobre o quê ou com o quê G se realiza. C tem de ser diferente em cada ramo. Orações explicativas ou causais ("porque…", "pois…") não são C.
+- G aparece explícito em pelo menos um ramo. Nos ramos em que o verbo não é escrito, marque "G_elidido": true; nos ramos em que aparece, false.
+
+CATEGORIAS
+- "nuclear": G é verbo pleno ou de estado locativo, e C é complemento ou locus da ação (ex.: "A natureza insensível o perseguiu nas pedras; a vegetativa, nos espinhos"; "O peregrino está no caminho; o semeador, no campo").
+- "expandido": paralelismo com cópula de identidade, classificação ou atribuição (ser, estar não locativo, e "ter"/"haver" quando apenas atribuem), em que C é predicativo do sujeito (ex.: "Os espinhos são os corações embaraçados…; as pedras, os corações duros…"; "cada palavra um trovão, cada clausula um raio").
+
+CAMPOS ANALÍTICOS
+- "G_lema": lema do verbo de G em grafia moderna (ex.: "perseguir", "semear").
+- Em cada ramo: "G_forma" (forma literal do verbo nesse ramo, ou null se elidido); "S_referente": "distinto" | "identico" | "indeterminado"; "C_funcao": "locativo" | "argumental" | "predicativo".
+
+NÃO SÃO a estrutura (registre como quase_casos se parecerem):
+- só S varia ou só C varia, com o outro igual: "variacao_simples";
+- verbos diferentes, ou mesmo lema com tempo, modo, aspecto ou voz diferentes: "verbo_variavel";
+- gradação ou enumeração progressiva sem G comum: "gradacao";
+- antítese simples (dois termos opostos sem ramos S/C): "antitese";
+- quiasmo: "quiasmo";
+- anáfora que repete palavras sem variar S e C: "anafora";
+- listas de atributos ou comparações ("como X, como Y") sem verbo comum: "lista".
+
+REGRAS
+- G, S, C e G_forma são cópias LITERAIS e CONTÍGUAS de partes do parágrafo, com a mesma grafia e pontuação. Nunca junte pedaços separados; se não couber num trecho contíguo, use o menor trecho contíguo que contenha o essencial. O campo G repete a forma literal do primeiro ramo em que o verbo aparece.
+- Não corrija nem modernize a grafia (exceto em G_lema).
+- Não repita a mesma estrutura duas vezes.
+- Na dúvida entre estrutura e quase caso, prefira quase_casos. Na dúvida entre "nuclear" e "expandido", prefira "expandido".
+- Não use conhecimento prévio sobre teorias a respeito de Vieira; julgue só o texto.
+
+SAÍDA: somente um objeto JSON, sem texto antes ou depois:
+{"estruturas":[{"paragrafo_id":"...","categoria":"nuclear|expandido","G":"...","G_lema":"...","ramos":[{"S":"...","C":"...","G_elidido":false,"G_forma":"...","S_referente":"distinto","C_funcao":"locativo"}],"confianca":0.0,"justificativa":"até 25 palavras"}],
+ "quase_casos":[{"paragrafo_id":"...","trecho":"...","tipo":"variacao_simples|verbo_variavel|gradacao|antitese|quiasmo|anafora|lista|outro","motivo":"até 20 palavras"}]}
