@@ -1,6 +1,6 @@
 # Corpus PANVIEIRA (v1)
 
-Texto-base: *Sermões do padre Antonio Vieira*, edição de Lisboa, J.M.C. Seabra e T.Q. Antunes, 1855, transcrita no Wikisource em português (domínio público). Ortografia original preservada.
+Texto-base: transcrições do Wikisource em português (domínio público), com a ortografia das transcrições preservada. O Sermão da Sexagésima é subpágina de *Sermões do padre Antonio Vieira* (Lisboa, J.M.C. Seabra e T.Q. Antunes, 1855). Os outros dois sermões são páginas avulsas do Wikisource; a edição-fonte dessas transcrições e as datas indicadas nos títulos (1640 e 1670) ainda precisam ser conferidas.
 
 | Arquivo | Conteúdo |
 |---|---|
@@ -12,6 +12,10 @@ Texto-base: *Sermões do padre Antonio Vieira*, edição de Lisboa, J.M.C. Seabr
 | `anotacoes/correspondencia-v3.csv` | Correspondência entre os anotadores gerada por `scripts/gerar_concordancia.py` (casamento bipartido ótimo, pontuação e mapeamento de ramos) |
 
 As anotações são **propostas de modelos**, não conjunto-ouro: ainda não passaram por adjudicação humana.
+
+Os exemplos dos manuais v2 e v3 foram tirados dos próprios sermões anotados (entre eles a ocorrência canônica abaixo). O reconhecimento desses trechos pelos modelos não é evidência independente; a medição futura deve separar um conjunto de desenvolvimento do manual de um conjunto de medição.
+
+O gerador descarta as estruturas que o próprio anotador marcou com confiança zero, as que têm menos de dois ramos e as que citam trecho inexistente; as demais inconsistências (elipse, G sem forma explícita, G diferente do texto, trechos sobrepostos) ficam como alertas. Além de `concordante`, a correspondência registra o estado `mesma_passagem`: os dois modelos marcaram a mesma passagem, mas delimitaram G, S ou C de modo diferente.
 
 O último parágrafo do Sermão do Mandato (`189440-p031`) contém resíduo de folha de estilo do Wikisource. O arquivo do corpus foi mantido intacto, porque é a fonte exata que os anotadores receberam; o resíduo é removido apenas na geração dos dados da plataforma.
 
@@ -30,6 +34,6 @@ O padrão anotado foi descrito pela crítica antes da sua formalização computa
 
 | Parágrafo | Trecho | Papel |
 |---|---|---|
-| `239684-p003` (Sermão da Sexagésima) | "A natureza insensivel o perseguiu nas pedras; a vegetativa, nos espinhos; a sensitiva, nas aves; a racional, nos homens." | exemplo analisado por Haddad (1957, p. 14-15); G = "o perseguiu", elidido do 2º ramo em diante; categoria nuclear; reconhecido por Claude e Gemini nas rodadas v1, v2 e v3 |
+| `239684-p003` (Sermão da Sexagésima) | "A natureza insensivel o perseguiu nas pedras; a vegetativa, nos espinhos; a sensitiva, nas aves; a racional, nos homens." | exemplo analisado por Haddad (1957, p. 14-15); G = "o perseguiu", elidido do 2º ramo em diante; categoria nuclear; é exemplo positivo do manual, portanto o reconhecimento pelos modelos não conta como evidência |
 
 As demais ocorrências estão nos arquivos de anotação; cada uma remete ao parágrafo pelo identificador `pageid-pNNN`.
