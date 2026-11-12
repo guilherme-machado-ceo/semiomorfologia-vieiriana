@@ -7,7 +7,7 @@ setup(
     package_dir={"": "src"},
     package_data={"semiomorfologia": ["web/*.html", "web/dados/*.json"]},
     include_package_data=True,
-    python_requires=">=3.8",
+    python_requires=">=3.10",
     install_requires=[
         "numpy>=1.21.0",
         "scipy>=1.7.0",

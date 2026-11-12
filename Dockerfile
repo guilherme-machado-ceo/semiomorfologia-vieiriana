@@ -12,11 +12,12 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 
-# Dependências primeiro, para aproveitar o cache de camadas
-COPY requirements-lite.txt ./
-RUN pip install -r requirements-lite.txt \
-    && pip install "fastapi>=0.100.0" "uvicorn>=0.23.0" \
-       "requests>=2.28.0" "sparqlwrapper>=2.0.0"
+# Dependências travadas com hashes (requirements-docker.lock, gerado de
+# requirements-docker.in com: uv pip compile requirements-docker.in
+# --python-version 3.12 --generate-hashes -o requirements-docker.lock).
+# requests e sparqlwrapper ficam fora: só as rotas experimentais os usam.
+COPY requirements-docker.lock ./
+RUN pip install --require-hashes -r requirements-docker.lock
 
 # Código do framework
 COPY setup.py pyproject.toml README.md LICENSE ./

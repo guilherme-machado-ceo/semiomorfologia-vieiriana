@@ -453,7 +453,8 @@ def main():
         "mesma_categoria": mesma_cat,
         "mesma_passagem": n_pass,
         "criterio_mesma_passagem": (f"estruturas não casadas cujas extensões no parágrafo se sobrepõem "
-                                    f"(Jaccard ≥ {LIMIAR_PASSAGEM}), com G, S ou C delimitados de modo diferente"),
+                                    f"(Jaccard ≥ {LIMIAR_PASSAGEM}); mede proximidade no texto, não identidade "
+                                    f"entre as propostas, e não entra no F1 estrito"),
         "f1_por_passagem": round(2 * ra * rb / (ra + rb), 3) if ra + rb else 0.0,
         "validadas_por_humano": 0,
         "entradas_sha256": {c.name: hashlib.sha256(c.read_bytes()).hexdigest()
@@ -486,7 +487,7 @@ def main():
         "sermoes": sermoes, "ocorrencias": ocorrencias, "governanca": governanca,
         "paragrafos": {k: v["texto"] for k, v in paragrafos.items()},
     }, ensure_ascii=False), encoding="utf-8")
-    print(f"{len(ocorrencias)} ocorrências ({comuns} concordantes, {n_pass} mesma passagem) -> {SAIDA.relative_to(RAIZ)}")
+    print(f"{len(ocorrencias)} ocorrências ({comuns} concordantes, {n_pass} passagem sobreposta) -> {SAIDA.relative_to(RAIZ)}")
     for m in ANOTACOES:
         print(m, auditoria[m])
 
