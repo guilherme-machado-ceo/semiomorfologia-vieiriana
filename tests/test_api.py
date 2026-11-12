@@ -1,5 +1,6 @@
 import sys, os
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
+os.environ["PANVIEIRA_API_EXPERIMENTAL"] = "1"  # as rotas experimentais só existem com esta variável
 
 import unittest
 from semiomorfologia.api.app import app
@@ -19,7 +20,13 @@ class TestAPI(unittest.TestCase):
     def test_status(self):
         r = self.client.get("/api/status")
         self.assertEqual(r.status_code, 200)
-        self.assertEqual(r.json()["version"], "2.0.0")
+        from semiomorfologia import __version__
+        self.assertEqual(r.json()["version"], __version__)
+
+    def test_cabecalhos_de_seguranca(self):
+        r = self.client.get("/")
+        self.assertEqual(r.headers["x-content-type-options"], "nosniff")
+        self.assertIn("frame-ancestors 'none'", r.headers["content-security-policy"])
 
     def test_dados_concordancia(self):
         r = self.client.get("/static/dados/concordancia.json")

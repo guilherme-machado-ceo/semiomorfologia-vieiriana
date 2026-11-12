@@ -80,3 +80,60 @@ def test_um_unico_ramo_casado_nao_e_concordancia():
     prop, mapa = G._casar_ramos(est[0], est[1])
     assert prop == 0.0 and mapa == []
     assert G._casar([est[0]], [est[1]]) == []
+
+
+def test_posicao_respeita_fronteira_de_palavra():
+    texto = "Para o prégador ha de haver regra: o pulpito é theatro, e o sermão comedia."
+    e = {"G": "é", "ramos": [_ramo("o pulpito", "theatro", "é"), _ramo("o sermão", "comedia", None, True)]}
+    ramos, g_pos, problemas = G._localizar(texto, e)
+    assert "nao_literal" not in problemas
+    assert texto[g_pos[0]:g_pos[1]] == "é" and texto[g_pos[0] - 1] == " " and texto[g_pos[1]] == " "
+    assert g_pos[0] > texto.index("pulpito")  # não é o "é" de "prégador"
+    assert G._ocorrencias(texto, "ha") == [(16, 18)]  # não casa dentro de "haver"
+
+
+def test_ramo_em_ordem_verbo_sujeito_fica_na_janela_compacta():
+    texto = ("A esposa e o esposo deram cada um a sua prova. Deu a esposa a cithara; "
+             "deu o esposo o véu.")
+    e = {"G": "Deu", "ramos": [_ramo("a esposa", "a cithara", "Deu"), _ramo("o esposo", "o véu", "deu")]}
+    ramos, g_pos, problemas = G._localizar(texto, e)
+    assert problemas == []
+    # o verbo vem antes do sujeito: G fica à esquerda de S, e S não é a primeira menção
+    assert ramos[0]["G_pos"][0] < ramos[0]["S_pos"][0] < ramos[0]["C_pos"][0]
+    assert ramos[1]["S_pos"][0] == texto.rindex("o esposo") and ramos[1]["G_pos"][0] == texto.rindex("deu")
+    assert g_pos == ramos[0]["G_pos"]
+
+
+def test_triagem_descarta_o_que_o_anotador_rejeitou(tmp_path):
+    texto = "Uma parte caiu entre espinhos. Outra parte caiu sobre pedras."
+    est = {"paragrafo_id": "p1", "categoria": "nuclear", "G": "caiu", "G_lema": "cair",
+           "ramos": [_ramo("Uma parte", "entre espinhos", "caiu"), _ramo("Outra parte", "sobre pedras", "caiu")]}
+    linhas = [{"revid": 1, "bloco": 1, "paragrafos": ["p1"], "erro": None,
+               "anotacao": {"estruturas": [{**est, "confianca": 0.9}, {**est, "confianca": 0.0},
+                                           {**est, "confianca": 0.8, "ramos": est["ramos"][:1]}]}}]
+    arq = tmp_path / "a.jsonl"
+    arq.write_text("\n".join(json.dumps(x) for x in linhas), encoding="utf-8")
+    validas, aud, _ = G._estruturas("teste", arq, {"p1": {"texto": texto}})
+    assert len(validas) == 1 and validas[0]["extensao"] == [0, len(texto) - 1]
+    assert aud["rejeitadas_pelo_anotador"] == 1 and aud["menos_de_dois_ramos"] == 1
+
+
+def test_dados_publicados_em_ordem_e_com_posicoes_exatas():
+    d = json.loads(DADOS.read_text(encoding="utf-8"))
+    ordem = [s["titulo"] for s in d["sermoes"]]
+    chaves = []
+    for o in d["ocorrencias"]:
+        texto = d["paragrafos"][o["paragrafo_id"]]
+        prim = o["anotacoes"].get("claude") or o["anotacoes"]["gemini"]
+        chaves.append((ordem.index(o["sermao"]), o["paragrafo"], prim["extensao"][0]))
+        for a in o["anotacoes"].values():
+            assert a["confianca"] is None or a["confianca"] > 0
+            for r in a["ramos"]:
+                for campo, pos in (("S", r["S_pos"]), ("C", r["C_pos"]), ("G_forma", r["G_pos"])):
+                    if pos:
+                        assert texto[pos[0]:pos[1]] == r[campo]
+                        dentro = (pos[0] > 0 and texto[pos[0] - 1].isalnum() and r[campo][0].isalnum()) or \
+                                 (pos[1] < len(texto) and texto[pos[1]].isalnum() and r[campo][-1].isalnum())
+                        assert not dentro, (a["id"], campo)
+    assert chaves == sorted(chaves)
+    assert {o["status"] for o in d["ocorrencias"]} <= {"concordante", "mesma_passagem", "so_claude", "so_gemini"}

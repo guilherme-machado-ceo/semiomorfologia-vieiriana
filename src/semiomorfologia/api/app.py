@@ -1,16 +1,56 @@
+import hmac
+import os
 import pathlib
 
-from fastapi import FastAPI, HTTPException
-from fastapi.responses import FileResponse
+from fastapi import APIRouter, FastAPI, HTTPException, Request
+from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from typing import Dict, Any, List, Optional
 
+from semiomorfologia import __version__
+
+# Em produção a plataforma serve só a interface, os dados e o status.
+# As rotas experimentais do framework (extração, contrato, FAME, pontes,
+# enriquecimento por serviços externos) não têm limites de tamanho nem de
+# custo e por isso só são registradas com PANVIEIRA_API_EXPERIMENTAL=1
+# (uso local e testes). A documentação interativa segue a mesma regra.
+EXPERIMENTAL = os.environ.get("PANVIEIRA_API_EXPERIMENTAL") == "1"
+# Se definido, toda requisição precisa trazer este valor no cabeçalho
+# x-panvieira-origin (enviado pelo proxy); bloqueia o acesso direto à origem.
+SEGREDO_ORIGEM = os.environ.get("PANVIEIRA_ORIGIN_SECRET") or ""
+
 app = FastAPI(
     title="Semiomorfologia Vieiriana API",
     description="API REST para extracao de analogias semiomorfologicas",
-    version="2.0.0"
+    version=__version__,
+    docs_url="/docs" if EXPERIMENTAL else None,
+    redoc_url=None,
+    openapi_url="/openapi.json" if EXPERIMENTAL else None,
 )
+experimental = APIRouter()
+
+CABECALHOS = {
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Strict-Transport-Security": "max-age=31536000",
+    # A página usa script e estilo embutidos; o restante fica restrito à própria origem.
+    "Content-Security-Policy": ("default-src 'self'; script-src 'self' 'unsafe-inline'; "
+                                "style-src 'self' 'unsafe-inline'; img-src 'self' data:; "
+                                "object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'none'"),
+}
+
+
+@app.middleware("http")
+async def seguranca(request: Request, call_next):
+    if SEGREDO_ORIGEM and not hmac.compare_digest(
+            request.headers.get("x-panvieira-origin", ""), SEGREDO_ORIGEM):
+        return JSONResponse({"detail": "acesso apenas pelo dominio publico"}, status_code=403)
+    resposta = await call_next(request)
+    for k, v in CABECALHOS.items():
+        resposta.headers.setdefault(k, v)
+    return resposta
 
 
 class MorfemaInput(BaseModel):
@@ -43,16 +83,16 @@ def plataforma():
 
 @app.get("/api/status")
 def status():
-    return {"framework": "Semiomorfologia Vieiriana", "version": "2.0.0", "status": "online"}
+    return {"framework": "Semiomorfologia Vieiriana", "version": __version__, "status": "online"}
 
 
-@app.get("/api/domains")
+@experimental.get("/api/domains")
 def list_domains():
     return {"domains": ["mineral", "vegetal", "animal", "humano"],
             "types": ["heuristica", "funcional", "homologica"]}
 
 
-@app.post("/api/extract")
+@experimental.post("/api/extract")
 def extract_analogies(domain: str, morphemes: List[MorfemaInput]):
     try:
         from semiomorfologia.core.ontologia import (
@@ -75,11 +115,11 @@ def extract_analogies(domain: str, morphemes: List[MorfemaInput]):
             serializado[tipo.value] = [a.serializar() for a in analogias]
         total = sum(len(v) for v in serializado.values())
         return {"domain": domain, "total": total, "analogies": serializado}
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+    except Exception:
+        raise HTTPException(status_code=400, detail="entrada invalida")
 
 
-@app.post("/api/contract")
+@experimental.post("/api/contract")
 def create_contract(data: ContratoInput):
     from semiomorfologia.similaridade.anti_unificacao import AntiUnificador
     from semiomorfologia.avaliacao.fame import AvaliadorFAME
@@ -91,7 +131,7 @@ def create_contract(data: ContratoInput):
     return contrato
 
 
-@app.post("/api/fame")
+@experimental.post("/api/fame")
 def evaluate_fame(data: FAMEInput):
     from semiomorfologia.avaliacao.fame import AvaliadorFAME
 
@@ -99,7 +139,7 @@ def evaluate_fame(data: FAMEInput):
     return av.avaliar(data.pontuacao, data.dimensoes)
 
 
-@app.post("/api/fame/batch")
+@experimental.post("/api/fame/batch")
 def evaluate_fame_batch(scores: List[float]):
     from semiomorfologia.avaliacao.fame import AvaliadorFAME
 
@@ -107,7 +147,7 @@ def evaluate_fame_batch(scores: List[float]):
     return av.avaliar_conjunto(scores)
 
 
-@app.post("/api/bridges")
+@experimental.post("/api/bridges")
 def cross_domain_bridges(domains_data: Dict[str, List[MorfemaInput]]):
     from semiomorfologia.core.ontologia import (
         Morfema, DominioNatural, NivelOrganizacao
@@ -129,7 +169,7 @@ def cross_domain_bridges(domains_data: Dict[str, List[MorfemaInput]]):
     return {"bridges": [p.serializar() for p in pontes], "total": len(pontes)}
 
 
-@app.post("/api/knowledge/enrich")
+@experimental.post("/api/knowledge/enrich")
 def enrich_morpheme(data: Dict[str, Any]):
     from semiomorfologia.conhecimento.enriquecedor import EnriquecedorMorfemas
 
@@ -137,9 +177,13 @@ def enrich_morpheme(data: Dict[str, Any]):
     return enc.enriquecer(data)
 
 
+if EXPERIMENTAL:
+    app.include_router(experimental)
+
+
 @app.get("/api/health")
 def health():
-    return {"status": "ok", "version": "2.0.0"}
+    return {"status": "ok", "version": __version__}
 
 
 if __name__ == "__main__":

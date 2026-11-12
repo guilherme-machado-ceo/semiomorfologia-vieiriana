@@ -2,132 +2,128 @@ candidate_id,paragraph_id,claude_id,gemini_id,match_status,match_score,branch_ma
 oc0001,239684-p002,claude-001,gemini-001,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,são,são
 oc0002,239684-p002,claude-002,gemini-002,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,nuclear,achar-vos-heis,achar-vos-heis
 oc0003,239684-p003,claude-003,gemini-003,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0], [2, 2, 1.0]]",nuclear,nuclear,caiu,caiu
-oc0004,239684-p003,claude-004,gemini-005,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0], [2, 2, 1.0], [3, 3, 1.0]]",nuclear,nuclear,o perseguiu,o perseguiu
-oc0005,239684-p004,claude-005,,so_claude,,[],nuclear,,Houve,
-oc0006,239684-p006,claude-006,gemini-008,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0], [2, 2, 0.683]]",nuclear,nuclear,a levaram,a levaram
-oc0007,239684-p006,claude-007,,so_claude,,[],nuclear,,Dá-me,
-oc0008,239684-p007,claude-008,gemini-009,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0], [2, 2, 0.722], [3, 3, 1.0]]",expandido,expandido,são,são
-oc0009,239684-p009,claude-009,gemini-011,concordante,1.0,"[[0, 0, 0.759], [1, 1, 0.8], [2, 2, 0.739]]",nuclear,nuclear,ha de concorrer,ha de concorrer
-oc0010,239684-p009,claude-010,gemini-012,concordante,1.0,"[[0, 0, 0.71], [1, 1, 0.688], [2, 2, 0.676]]",nuclear,nuclear,concorre,concorre
-oc0011,239684-p013,claude-011,,so_claude,,[],expandido,,ha,
-oc0012,239684-p014,claude-012,gemini-022,concordante,1.0,"[[0, 0, 0.978], [1, 1, 0.978]]",nuclear,nuclear,faz-se,faz-se
-oc0013,239684-p014,claude-013,gemini-024,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",nuclear,nuclear,entram,entram
-oc0014,239684-p014,claude-014,gemini-021,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,é,é
-oc0015,239684-p015,claude-015,gemini-027,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",nuclear,nuclear,prégavam,prégavam
-oc0016,239684-p017,claude-016,gemini-028,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0], [2, 2, 1.0], [3, 3, 1.0]]",nuclear,nuclear,tudo se faz,se faz
-oc0017,239684-p018,claude-017,gemini-031,concordante,1.0,"[[0, 0, 0.821], [1, 1, 0.844], [2, 2, 0.853]]",expandido,expandido,é para,é
-oc0018,239684-p019,claude-018,gemini-032,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,são,são
-oc0019,239684-p019,claude-019,gemini-033,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",nuclear,nuclear,semeada,semeada
-oc0020,239684-p019,claude-020,gemini-034,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0], [2, 2, 1.0]]",nuclear,nuclear,acha,acha documentos nas estrellas
-oc0021,239684-p020,claude-021,gemini-035,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",nuclear,nuclear,chamam-lhe,chamam-lhe
-oc0022,239684-p020,claude-022,gemini-036,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,ha,ha
-oc0023,239684-p020,claude-023,gemini-037,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0], [2, 2, 1.0], [3, 3, 1.0], [4, 4, 1.0], [5, 5, 1.0]]",expandido,expandido,é,dizem que é
-oc0024,239684-p020,claude-024,gemini-038,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0], [2, 2, 1.0]]",expandido,expandido,é,é
-oc0025,239684-p021,claude-025,,so_claude,,[],nuclear,,se defendem,
-oc0026,239684-p022,claude-026,gemini-040,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",nuclear,nuclear,vae,vae
-oc0027,239684-p022,claude-027,gemini-039,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0], [2, 2, 1.0], [3, 3, 1.0]]",nuclear,nuclear,fizesse,fizesse
-oc0028,239684-p023,claude-028,gemini-042,concordante,1.0,"[[0, 0, 0.5], [1, 1, 0.647], [2, 2, 0.667], [3, 3, 0.647], [4, 4, 0.667]]",expandido,expandido,é,é
-oc0029,239684-p023,claude-029,gemini-041,concordante,0.8,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,são,são
-oc0030,239684-p025,claude-030,gemini-044,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",nuclear,nuclear,servem,servem
-oc0031,239684-p027,claude-031,gemini-046,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0], [2, 2, 1.0]]",nuclear,nuclear,não serve,não serve
-oc0032,239684-p027,claude-032,gemini-047,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0], [2, 2, 1.0]]",expandido,expandido,era,era
-oc0033,239684-p028,claude-033,gemini-048,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0], [2, 2, 1.0]]",nuclear,nuclear,tomou,tomou
-oc0034,239684-p029,claude-034,gemini-050,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0], [2, 2, 1.0]]",nuclear,nuclear,fere,fere
-oc0035,239684-p031,claude-035,gemini-052,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,tinha,tinha
-oc0036,239684-p031,claude-036,gemini-053,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,não tinha,não tinha
-oc0037,239684-p033,claude-037,gemini-055,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",nuclear,nuclear,tomava as palavras da escriptura,tomava as palavras da escriptura
-oc0038,239684-p036,claude-038,gemini-060,concordante,1.0,"[[0, 0, 0.7], [1, 1, 0.685]]",nuclear,nuclear,veem,veem
-oc0039,239684-p037,claude-039,gemini-061,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0], [2, 2, 1.0], [3, 3, 1.0], [4, 4, 1.0]]",expandido,expandido,é,é
-oc0040,239684-p037,claude-040,gemini-064,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,é,é
-oc0041,239684-p040,claude-041,gemini-067,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",nuclear,nuclear,saibam,saibam
-oc0042,239684-p040,claude-042,gemini-068,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",nuclear,nuclear,diziam,diziam
-oc0043,239684-p040,claude-043,gemini-069,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",nuclear,nuclear,saiba,Saiba
-oc0044,239684-p003,,gemini-004,so_gemini,,[],,nuclear,,cecidit
-oc0045,239684-p004,,gemini-006,so_gemini,,[],,nuclear,,padeceu
-oc0046,239684-p006,,gemini-007,so_gemini,,[],,nuclear,,me dá
-oc0047,239684-p008,,gemini-010,so_gemini,,[],,expandido,,Não ha
-oc0048,239684-p011,,gemini-013,so_gemini,,[],,nuclear,,faz
-oc0049,239684-p011,,gemini-014,so_gemini,,[],,nuclear,,faz
-oc0050,239684-p011,,gemini-015,so_gemini,,[],,nuclear,,nasceu
-oc0051,239684-p011,,gemini-016,so_gemini,,[],,expandido,,são
-oc0052,239684-p011,,gemini-017,so_gemini,,[],,nuclear,,nasce
-oc0053,239684-p011,,gemini-018,so_gemini,,[],,nuclear,,nasce
-oc0054,239684-p013,,gemini-019,so_gemini,,[],,expandido,,ha
-oc0055,239684-p014,,gemini-020,so_gemini,,[],,expandido,,é
-oc0056,239684-p014,,gemini-023,so_gemini,,[],,expandido,,é
-oc0057,239684-p014,,gemini-025,so_gemini,,[],,expandido,,é
-oc0058,239684-p014,,gemini-026,so_gemini,,[],,nuclear,,entra
-oc0059,239684-p017,,gemini-029,so_gemini,,[],,nuclear,,Caía
-oc0060,239684-p018,,gemini-030,so_gemini,,[],,expandido,,veem
-oc0061,239684-p024,,gemini-043,so_gemini,,[],,expandido,,é
-oc0062,239684-p026,,gemini-045,so_gemini,,[],,expandido,,tem
-oc0063,239684-p029,,gemini-049,so_gemini,,[],,expandido,,tem
-oc0064,239684-p030,,gemini-051,so_gemini,,[],,nuclear,,Desça
-oc0065,239684-p033,,gemini-054,so_gemini,,[],,nuclear,,toma a escriptura
-oc0066,239684-p033,,gemini-056,so_gemini,,[],,expandido,,são
-oc0067,239684-p033,,gemini-057,so_gemini,,[],,expandido,,são
-oc0068,239684-p033,,gemini-058,so_gemini,,[],,nuclear,,tentou-o
-oc0069,239684-p034,,gemini-059,so_gemini,,[],,nuclear,,levantou
-oc0070,239684-p037,,gemini-062,so_gemini,,[],,nuclear,,veste
-oc0071,239684-p037,,gemini-063,so_gemini,,[],,nuclear,,falla
-oc0072,239684-p038,,gemini-065,so_gemini,,[],,nuclear,,caíu
-oc0073,239684-p038,,gemini-066,so_gemini,,[],,expandido,,é
-oc0074,189440-p004,claude-054,gemini-085,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0], [2, 2, 1.0]]",nuclear,nuclear,diz,diz
-oc0075,189440-p005,claude-055,gemini-088,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,são,é
-oc0076,189440-p006,claude-056,gemini-090,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,eis abi,eis abi
-oc0077,189440-p008,claude-057,,so_claude,,[],nuclear,,quebrou,
-oc0078,189440-p009,claude-058,gemini-094,concordante,1.0,"[[0, 0, 1.0], [1, 1, 0.718]]",expandido,expandido,eram,eram
-oc0079,189440-p009,claude-059,,so_claude,,[],expandido,,significa,
-oc0080,189440-p009,claude-060,gemini-096,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,era,era
-oc0081,189440-p010,claude-061,,so_claude,,[],nuclear,,provar,
-oc0082,189440-p012,claude-062,gemini-099,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",nuclear,nuclear,deixou,deixou
-oc0083,189440-p013,claude-063,,so_claude,,[],nuclear,,deixou,
-oc0084,189440-p015,claude-064,gemini-101,concordante,1.0,"[[0, 0, 0.5], [1, 1, 0.574]]",nuclear,nuclear,seguiu,seguiu
-oc0085,189440-p017,claude-065,gemini-104,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",nuclear,nuclear,fugiu,fugiu
-oc0086,189440-p017,claude-066,gemini-106,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",nuclear,nuclear,correu,correu
-oc0087,189440-p018,claude-067,gemini-107,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0], [2, 2, 1.0]]",expandido,expandido,foi,foi
-oc0088,189440-p019,claude-068,gemini-108,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",nuclear,nuclear,faz argumento,faz argumento
-oc0089,189440-p020,claude-069,,so_claude,,[],nuclear,,não se apartava,
-oc0090,189440-p021,claude-070,gemini-110,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,era,era
-oc0091,189440-p021,claude-071,gemini-112,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,era,era
-oc0092,189440-p021,claude-072,,so_claude,,[],expandido,,eram,
-oc0093,189440-p025,claude-073,gemini-115,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,era,era
-oc0094,189440-p026,claude-074,gemini-116,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,era,era
-oc0095,189440-p026,claude-075,gemini-118,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,era,era
-oc0096,189440-p028,claude-076,gemini-119,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0], [2, 2, 1.0], [3, 3, 1.0]]",expandido,expandido,era,era
-oc0097,189440-p029,claude-077,,so_claude,,[],nuclear,,sente,
-oc0098,189440-p005,,gemini-086,so_gemini,,[],,nuclear,,faz
-oc0099,189440-p005,,gemini-087,so_gemini,,[],,expandido,,é
-oc0100,189440-p005,,gemini-089,so_gemini,,[],,expandido,,é
-oc0101,189440-p007,,gemini-091,so_gemini,,[],,expandido,,somos
-oc0102,189440-p007,,gemini-092,so_gemini,,[],,nuclear,,Cantou
-oc0103,189440-p007,,gemini-093,so_gemini,,[],,nuclear,,dizeis -lhe
-oc0104,189440-p009,,gemini-095,so_gemini,,[],,nuclear,,significa
-oc0105,189440-p010,,gemini-097,so_gemini,,[],,nuclear,,Quiz
-oc0106,189440-p010,,gemini-098,so_gemini,,[],,nuclear,,locou-o
-oc0107,189440-p015,,gemini-100,so_gemini,,[],,nuclear,,amou
-oc0108,189440-p016,,gemini-102,so_gemini,,[],,expandido,,foi
-oc0109,189440-p017,,gemini-103,so_gemini,,[],,expandido,,loi
-oc0110,189440-p017,,gemini-105,so_gemini,,[],,expandido,,foi
-oc0111,189440-p021,,gemini-109,so_gemini,,[],,expandido,,foi
-oc0112,189440-p021,,gemini-111,so_gemini,,[],,expandido,,era
-oc0113,189440-p022,,gemini-113,so_gemini,,[],,nuclear,,se seguia
-oc0114,189440-p023,,gemini-114,so_gemini,,[],,expandido,,eram
-oc0115,189440-p026,,gemini-117,so_gemini,,[],,nuclear,,pezava
-oc0116,254358-p013,claude-044,gemini-072,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,é,é
-oc0117,254358-p015,claude-045,gemini-073,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,sejam,sejam
-oc0118,254358-p015,claude-046,gemini-074,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,não tem,não tem
-oc0119,254358-p016,claude-047,gemini-075,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,nuclear,se vejam,se vejam
-oc0120,254358-p017,claude-048,gemini-077,concordante,1.0,"[[0, 0, 0.654], [1, 1, 0.545]]",expandido,expandido,foi,foi
-oc0121,254358-p019,claude-049,,so_claude,,[],expandido,,foram,
-oc0122,254358-p022,claude-050,,so_claude,,[],nuclear,,se não guarda,
-oc0123,254358-p024,claude-051,gemini-080,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",nuclear,nuclear,responderá,responderá
-oc0124,254358-p027,claude-052,gemini-082,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,é,é
-oc0125,254358-p027,claude-053,gemini-083,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",nuclear,nuclear,importa,importa
-oc0126,254358-p012,,gemini-070,so_gemini,,[],,expandido,,é
-oc0127,254358-p012,,gemini-071,so_gemini,,[],,expandido,,sejam
-oc0128,254358-p017,,gemini-076,so_gemini,,[],,nuclear,,passarem
-oc0129,254358-p022,,gemini-078,so_gemini,,[],,nuclear,,chorarão
-oc0130,254358-p023,,gemini-079,so_gemini,,[],,expandido,,era
-oc0131,254358-p025,,gemini-081,so_gemini,,[],,nuclear,,diz
-oc0132,254358-p029,,gemini-084,so_gemini,,[],,nuclear,,venceis-nos
+oc0004,239684-p003,,gemini-004,so_gemini,,[],,nuclear,,cecidit
+oc0005,239684-p003,claude-004,gemini-005,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0], [2, 2, 1.0], [3, 3, 1.0]]",nuclear,nuclear,o perseguiu,o perseguiu
+oc0006,239684-p004,,gemini-006,so_gemini,,[],,nuclear,,padeceu
+oc0007,239684-p004,claude-005,,so_claude,,[],nuclear,,Houve,
+oc0008,239684-p006,,gemini-007,so_gemini,,[],,nuclear,,me dá
+oc0009,239684-p006,claude-007,,so_claude,,[],nuclear,,Dá-me,
+oc0010,239684-p006,claude-006,gemini-008,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0], [2, 2, 0.683]]",nuclear,nuclear,a levaram,a levaram
+oc0011,239684-p007,claude-008,gemini-009,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0], [2, 2, 0.722], [3, 3, 1.0]]",expandido,expandido,são,são
+oc0012,239684-p008,,gemini-010,so_gemini,,[],,expandido,,Não ha
+oc0013,239684-p009,claude-009,gemini-011,concordante,1.0,"[[0, 0, 0.759], [1, 1, 0.8], [2, 2, 0.739]]",nuclear,nuclear,ha de concorrer,ha de concorrer
+oc0014,239684-p009,claude-010,gemini-012,concordante,1.0,"[[0, 0, 0.71], [1, 1, 0.688], [2, 2, 0.676]]",nuclear,nuclear,concorre,concorre
+oc0015,239684-p011,,gemini-013,so_gemini,,[],,nuclear,,faz
+oc0016,239684-p011,,gemini-014,so_gemini,,[],,nuclear,,faz
+oc0017,239684-p011,,gemini-015,so_gemini,,[],,nuclear,,nasceu
+oc0018,239684-p011,,gemini-016,so_gemini,,[],,expandido,,são
+oc0019,239684-p011,,gemini-017,so_gemini,,[],,nuclear,,nasce
+oc0020,239684-p011,,gemini-018,so_gemini,,[],,nuclear,,nasce
+oc0021,239684-p013,claude-011,gemini-019,mesma_passagem,1.0,[],expandido,expandido,ha,ha
+oc0022,239684-p014,,gemini-020,so_gemini,,[],,expandido,,é
+oc0023,239684-p014,claude-014,gemini-021,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,é,é
+oc0024,239684-p014,claude-012,gemini-022,concordante,1.0,"[[0, 0, 0.978], [1, 1, 0.978]]",nuclear,nuclear,faz-se,faz-se
+oc0025,239684-p014,,gemini-023,so_gemini,,[],,expandido,,é
+oc0026,239684-p014,claude-013,gemini-024,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",nuclear,nuclear,entram,entram
+oc0027,239684-p014,,gemini-025,so_gemini,,[],,expandido,,é
+oc0028,239684-p014,,gemini-026,so_gemini,,[],,nuclear,,entra
+oc0029,239684-p015,claude-015,gemini-027,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",nuclear,nuclear,prégavam,prégavam
+oc0030,239684-p017,claude-016,gemini-028,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0], [2, 2, 1.0], [3, 3, 1.0]]",nuclear,nuclear,tudo se faz,se faz
+oc0031,239684-p017,,gemini-029,so_gemini,,[],,nuclear,,Caía
+oc0032,239684-p018,,gemini-030,so_gemini,,[],,expandido,,veem
+oc0033,239684-p018,claude-017,gemini-031,concordante,1.0,"[[0, 0, 0.821], [1, 1, 0.844], [2, 2, 0.853]]",expandido,expandido,é para,é
+oc0034,239684-p019,claude-018,gemini-032,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,são,são
+oc0035,239684-p019,claude-019,gemini-033,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",nuclear,nuclear,semeada,semeada
+oc0036,239684-p019,claude-020,gemini-034,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0], [2, 2, 1.0]]",nuclear,nuclear,acha,acha documentos nas estrellas
+oc0037,239684-p020,claude-021,gemini-035,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",nuclear,nuclear,chamam-lhe,chamam-lhe
+oc0038,239684-p020,claude-022,gemini-036,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,ha,ha
+oc0039,239684-p020,claude-023,gemini-037,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0], [2, 2, 1.0], [3, 3, 1.0], [4, 4, 1.0], [5, 5, 1.0]]",expandido,expandido,é,dizem que é
+oc0040,239684-p020,claude-024,gemini-038,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0], [2, 2, 1.0]]",expandido,expandido,é,é
+oc0041,239684-p021,claude-025,,so_claude,,[],nuclear,,se defendem,
+oc0042,239684-p022,claude-027,gemini-039,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0], [2, 2, 1.0], [3, 3, 1.0]]",nuclear,nuclear,fizesse,fizesse
+oc0043,239684-p022,claude-026,gemini-040,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",nuclear,nuclear,vae,vae
+oc0044,239684-p023,claude-029,gemini-041,concordante,0.8,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,são,são
+oc0045,239684-p023,claude-028,gemini-042,concordante,1.0,"[[0, 0, 0.684], [1, 1, 0.647], [2, 2, 0.667], [3, 3, 0.647], [4, 4, 0.667]]",expandido,expandido,é,é
+oc0046,239684-p024,,gemini-043,so_gemini,,[],,expandido,,é
+oc0047,239684-p025,claude-030,gemini-044,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",nuclear,nuclear,servem,servem
+oc0048,239684-p026,,gemini-045,so_gemini,,[],,expandido,,tem
+oc0049,239684-p027,claude-031,gemini-046,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0], [2, 2, 1.0]]",nuclear,nuclear,não serve,não serve
+oc0050,239684-p027,claude-032,gemini-047,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0], [2, 2, 1.0]]",expandido,expandido,era,era
+oc0051,239684-p028,claude-033,gemini-048,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0], [2, 2, 1.0]]",nuclear,nuclear,tomou,tomou
+oc0052,239684-p029,,gemini-049,so_gemini,,[],,expandido,,tem
+oc0053,239684-p029,claude-034,gemini-050,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0], [2, 2, 1.0]]",nuclear,nuclear,fere,fere
+oc0054,239684-p030,,gemini-051,so_gemini,,[],,nuclear,,Desça
+oc0055,239684-p031,claude-035,gemini-052,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,tinha,tinha
+oc0056,239684-p031,claude-036,gemini-053,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,não tinha,não tinha
+oc0057,239684-p033,,gemini-054,so_gemini,,[],,nuclear,,toma a escriptura
+oc0058,239684-p033,claude-037,gemini-055,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",nuclear,nuclear,tomava as palavras da escriptura,tomava as palavras da escriptura
+oc0059,239684-p033,,gemini-056,so_gemini,,[],,expandido,,são
+oc0060,239684-p033,,gemini-057,so_gemini,,[],,expandido,,são
+oc0061,239684-p033,,gemini-058,so_gemini,,[],,nuclear,,tentou-o
+oc0062,239684-p034,,gemini-059,so_gemini,,[],,nuclear,,levantou
+oc0063,239684-p036,claude-038,gemini-060,concordante,1.0,"[[0, 0, 0.7], [1, 1, 0.685]]",nuclear,nuclear,veem,veem
+oc0064,239684-p037,claude-039,gemini-061,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0], [2, 2, 1.0], [3, 3, 1.0], [4, 4, 1.0]]",expandido,expandido,é,é
+oc0065,239684-p037,,gemini-062,so_gemini,,[],,nuclear,,veste
+oc0066,239684-p037,,gemini-063,so_gemini,,[],,nuclear,,falla
+oc0067,239684-p037,claude-040,gemini-064,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,é,é
+oc0068,239684-p038,,gemini-065,so_gemini,,[],,nuclear,,caíu
+oc0069,239684-p038,,gemini-066,so_gemini,,[],,expandido,,é
+oc0070,239684-p040,claude-041,gemini-067,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",nuclear,nuclear,saibam,saibam
+oc0071,239684-p040,claude-042,gemini-068,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",nuclear,nuclear,diziam,diziam
+oc0072,239684-p040,claude-043,gemini-069,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",nuclear,nuclear,saiba,Saiba
+oc0073,254358-p012,,gemini-070,so_gemini,,[],,expandido,,é
+oc0074,254358-p012,,gemini-071,so_gemini,,[],,expandido,,sejam
+oc0075,254358-p013,claude-044,gemini-072,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,é,é
+oc0076,254358-p015,claude-045,gemini-073,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,sejam,sejam
+oc0077,254358-p015,claude-046,gemini-074,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,não tem,não tem
+oc0078,254358-p016,claude-047,gemini-075,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,nuclear,se vejam,se vejam
+oc0079,254358-p017,,gemini-076,so_gemini,,[],,nuclear,,passarem
+oc0080,254358-p017,claude-048,gemini-077,concordante,1.0,"[[0, 0, 0.654], [1, 1, 0.545]]",expandido,expandido,foi,foi
+oc0081,254358-p019,claude-049,,so_claude,,[],expandido,,foram,
+oc0082,254358-p022,claude-050,gemini-078,mesma_passagem,0.538,[],nuclear,nuclear,se não guarda,chorarão
+oc0083,254358-p023,,gemini-079,so_gemini,,[],,expandido,,era
+oc0084,254358-p024,claude-051,gemini-080,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",nuclear,nuclear,responderá,responderá
+oc0085,254358-p027,claude-052,gemini-081,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,é,é
+oc0086,254358-p027,claude-053,gemini-082,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",nuclear,nuclear,importa,importa
+oc0087,254358-p029,,gemini-083,so_gemini,,[],,nuclear,,venceis-nos
+oc0088,189440-p004,claude-054,gemini-084,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0], [2, 2, 1.0]]",nuclear,nuclear,diz,diz
+oc0089,189440-p005,,gemini-085,so_gemini,,[],,nuclear,,faz
+oc0090,189440-p005,,gemini-086,so_gemini,,[],,expandido,,é
+oc0091,189440-p005,claude-055,gemini-087,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,são,é
+oc0092,189440-p005,,gemini-088,so_gemini,,[],,expandido,,é
+oc0093,189440-p006,claude-056,gemini-089,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,eis abi,eis abi
+oc0094,189440-p007,,gemini-090,so_gemini,,[],,expandido,,somos
+oc0095,189440-p007,,gemini-091,so_gemini,,[],,nuclear,,Cantou
+oc0096,189440-p007,,gemini-092,so_gemini,,[],,nuclear,,dizeis -lhe
+oc0097,189440-p008,claude-057,,so_claude,,[],nuclear,,quebrou,
+oc0098,189440-p009,claude-058,gemini-093,concordante,1.0,"[[0, 0, 1.0], [1, 1, 0.718]]",expandido,expandido,eram,eram
+oc0099,189440-p009,claude-059,,so_claude,,[],expandido,,significa,
+oc0100,189440-p009,,gemini-094,so_gemini,,[],,nuclear,,significa
+oc0101,189440-p009,claude-060,gemini-095,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,era,era
+oc0102,189440-p010,claude-061,gemini-096,mesma_passagem,0.96,[],nuclear,nuclear,provar,Quiz
+oc0103,189440-p010,,gemini-097,so_gemini,,[],,nuclear,,locou-o
+oc0104,189440-p012,claude-062,gemini-098,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",nuclear,nuclear,deixou,deixou
+oc0105,189440-p013,claude-063,,so_claude,,[],nuclear,,deixou,
+oc0106,189440-p015,,gemini-099,so_gemini,,[],,nuclear,,amou
+oc0107,189440-p015,claude-064,gemini-100,concordante,1.0,"[[0, 0, 0.593], [1, 1, 0.574]]",nuclear,nuclear,seguiu,seguiu
+oc0108,189440-p016,,gemini-101,so_gemini,,[],,expandido,,foi
+oc0109,189440-p017,,gemini-102,so_gemini,,[],,expandido,,loi
+oc0110,189440-p017,claude-065,gemini-103,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",nuclear,nuclear,fugiu,fugiu
+oc0111,189440-p017,,gemini-104,so_gemini,,[],,expandido,,foi
+oc0112,189440-p017,claude-066,gemini-105,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",nuclear,nuclear,correu,correu
+oc0113,189440-p018,claude-067,gemini-106,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0], [2, 2, 1.0]]",expandido,expandido,foi,foi
+oc0114,189440-p019,claude-068,gemini-107,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",nuclear,nuclear,faz argumento,faz argumento
+oc0115,189440-p020,claude-069,,so_claude,,[],nuclear,,não se apartava,
+oc0116,189440-p021,,gemini-108,so_gemini,,[],,expandido,,foi
+oc0117,189440-p021,claude-072,,so_claude,,[],expandido,,eram,
+oc0118,189440-p021,claude-070,gemini-109,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,era,era
+oc0119,189440-p021,,gemini-110,so_gemini,,[],,expandido,,era
+oc0120,189440-p021,claude-071,gemini-111,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,era,era
+oc0121,189440-p022,,gemini-112,so_gemini,,[],,nuclear,,se seguia
+oc0122,189440-p023,,gemini-113,so_gemini,,[],,expandido,,eram
+oc0123,189440-p025,claude-073,gemini-114,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,era,era
+oc0124,189440-p026,claude-074,gemini-115,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,era,era
+oc0125,189440-p026,,gemini-116,so_gemini,,[],,nuclear,,pezava
+oc0126,189440-p026,claude-075,gemini-117,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0]]",expandido,expandido,era,era
+oc0127,189440-p028,claude-076,gemini-118,concordante,1.0,"[[0, 0, 1.0], [1, 1, 1.0], [2, 2, 1.0], [3, 3, 1.0]]",expandido,expandido,era,era
+oc0128,189440-p029,claude-077,,so_claude,,[],nuclear,,sente,
