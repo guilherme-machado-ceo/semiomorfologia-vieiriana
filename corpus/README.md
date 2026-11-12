@@ -15,7 +15,7 @@ As anotações são **propostas de modelos**, não conjunto-ouro: ainda não pas
 
 Os exemplos dos manuais v2 e v3 foram tirados dos próprios sermões anotados (entre eles a ocorrência canônica abaixo). O reconhecimento desses trechos pelos modelos não é evidência independente; a medição futura deve separar um conjunto de desenvolvimento do manual de um conjunto de medição.
 
-O gerador descarta as estruturas que o próprio anotador marcou com confiança zero, as que têm menos de dois ramos e as que citam trecho inexistente; as demais inconsistências (elipse, G sem forma explícita, G diferente do texto, trechos sobrepostos) ficam como alertas. Além de `concordante`, a correspondência registra o estado `mesma_passagem`: os dois modelos marcaram a mesma passagem, mas delimitaram G, S ou C de modo diferente.
+O gerador descarta as estruturas que o próprio anotador marcou com confiança zero, as que têm menos de dois ramos e as que citam trecho inexistente; as demais inconsistências (elipse, G sem forma explícita, G diferente do texto, trechos sobrepostos) ficam como alertas. Além de `concordante`, a correspondência registra o estado `mesma_passagem` (na página, "passagem sobreposta"): propostas não casadas dos dois modelos cujos trechos se sobrepõem no parágrafo. O estado mede proximidade de extensão, não identidade entre as propostas, e não entra no F1 estrito; o F1 que o inclui é métrica complementar.
 
 O último parágrafo do Sermão do Mandato (`189440-p031`) contém resíduo de folha de estilo do Wikisource. O arquivo do corpus foi mantido intacto, porque é a fonte exata que os anotadores receberam; o resíduo é removido apenas na geração dos dados da plataforma.
 

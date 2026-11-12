@@ -100,13 +100,13 @@ th{color:var(--suave);font-weight:600}
   <div class="filtros">
     <select id="f-sermao" aria-label="Sermão"><option value="">Todos os sermões</option></select>
     <select id="f-cat" aria-label="Categoria"><option value="">Nuclear e expandido</option><option value="nuclear">Só nuclear</option><option value="expandido">Só expandido</option></select>
-    <select id="f-mod" aria-label="Anotador"><option value="">Todas as ocorrências</option><option value="claude">Anotações do Claude</option><option value="gemini">Anotações do Gemini</option><option value="concordante">Só concordantes</option><option value="mesma_passagem">Mesma passagem, delimitação divergente</option><option value="divergente">Só divergentes</option></select>
+    <select id="f-mod" aria-label="Anotador"><option value="">Todas as ocorrências</option><option value="claude">Anotações do Claude</option><option value="gemini">Anotações do Gemini</option><option value="concordante">Só concordantes</option><option value="mesma_passagem">Passagem sobreposta (proximidade, não concordância)</option><option value="divergente">Só divergentes</option></select>
     <select id="f-ord" aria-label="Ordem"><option value="pos">Ordem do texto</option><option value="lema">Lema de G</option></select>
     <input type="search" id="f-busca" placeholder="Buscar no G ou no lema" aria-label="Busca">
     <button class="acao" id="csv">Exportar CSV</button>
     <span class="conta" id="conta" aria-live="polite"></span>
   </div>
-  <p class="legenda">Clique numa linha (ou use Enter) para ver o parágrafo com <mark class="g">G</mark>, <mark class="s">S</mark> e <mark class="c">C</mark> destacados. Quando os dois modelos marcaram a mesma passagem, as duas anotações aparecem lado a lado. As contagens incluem notas e citações latinas presentes na transcrição.</p>
+  <p class="legenda">Clique numa linha (ou use Enter) para ver o parágrafo com <mark class="g">G</mark>, <mark class="s">S</mark> e <mark class="c">C</mark> destacados. Quando os dois modelos marcaram trechos sobrepostos, as duas anotações aparecem lado a lado. As contagens incluem notas e citações latinas presentes na transcrição.</p>
   <div class="kwic" id="kwic"></div>
 </section>
 
@@ -138,7 +138,7 @@ th{color:var(--suave);font-weight:600}
   <p><b>2. Regra escrita.</b> Manual de anotação versionado (v3), com definições operacionais, exemplos e contraexemplos. Os exemplos do manual saem dos próprios sermões anotados; a concordância nesses trechos não é evidência independente.</p>
   <p><b>3. Dois anotadores às cegas.</b> Modelos de linguagem de famílias diferentes anotam o mesmo texto sem ver a resposta um do outro.</p>
   <p><b>4. Prova literal e posição.</b> Todo trecho afirmado deve existir no texto como palavra inteira, e cada ramo é localizado por posição. A verificação é automática. Ela prova que o trecho existe, não que a análise está certa.</p>
-  <p><b>5. Concordância entre anotadores.</b> Casamento ótimo das estruturas, com pelo menos dois ramos correspondentes; casos em que os modelos marcaram a mesma passagem com outra delimitação ficam num estado próprio.</p>
+  <p><b>5. Concordância entre anotadores.</b> Casamento ótimo das estruturas, com pelo menos dois ramos correspondentes; estruturas não casadas cujos trechos se sobrepõem no parágrafo ficam num estado próprio, "passagem sobreposta". Esse estado registra proximidade de extensão no texto, não identidade entre as propostas: os dois modelos podem ter visto estruturas diferentes no mesmo trecho.</p>
   <h3>Planejado</h3>
   <p><b>6. Decisão humana.</b> Um revisor decidirá as divergências e uma amostra aleatória das concordantes, com justificativa registrada. As decisões formarão a amostra de referência.</p>
   <p><b>7. Medição contra a referência.</b> Acerto de cada anotador, calibração da confiança declarada e evolução do manual, com um conjunto de desenvolvimento separado do conjunto de medição.</p>
@@ -205,7 +205,7 @@ function render(){
   $("#conta").textContent=`${o.length} ocorrência${o.length===1?"":"s"}`;
   $("#kwic").innerHTML=o.map(x=>{
     const a=vista(x);
-    const tag=!x.cobertura_completa?'<span class="tag">cobertura parcial</span>':x.status==="concordante"?'<span class="tag ambos">2 modelos</span>':x.status==="mesma_passagem"?'<span class="tag um">mesma passagem</span>':`<span class="tag um">só ${esc(NOME[x.modelos[0]])}</span>`;
+    const tag=!x.cobertura_completa?'<span class="tag">cobertura parcial</span>':x.status==="concordante"?'<span class="tag ambos">2 modelos</span>':x.status==="mesma_passagem"?'<span class="tag um">passagem sobreposta</span>':`<span class="tag um">só ${esc(NOME[x.modelos[0]])}</span>`;
     const cats=[...new Set(x.modelos.map(m=>x.anotacoes[m].categoria))];
     const cat=(sel==="claude"||sel==="gemini"||cats.length===1)?a.categoria:x.modelos.map(m=>`${NOME[m]}: ${x.anotacoes[m].categoria}`).join(" · ");
     let h=`<div class="linha" data-id="${esc(x.id)}" tabindex="0" role="button" aria-expanded="${abertos.has(x.id)}">
@@ -216,7 +216,7 @@ function render(){
     if(abertos.has(x.id)){
       const ms=x.modelos;
       const fonte=String(x.fonte||"").startsWith("https://")?`<a href="${esc(x.fonte)}" target="_blank" rel="noopener">fonte (Wikisource, revisão coletada)</a>`:"";
-      const nota=x.status==="concordante"?`Casamento entre anotadores: índice ${esc(x.match_score)} (0,4 × semelhança de G + 0,6 × proporção de ramos casados), ${x.branch_mapping.length} ramos casados. `:x.status==="mesma_passagem"?`Mesma passagem com delimitação divergente: sobreposição das extensões ${esc(x.match_score)}. `:"";
+      const nota=x.status==="concordante"?`Casamento entre anotadores: índice ${esc(x.match_score)} (0,4 × semelhança de G + 0,6 × proporção de ramos casados), ${x.branch_mapping.length} ramos casados. `:x.status==="mesma_passagem"?`Passagem sobreposta: os trechos das duas propostas se sobrepõem (índice ${esc(x.match_score)}). Isso indica proximidade no texto, não que as propostas sejam a mesma estrutura. `:"";
       h+=`<div class="detalhe"><div class="grade">${ms.map(m=>painelAnotacao(x,m)).join("")}</div>
       <p class="legenda">${nota}Validação humana: ${x.validacao==="nao_validado"?"não feita":esc(x.validacao)} · ${fonte}</p></div>`;
     }
@@ -228,7 +228,7 @@ function cards(){
   const porS={};D.ocorrencias.forEach(x=>{const v=porS[x.sermao]=porS[x.sermao]||{t:0,c:0,p:0};v.t++;if(x.status==="concordante")v.c++;if(x.status==="mesma_passagem")v.p++;});
   const max=Math.max(...D.sermoes.map(s=>(porS[s.titulo]?.t||0)/s.n_paragrafos));
   $("#cards").innerHTML=D.sermoes.map(s=>{const v=porS[s.titulo]||{t:0,c:0,p:0},d=v.t/s.n_paragrafos,mil=v.t/s.palavras*1000;
-    return `<div class="card"><b>${v.t} propostas</b><span>${esc(s.titulo)}</span><br><span>${v.c} dos dois modelos · ${v.p} mesma passagem · ${v.t-v.c-v.p} de um só modelo · ${d.toFixed(2)} por parágrafo · ${mil.toFixed(1)} por mil palavras · em ${s.paragrafos_com_ocorrencia} de ${s.n_paragrafos} parágrafos</span><div class="barra"><i style="width:${(d/max*100).toFixed(0)}%"></i></div></div>`}).join("");
+    return `<div class="card"><b>${v.t} propostas</b><span>${esc(s.titulo)}</span><br><span>${v.c} dos dois modelos · ${v.p} com passagem sobreposta · ${v.t-v.c-v.p} de um só modelo · ${d.toFixed(2)} por parágrafo · ${mil.toFixed(1)} por mil palavras · em ${s.paragrafos_com_ocorrencia} de ${s.n_paragrafos} parágrafos</span><div class="barra"><i style="width:${(d/max*100).toFixed(0)}%"></i></div></div>`}).join("");
   $("#selo").textContent=`não validado por humanos (${D.governanca.validadas_por_humano||0}/${D.ocorrencias.length})`;
 }
 
@@ -239,16 +239,16 @@ function governanca(){
     [m.estruturas,"estruturas retidas após a triagem · "+m.nome],
     [c.com_alerta+m.com_alerta,"estruturas retidas com alerta de validação (ver trilha)"],
     [g.concordantes,"concordantes (casamento ótimo, ≥ 2 ramos)"],
-    [g.mesma_passagem,"mesma passagem, delimitação divergente"],
+    [g.mesma_passagem,"passagens sobrepostas sem concordância (proximidade, não identidade)"],
     [g.f1.toFixed(2),"F1 de concordância estrita"],
-    [g.f1_por_passagem.toFixed(2),"F1 contando também a mesma passagem"],
+    [g.f1_por_passagem.toFixed(2),"F1 por sobreposição de trecho (complementar; não é concordância estrutural)"],
     [`${g.mesma_categoria}/${g.concordantes}`,"mesma categoria quando concordam"],
     [`${g.validadas_por_humano||0}/${D.ocorrencias.length}`,"propostas validadas por humanos"],
   ].map(([v,t])=>`<div class="card"><b>${esc(v)}</b><span>${esc(t)}</span></div>`).join("");
   const linhaAud=x=>esc(`${x.estruturas_brutas} brutas · descartadas: ${x.rejeitadas_pelo_anotador} rejeitadas pelo próprio anotador (confiança zero), ${x.nao_literais_descartadas} com trecho não literal, ${x.menos_de_dois_ramos} com menos de dois ramos · alertas nas retidas: ${x.elipse_inconsistente} elipse inconsistente, ${x.sem_G_explicito} sem G explícito em nenhum ramo, ${x.G_difere_do_texto} G diferente do texto, ${x.trechos_sobrepostos} trechos sobrepostos, ${x.posicao_fora_de_ordem} fora de ordem, ${x.ramo_disperso} ramo disperso · ${x.blocos_sem_resposta} blocos sem resposta`);
   $("#gov-texto").innerHTML=`
   <h3>Leitura</h3>
-  <p>Das estruturas do Claude, ${pc(g.confirmadas_claude)} também foram encontradas pelo Gemini; das do Gemini, ${pc(g.confirmadas_gemini)} pelo Claude. Em ${esc(g.mesma_passagem)} casos os dois marcaram a mesma passagem, mas delimitaram G, S ou C de modo diferente. A maior parte da divergência está em <i>o que conta</i> como ocorrência; uma parte menor, em <i>como</i> delimitá-la. Estes números comparam dois anotadores automáticos entre si; não são acurácia, que só a adjudicação humana pode medir.</p>
+  <p>Das estruturas do Claude, ${pc(g.confirmadas_claude)} também foram encontradas pelo Gemini; das do Gemini, ${pc(g.confirmadas_gemini)} pelo Claude. Em ${esc(g.mesma_passagem)} casos, propostas não casadas dos dois modelos ocupam trechos sobrepostos. Isso indica proximidade no texto, não concordância: os modelos podem ter visto estruturas diferentes no mesmo trecho. O F1 estrito é a medida de concordância estrutural; o F1 por sobreposição é só complementar. Estes números comparam dois anotadores automáticos entre si; não são acurácia, que só a adjudicação humana pode medir.</p>
   <h3>Confiança declarada e concordância (exploratório)</h3>
   <p>Confiança média declarada pelo Gemini: ${esc(m.confianca_media_concordantes)} nas estruturas que o outro modelo também encontrou e ${esc(m.confianca_media_isoladas)} nas demais. No Claude: ${esc(c.confianca_media_concordantes)} e ${esc(c.confianca_media_isoladas)}. Isso mede a relação entre confiança e <i>concordância entre modelos</i>, e não entre confiança e acerto: uma estrutura confirmada pelos dois pode estar errada, e uma isolada pode estar certa. A calibração propriamente dita só poderá ser medida contra a adjudicação humana.</p>
   <h3>Trilha e validação</h3>
@@ -258,7 +258,7 @@ function governanca(){
   <tr><td>${esc(c.nome)}</td><td>${linhaAud(c)}</td></tr>
   <tr><td>${esc(m.nome)}</td><td>${linhaAud(m)}</td></tr>
   <tr><td>Casamento</td><td>${esc(g.criterio_casamento)}</td></tr>
-  <tr><td>Mesma passagem</td><td>${esc(g.criterio_mesma_passagem)}</td></tr>
+  <tr><td>Passagem sobreposta</td><td>${esc(g.criterio_mesma_passagem)}</td></tr>
   <tr><td>Base da concordância</td><td>${esc(g.base_da_concordancia)}</td></tr>
   <tr><td>Arquivos de entrada (SHA-256)</td><td>${Object.entries(g.entradas_sha256||{}).map(([k,v])=>esc(k)+": "+esc(v)).join("<br>")}</td></tr>
   <tr><td>Dados gerados em</td><td>${esc(D.gerado_em)}</td></tr></table></div>`;

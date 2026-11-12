@@ -4,6 +4,8 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+permissions:
+  contents: read
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -11,9 +13,9 @@ jobs:
       matrix:
         python-version: ['3.10', '3.12']
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262  # v4
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065  # v5
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
@@ -25,3 +27,10 @@ jobs:
           pip install -e .
       - name: Run tests
         run: python -m pytest tests/ -v --tb=short
+      - name: Smoke test (instalacao nao editavel, como na imagem)
+        if: matrix.python-version == '3.12'  # a trava foi resolvida para o Python 3.12 da imagem
+        run: |
+          python -m venv /tmp/fumaca
+          /tmp/fumaca/bin/pip install -q --require-hashes -r requirements-docker.lock
+          /tmp/fumaca/bin/pip install -q --no-deps .
+          cd /tmp && /tmp/fumaca/bin/python -c "import semiomorfologia.api.app as a; import pathlib; assert (pathlib.Path(a.__file__).parents[1] / 'web' / 'dados' / 'concordancia.json').exists(); print('ok')"

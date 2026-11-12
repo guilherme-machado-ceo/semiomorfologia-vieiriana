@@ -7,7 +7,7 @@ name = "semiomorfologia-vieiriana"
 version = "3.0.0"
 description = "Framework agnóstico de extração de analogias nas 4 morfologias naturais"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 license = {text = "Licenca Semiomorfologica Vieiriana v1.0 - Uso academico livre; uso comercial requer autorizacao"}
 keywords = ["semiomorfologia", "vieira", "analogia", "biomimetica", "barroco"]
 
